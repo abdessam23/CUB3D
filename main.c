@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/07 11:13:22 by abdo             ###   ########.fr       */
+/*   Updated: 2025/08/07 13:13:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,18 @@ int check_side(char **str)
     }
     return 1;
 }
-void check_walls(char **map)
+int check_walls(char **map)
 {
     char **str;
     str = map + 6;
     int i = 0;
+    if (!map || !*map)
+        return 0;
     while (str[i] != NULL)
         i++;
     if (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str))
-        printf(" no wall");
-    else
-        printf("walls are ok");
-        
+        return 0;
+    return 1;        
 }
 int main(int argc, char **argv)
 {
@@ -157,9 +157,12 @@ int main(int argc, char **argv)
                 return 1;
             }
         }
-        printf("%s\n", map[i]);
     }
-    check_walls(map);
+    if (!check_walls(map))
+    {
+        printf("walls issue");
+        return 1;
+    }
     
     return 0;
 }
