@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/10 11:52:46 by abdo             ###   ########.fr       */
+/*   Updated: 2025/08/11 12:38:05 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,11 +291,172 @@ int check_walls(char **map)
         return 0;
     while (str[i] != NULL)
         i++;
-    if (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str))
-    {
+    if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
         return 0;
-    }
     return 1;        
+}
+int path_checker(char *s)
+{
+    int i = 3;
+    int start = 0;
+    char *path = NULL;
+    int fd;
+    while (s[i] == ' ')
+        i++;
+    start = i;
+    if (s[i] == '\0')
+        return 0;
+    while (s[i] && s[i] != ' ')
+            i++;
+    path = ft_substr(s,start, i - start);
+    fd = open(path,O_RDONLY);
+    if (fd == -1)
+        return 0;
+   while (s[i] && s[i] == ' ')
+            i++;
+    if (s[i] != '\0')
+        return 0;
+    free(path);
+    return 1;
+}
+int identif_checker(char *s1,char *s2)
+{
+    int i;
+     
+    i = 0;
+    while (*s1 == ' ')
+        s1++;
+    
+    if (*s1 == *s2)
+    {
+        if (ft_strncmp(s1, s2, 3))
+            return 0;
+        if (!path_checker(s1))
+            return 0;
+    }
+    return 1;
+}
+int ft_atoichecker(char **s)
+{
+    int i;
+    i = 0;
+    int n;
+    while (s[i])
+    {
+        n = ft_atoi(s[i]);
+        if (n < 0 || n > 255)
+            return 0;
+        i++;
+    }
+    if (i != 3)
+        return 0;
+    return 1;
+}
+int check_range(char *s)
+{
+    int  i;
+    int start;
+    char **arr;
+    char *range = NULL;
+    i = 0;
+    start = 0;
+    while (s[i] && s[i] == ' ')
+        i++;
+    start = i;
+    if (s[i] == '\0')
+        return 0;
+    while (s[i] && s[i] != ' ')
+        i++;
+    range = ft_substr(s,start, i - start);
+    start = 0;
+    
+    while(range[start])
+    {
+        if (!ft_isdigit(range[start]) && range[start] != ',')
+            return 0;
+        start++;
+    }
+    arr = ft_split(range, ',');
+    if (!ft_atoichecker(arr))
+        return 0;
+    while (s[i] && s[i] == ' ')
+        i++;
+    if(s[i] != '\0')
+        return 0;
+    free(range);
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
+    return 1;
+}
+int check_singlid(char *s)
+{
+    while (*s && *s == ' ')
+        s++;
+    if(*s == 'F')
+    {
+        if(ft_strncmp(s,"F ", 2))
+            return 0;
+        if (!check_range(s+2))
+            return 0;
+    }
+    if(*s == 'C')
+    {
+        if(ft_strncmp(s,"C ", 2))
+            return 0;
+        if (!check_range(s+2))
+            return 0;
+    }
+   return 1;
+}
+char *ft_idchar(char c)
+{
+    if (c == 'S')
+        return (ft_strdup("SO "));
+    if (c == 'N')
+        return (ft_strdup("NO "));
+    if (c == 'W')
+        return (ft_strdup("WE "));
+    if (c == 'E')
+        return (ft_strdup("EA "));
+    return NULL;  
+}
+
+int ft_valid_id(char *str)
+{
+    int i;
+    char *identif = NULL;
+    i = 0;
+    
+    while (str[i] && str[i] == ' ')
+        i++;
+    printf("%c\n", str[i]);
+    //should check null terminator here
+    if (ft_identif(str[i]))
+    {
+        
+        if (str[i] == 'S' || str[i] == 'W' || str[i] == 'N' || str[i] == 'E')
+        {
+            identif = ft_idchar(str[i]);
+            if (!identif_checker(str, identif))
+            {
+                free(identif);
+                return 0;
+            }
+                
+        }
+        if (str[i] == 'F' || str[i] == 'C')
+        {
+            if(!check_singlid(str))
+                return 0;
+        }
+    }
+    free(identif);
+    return 1;
 }
 int main(int argc, char **argv)
 {
@@ -318,8 +479,16 @@ int main(int argc, char **argv)
     map = ft_split(str, '\n');
     if (!map)
         return 1;
-    // for (int i = 0; map[i] != NULL; i++)
-    //     printf("%s\n",map[i]);
+    for (int i = 0; map[i] != NULL; i++)
+    {
+        printf("%s\n", map[i]);
+        if (!ft_valid_id(map[i]))
+        {
+            printf("Error: identifier");
+            return 1;
+        }
+    }
+        
     if (!check_walls(map))
     {
         printf("walls issue");

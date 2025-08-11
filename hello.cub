@@ -1,11 +1,11 @@
-NO ./path_to_the_north_texture
+NO ../textur/img2.webp
 F 220,100,0
 
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+SO ../textur/img1.webp
+WE ../textur/img3.webp
+EA ../textur/img4.webp
 
-C 225,30,0 r
+C 275,30,0
 
 
 
@@ -26,7 +26,7 @@ C 225,30,0 r
 10000000000000001101010010001
 11000001110101011111011110N0111
 11110111 1110101 101111010001
-11111111 111111111111111111 111111111111
+11111111 11111111111111111 111111111111
 
 
 
