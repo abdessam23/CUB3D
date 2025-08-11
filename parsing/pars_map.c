@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/11 12:38:05 by abdo             ###   ########.fr       */
+/*   Updated: 2025/08/11 14:34:49 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -434,7 +434,6 @@ int ft_valid_id(char *str)
     
     while (str[i] && str[i] == ' ')
         i++;
-    printf("%c\n", str[i]);
     //should check null terminator here
     if (ft_identif(str[i]))
     {
