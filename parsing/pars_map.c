@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/11 14:34:49 by abdo             ###   ########.fr       */
+/*   Updated: 2025/08/13 10:08:58 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ int ft_side(char *s)
         return 0;
     while (s[i])
     {
-        if(s[i + 1] == '\0' && s[i] == '1')
+        if(s[i + 1] != ' ' && s[i] != '1')
             return 1;
         i++;
     }
@@ -278,7 +278,42 @@ int find_one(char **map)
     return 0;
     
 }
-int check_walls(char **map)
+
+int ft_direction(int c)
+{
+    if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+        return 1;
+    return 0;
+}
+int duplicatID(char **str)
+{
+    int i;
+    int x;
+    int y;
+    int j;
+    int count;
+    char dir;
+    i = 0;
+    count  = 0;
+    while (str[++i])
+    {
+        j = 0;
+        while (str[i][++j])
+        {
+            if(ft_direction(str[i][j]))
+            {
+                count++;
+                x = i; //position of player
+                y = j;  //position of player
+                dir = str[i][j]; // derection of player
+            }
+        }
+    }
+    if (count > 1)
+        return 0;
+    return 1;
+}
+int check_in_map(char **map)
 {
     char **str;
     int n = 0;
@@ -287,11 +322,14 @@ int check_walls(char **map)
         return 0;
     str = map + n;
     int i = 0;
-    if (!map || !*map)
+    if (!str || !*str)
         return 0;
+    
     while (str[i] != NULL)
         i++;
     if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
+        return 0;
+    if (!duplicatID(str))
         return 0;
     return 1;        
 }
@@ -454,7 +492,8 @@ int ft_valid_id(char *str)
                 return 0;
         }
     }
-    free(identif);
+    if (identif)
+        free(identif);
     return 1;
 }
 int main(int argc, char **argv)
@@ -488,9 +527,9 @@ int main(int argc, char **argv)
         }
     }
         
-    if (!check_walls(map))
+    if (!check_in_map(map))
     {
-        printf("walls issue");
+        printf("issue inside map");
         return 1;
     }
     printf("seccess!");
