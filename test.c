@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#define color 0x00FF0000
+#define color 0xFF0000
 #define width 500
 #define hight 500
 #define Pi 3.14159
@@ -24,7 +24,11 @@ int max(int n1, int n2)
 }
 void put_pixel(t_data *img,int x, int y)
 {
-    *(int*)(img->addr + (y * img->sl + x * (img->bpp/8))) = color;
+    char *dst;
+    // if (y == -1);
+    //  return;
+    dst = img->addr + (y * img->sl + x * (img->bpp/8));
+    *(unsigned int*)dst = color;
 }
 void init_line(t_data *img, int x0,int y0,int x1,int y1)
 {
@@ -36,17 +40,14 @@ void init_line(t_data *img, int x0,int y0,int x1,int y1)
    int x = x0;
    int y = y0;
 
-
-   while (y < y1)
+    int i = 0;
+   while (i < step)
    {
-        // x =  x0 + x_inc;
-        // y = y0 + y_inc;
         put_pixel(img, x, y);
-        y++;
-        
+        x += x_inc;
+        y += y_inc;
+        i++;
    }
-    
-
 }
 void draw_line(t_data *img)
 {
@@ -56,15 +57,13 @@ void draw_line(t_data *img)
     int n_y = 300;
     float angle = Pi/6;
     init_line(img, x,y,n_x,n_y);
-    // while (angle < Pi/2)
-    // {
-    //     n_x = (sin(angle) * 210 )+ 90;
-    //     n_y = 210 - (cos(angle) * 210) ;
-    //     printf("%d\n",n_y);
-    //     init_line(img, x,y,n_x,n_y);
-    //     // put_pixel(img, n_x,n_y);
-    //     angle +=angle; 
-    // }
+    while (angle < Pi/2)
+    {
+        n_x = (sin(angle) * 210) + n_x;
+        n_y = y + (cos(angle) * 210);
+        init_line(img, x,y,n_x,n_y);
+        angle += angle;
+    }
 }
 
 int main()
