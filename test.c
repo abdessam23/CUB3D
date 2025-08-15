@@ -35,15 +35,15 @@ void init_line(t_data *img, int x0,int y0,int x1,int y1)
    int dx = x1- x0;
    int dy = y1 - y0;
    int step = max(fabs(dx),fabs(dy));
-   int x_inc = dx / step;
-   int y_inc = dy / step;
-   int x = x0;
-   int y = y0;
+   float x_inc = dx /(float)step;
+   float y_inc = dy /(float)step;
+   float x = x0;
+   float y = y0;
 
     int i = 0;
    while (i < step)
    {
-        put_pixel(img, x, y);
+        put_pixel(img, (int)x,(int)y);
         x += x_inc;
         y += y_inc;
         i++;
@@ -59,10 +59,10 @@ void draw_line(t_data *img)
     init_line(img, x,y,n_x,n_y);
     while (angle < Pi/2)
     {
-        n_x = (sin(angle) * 210) + n_x;
+        n_x = x + (sin(angle) * 210) ;
         n_y = y + (cos(angle) * 210);
         init_line(img, x,y,n_x,n_y);
-        angle += angle;
+        angle += 0.5;
     }
 }
 
