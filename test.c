@@ -51,19 +51,30 @@ void init_line(t_data *img, int x0,int y0,int x1,int y1)
 }
 void draw_line(t_data *img)
 {
-    int x = 90;
-    int y = 90;
-    int n_x = 90;
-    int n_y = 300;
+     int i = 0;
+    int x = 12;
+    int y = 50;
+    int rayX = 30;
+    int rayY = 1;
+    int cameraX = 2 * x/width - 1;
+    float xplane = 0;
+    float yplane = 0.66;
+   
     float angle = Pi/6;
-    init_line(img, x,y,n_x,n_y);
-    while (angle < Pi/2)
-    {
-        n_x = x + (sin(angle) * 210) ;
-        n_y = y + (cos(angle) * 210);
-        init_line(img, x,y,n_x,n_y);
-        angle += 0.5;
-    }
+    init_line(img, x,y,rayX,rayY);
+    // while(!done)
+    // {
+        // while (i < width)
+        // {
+        //     int cameraX = 2 * i/width - 1;
+        //     int n_x = rayX + xplane * cameraX;
+        //     int n_y = rayY + yplane * cameraX;
+        //     init_line(img, x,y,n_x,n_y);
+        //     i++;
+        // }
+    // }
+
+    
 }
 
 int main()
@@ -71,10 +82,8 @@ int main()
     void *mlx;
     void *mlx_window;
     t_data mlx_img;
-    
 
     mlx = mlx_init();
-
     mlx_window = mlx_new_window(mlx, width, hight, "Cub3d");
     mlx_img.img = mlx_new_image(mlx,500,500);
     mlx_img.addr = mlx_get_data_addr(mlx_img.img,&mlx_img.bpp,&mlx_img.sl,&mlx_img.endian);
