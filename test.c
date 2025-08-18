@@ -52,29 +52,26 @@ void init_line(t_data *img, int x0,int y0,int x1,int y1)
 void draw_line(t_data *img)
 {
      int i = 0;
-    int x = 12;
-    int y = 50;
-    int rayX = 30;
-    int rayY = 1;
+    int x = 90;
+    int y = 90;
+    int rayX = 0;
+    int rayY = -1;
     int cameraX = 2 * x/width - 1;
     float xplane = 0;
     float yplane = 0.66;
    
     float angle = Pi/6;
-    init_line(img, x,y,rayX,rayY);
-    // while(!done)
-    // {
-        // while (i < width)
-        // {
-        //     int cameraX = 2 * i/width - 1;
-        //     int n_x = rayX + xplane * cameraX;
-        //     int n_y = rayY + yplane * cameraX;
-        //     init_line(img, x,y,n_x,n_y);
-        //     i++;
-        // }
-    // }
-
-    
+   // init_line(img, x,y,rayX,rayY);
+  
+    while (i < width)
+    {
+        int cameraX = 2 * x/width - 1;
+        int n_x = rayX + xplane * cameraX;
+        int n_y = rayY + yplane * cameraX;
+        init_line(img, x,y,n_x,n_y);
+        xplane += n_x/width;
+        i++;
+    }
 }
 
 int main()
