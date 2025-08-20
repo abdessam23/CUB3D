@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:04:15 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/20 10:02:44 by abdo             ###   ########.fr       */
+/*   Updated: 2025/08/20 10:19:27 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 
 typedef struct s_player
 {
-    int playerX;
-    int playerY;
+    double playerX;
+    double playerY;
     char direction;
     int *roof;
     int *floor;

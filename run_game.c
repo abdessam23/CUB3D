@@ -35,6 +35,11 @@ void run_game(t_player player)
     double dy;
     double dsidX;
     double dsidY;
+    double stepX;
+    double stepY;
+    int mapX = (int)player.playerX;
+    int mapY = (int)player.playerY;
+    int side = 0;
     int hit = 0;
     int *p;
     int dirX;
@@ -54,8 +59,46 @@ void run_game(t_player player)
             raydiY = dirY + planeY * cameraX;
             dx = sqrt(1 + raydiY * raydiY / (raydiX * raydiX));
             dy = sqrt(1 + raydiX * raydiX / (raydiY * raydiY));
-
-
+            if (raydiX < 0)
+            {
+                dsidX = (player.playerX - mapX) * dx;
+                stepX = -1;
+            }
+            else
+            {
+                dsidX = (mapX + 1.0 - player.playerX) * dx;
+                stepX = 1;
+            }
+            if (raydiY < 0)
+            {
+                dsidX = (player.playerY - mapY) * dy;
+                stepX = -1;
+            }
+            else
+            {
+                dsidX = (mapY + 1.0 - player.playerY) * dy;
+                stepX = 1;
+            }
+            while (!hit)
+            {
+                if (dsidX < dsidY)
+                {
+                    dsidX += dx;
+                    mapX += stepX;
+                    side = 0;
+                }
+                else
+                {
+                    dsidY += dy;
+                    mapY += stepY;
+                    side = 1;
+                }
+                if (map[x][y] == '1') // we need map here!!
+                {
+                    hit = 1;
+                }
+            }
+            
         }
     }
     
