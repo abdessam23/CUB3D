@@ -61,7 +61,7 @@ void draw_line(t_data *img)
     float yplane = 0.66;
    
     float angle = Pi/6;
-   // init_line(img, x,y,rayX,rayY);
+   init_line(img, x,y,rayX,rayY);
   
     while (i < width)
     {
