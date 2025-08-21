@@ -37,6 +37,7 @@ void run_game(t_player player)
     double dsidY;
     double stepX;
     double stepY;
+    double wallp;
     int mapX = (int)player.playerX;
     int mapY = (int)player.playerY;
     int side = 0;
@@ -93,12 +94,13 @@ void run_game(t_player player)
                     mapY += stepY;
                     side = 1;
                 }
-                if (map[x][y] == '1') // we need map here!!
-                {
+                if (player.map[mapX][mapY] == '1') // we need map here!!
                     hit = 1;
-                }
             }
-            
+            if (side == 0)
+                wallp = dsidX - dx;
+            else
+                wallp = dsidY - dy;
         }
     }
     
