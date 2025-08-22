@@ -101,6 +101,8 @@ void run_game(t_player player)
                 wallp = dsidX - dx;
             else
                 wallp = dsidY - dy;
+            
+                
         }
     }
     
