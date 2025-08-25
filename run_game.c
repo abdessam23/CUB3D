@@ -38,6 +38,7 @@ void run_game(t_player player)
     double stepX;
     double stepY;
     double wallp;
+    int line_hight;
     int mapX = (int)player.playerX;
     int mapY = (int)player.playerY;
     int side = 0;
@@ -101,8 +102,13 @@ void run_game(t_player player)
                 wallp = dsidX - dx;
             else
                 wallp = dsidY - dy;
-            
-                
+            line_hight = (int)hight/wallp;
+            int startdraw = hight/2 - line_hight/2;
+            if (startdraw < 0)
+                startdraw = 0;
+            int enddraw = hight/2 + line_hight/2;
+            if (enddraw >= hight)
+                enddraw = hight - 1;    
         }
     }
     
