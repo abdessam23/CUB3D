@@ -44,6 +44,7 @@ void run_game(t_player player)
     int side = 0;
     int hit = 0;
     int *p;
+    float wallX;
     int dirX;
     int dirY;
     planeX = 0;
@@ -108,7 +109,12 @@ void run_game(t_player player)
                 startdraw = 0;
             int enddraw = hight/2 + line_hight/2;
             if (enddraw >= hight)
-                enddraw = hight - 1;    
+                enddraw = hight - 1;
+            if (side == 0)
+                wallX = player.playerY + wallp * raydiY;
+            else
+                wallX = player.playerX + wallp * raydiX;
+            wallX -=floor(wallX);
         }
     }
     
