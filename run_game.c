@@ -115,6 +115,7 @@ void run_game(t_player player)
             else
                 wallX = player.playerX + wallp * raydiX;
             wallX -=floor(wallX);
+            int texX = (int) wallX * 64;
         }
     }
     
