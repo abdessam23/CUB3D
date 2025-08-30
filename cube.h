@@ -33,6 +33,9 @@ typedef struct s_player
 	char	**map;
 	double	playerX;
 	double	playerY;
+	char	direction;
+	int	mapX;
+	int	mapY;
 	float cameraX;
 	float planeX;
 	float planeY;
