@@ -1,7 +1,7 @@
 #include "cub3d.h"
-int *direction(char c)
+float *direction(char c)
 {
-    int *p = malloc(sizeof(int) * 2);
+    float *p = malloc(sizeof(float) * 2);
     if (c == 'N' || c == 'S')
     {
         p[0] = 0;
@@ -45,8 +45,8 @@ void run_game(t_player player)
     int hit = 0;
     int *p;
     float wallX;
-    int dirX;
-    int dirY;
+    float dirX;
+    float dirY;
     planeX = 0;
     planeY  = 0.66;
     p = direction(player.direction);
