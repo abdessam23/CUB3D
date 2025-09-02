@@ -38,11 +38,6 @@
 # define MOVE_SPEED 0.005
 # define ROT_SPEED 0.001
 
-#define PI	3.14159265358979323846
-#define	FOV 66.0
-#define V_RAD (VIEW * PI / 180.0)
-
-
 typedef struct	s_data
 {
 	void	*img;
