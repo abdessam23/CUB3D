@@ -172,6 +172,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 		player->wallp = player->dsidX - player->dx;
 	else
 		player->wallp = player->dsidY - player->dy;
+
 	int line_height = (int)(WIN_HEIGHT / player->wallp);
 	int start_draw = WIN_HEIGHT / 2 - line_height / 2;
 	int end_draw = WIN_HEIGHT / 2 + line_height / 2;
@@ -249,8 +250,9 @@ void rotate_player(t_player *player, float angle)
 
 void handle_movement(t_game *game)
 {
-	t_player *player = game->player;
+	t_player *player;
 
+	player = game->player;
 	// Rotation (Left/Right arrows or A/D keys)
 	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
 		rotate_player(player, -ROT_SPEED);
