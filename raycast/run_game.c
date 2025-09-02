@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:22:27 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/02 18:00:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/02 18:42:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,9 +186,9 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	// Choose wall color based on side
 	int color;
 	if (player->side == 0)
-		color = 0xFF0000;  // red for North/South walls
+		color = 0xA16B10;  // red for North/South walls
 	else
-		color = 0x00FF00;  // Green for East/West walls
+		color = 0x0A7A31;  // Green for East/West walls
 
 	// Draw ceiling (above wall)
 	for (int y = 0; y < start_draw; y++)
@@ -200,7 +200,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0x8B4513);
+		put_pixel(&game->img, column, y, 0x000000);
 }
 
 
@@ -415,16 +415,16 @@ char	**create_test_map(void)
 {
 	char **map = malloc(sizeof(char*) * 10);
 
-	map[0] = strdup("111111111111111111");
-	map[1] = strdup("100001000000000001");
-	map[2] = strdup("100000000000000001");
-	map[3] = strdup("101000000100000001");
-	map[4] = strdup("100000010000000001");
-	map[5] = strdup("100000000000000001");
-	map[6] = strdup("100001000000000001");
-	map[7] = strdup("100000000000N00001");
-	map[8] = strdup("100000111100000001");
-	map[9] = strdup("111111111111111111");
+	map[0] = strdup("111111111111111111111111111111");
+	map[1] = strdup("100001000000000000000001000001");
+	map[2] = strdup("100000000000000000000000000001");
+	map[3] = strdup("101000000100000001011110000001");
+	map[4] = strdup("100000010000000001000000000001");
+	map[5] = strdup("100000000000000000111100000001");
+	map[6] = strdup("100001000000000000000000000001");
+	map[7] = strdup("100000000000N00001000000001001");
+	map[8] = strdup("100000111100000001000000000001");
+	map[9] = strdup("111111111111111111111111111111");
 
 	return (map);
 }
