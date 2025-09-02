@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   run_game.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:22:27 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/02 09:30:46 by asyani           ###   ########.fr       */
+/*   Updated: 2025/09/02 18:00:30 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../cube.h"
 
-int *direction(char c)
+float *direction(char c)
 {
-	int *p = malloc(sizeof(int) * 2);
+	float *p = malloc(sizeof(int) * 2);
 	if (c == 'N' || c == 'S')
 	{
 		p[0] = 0;
@@ -32,7 +33,7 @@ int *direction(char c)
 			p[0] = 1;
 		return p;
 	}
-	return 0;
+	return NULL;
 }
 
 void	set_plane(t_player *player)
@@ -215,8 +216,6 @@ void	run_game(t_player *player, t_game *game)
 		draw_wall_column(game, player, i);
 	}
 }
-
-
 int key_press(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
@@ -235,23 +234,25 @@ int key_release(int keycode, t_game *game)
 
 void rotate_player(t_player *player, float angle)
 {
-	// Save original values
 	float oldDirX = player->dirX;
-	float oldPlaneX = player->planeX;
-
 	// Rotate direction vector
 	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
 	player->dirY = oldDirX * sin(angle) + player->dirY * cos(angle);
+	
 
-	// Rotate plane vector
+	//Rotate plane vector
+	float oldPlaneX = player->planeX;
 	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
-	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);
+	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);	
 }
+
 
 void handle_movement(t_game *game)
 {
 	t_player *player;
-
+	
+	
+	
 	player = game->player;
 	// Rotation (Left/Right arrows or A/D keys)
 	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
@@ -268,9 +269,9 @@ void handle_movement(t_game *game)
 
 		// Check collision with walls
 		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY += newY;
+			player->playerY = newY;
 		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX += newX;
+			player->playerX = newX;
 	}
 
 	// Backward movement (S key)
@@ -291,10 +292,15 @@ void	init_player_direction(t_player *player)
 {
 	// Get initial direction
 	printf("direction: %c\n", player->direction);
-	int *p = direction(player->direction);
+	float *p = direction(player->direction);
+	if (!p)
+	{
+		printf("Yes");
+		return;
+	}
 	player->dirX = p[0];
 	player->dirY = p[1];
-	printf("dirx: %d diry: %d\n", player->dirX, player->dirY);
+	printf("dirx: %f diry: %f\n", player->dirX, player->dirY);
 	printf("playerx: %f playery: %f\n", player->playerX, player->playerY);
 	free(p);
 
@@ -307,7 +313,7 @@ void	init_player(t_player *player)
 	player->map = create_test_map();
 	for (int y = 0; y < 10; y++)
 	{
-		for (int x = 0; x < 6; x++)
+		for (int x = 0; x < 18; x++)
 		{
 			if (player->map[y][x] == 'N')
        			{
@@ -409,16 +415,16 @@ char	**create_test_map(void)
 {
 	char **map = malloc(sizeof(char*) * 10);
 
-	map[0] = strdup("111111");
-	map[1] = strdup("100001");
-	map[2] = strdup("10E001");
-	map[3] = strdup("100011");
-	map[4] = strdup("110001");
-	map[5] = strdup("100111");
-	map[6] = strdup("101001");
-	map[7] = strdup("100001");
-	map[8] = strdup("100001");
-	map[9] = strdup("111111");
+	map[0] = strdup("111111111111111111");
+	map[1] = strdup("100001000000000001");
+	map[2] = strdup("100000000000000001");
+	map[3] = strdup("101000000100000001");
+	map[4] = strdup("100000010000000001");
+	map[5] = strdup("100000000000000001");
+	map[6] = strdup("100001000000000001");
+	map[7] = strdup("100000000000N00001");
+	map[8] = strdup("100000111100000001");
+	map[9] = strdup("111111111111111111");
 
 	return (map);
 }
