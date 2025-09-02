@@ -9,7 +9,6 @@
 /*   Updated: 2025/09/02 09:30:46 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../cube.h"
 
 int *direction(char c)
@@ -73,7 +72,6 @@ void	calc_step(t_player *player)
 		player->stepX = 1;
 		player->dsidX = (player->mapX + 1.0 - player->playerX) * player->dx;
 	}
-
 	if (player->raydiY < 0)
 	{
 		player->stepY = -1;
@@ -113,7 +111,6 @@ void	prep_calcs(t_player *player, int i)
 	player->mapX = (int)player->playerX;
 	player->mapY = (int)player->playerY;
 
-	printf("mapx: %d mapy: %d\n", player->mapX, player->mapY);
 	player->hit = 0;
 	player->cameraX = 2 * (float)i / WIN_WIDTH - 1;
 	player->raydiX = player->dirX + player->planeX * player->cameraX;
@@ -171,23 +168,29 @@ void	wall_calc(t_player *player)
 void	draw_wall_column(t_game *game, t_player *player, int column)
 {
 	// Calculate line height and draw positions
+	if (player->side == 0)
+		player->wallp = player->dsidX - player->dx;
+	else
+		player->wallp = player->dsidY - player->dy;
 	int line_height = (int)(WIN_HEIGHT / player->wallp);
 	int start_draw = WIN_HEIGHT / 2 - line_height / 2;
 	int end_draw = WIN_HEIGHT / 2 + line_height / 2;
 
-	if (start_draw < 0) start_draw = 0;
-	if (end_draw >= WIN_HEIGHT) end_draw = WIN_HEIGHT - 1;
+	if (start_draw < 0)
+		start_draw = 0;
+	if (end_draw >= WIN_HEIGHT)
+		end_draw = WIN_HEIGHT - 1;
 
-	// Choose wall color based on side (simple version)
+	// Choose wall color based on side
 	int color;
 	if (player->side == 0)
-		color = 0xFF0000;  // Red for North/South walls
+		color = 0xFF0000;  // red for North/South walls
 	else
 		color = 0x00FF00;  // Green for East/West walls
 
 	// Draw ceiling (above wall)
 	for (int y = 0; y < start_draw; y++)
-		put_pixel(&game->img, column, y, 0x87CEEB);  // Sky blue
+		put_pixel(&game->img, column, y, 0x87CEEB);
 
 	// Draw wall
 	for (int y = start_draw; y < end_draw; y++)
@@ -195,7 +198,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0x8B4513);  // Brown floor
+		put_pixel(&game->img, column, y, 0x8B4513);
 }
 
 
@@ -207,7 +210,7 @@ void	run_game(t_player *player, t_game *game)
 		prep_calcs(player, i);
 		calc_step(player);
 		DDA_algo(player);
-		wall_calc(player);
+		//wall_calc(player);
 		draw_wall_column(game, player, i);
 	}
 }
@@ -250,10 +253,10 @@ void handle_movement(t_game *game)
 
 	// Rotation (Left/Right arrows or A/D keys)
 	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
-		rotate_player(player, -ROT_SPEED);  // Turn left
+		rotate_player(player, -ROT_SPEED);
 
 	if (game->keys[KEY_RIGHT] || game->keys[KEY_D])
-		rotate_player(player, ROT_SPEED);   // Turn right
+		rotate_player(player, ROT_SPEED);
 
 	// Forward movement (W key)
 	if (game->keys[KEY_W])
@@ -300,37 +303,37 @@ void	init_player_direction(t_player *player)
 void	init_player(t_player *player)
 {
 	player->map = create_test_map();
-	for (int x = 0; x < 10; x++)
+	for (int y = 0; y < 10; y++)
 	{
-		for (int y = 0; y < 10; y++)
+		for (int x = 0; x < 6; x++)
 		{
-			if (player->map[x][y] == 'N')
+			if (player->map[y][x] == 'N')
        			{
-				printf("find N in %d,%d\n", x, y);
+				printf("find N in %d,%d\n", y, x);
 				player->direction = 'N';
-				player->playerX = (float)x;
 				player->playerY = (float)y;
+				player->playerX = (float)x;
 			}
-			else if (player->map[x][y] == 'W')
+			else if (player->map[y][x] == 'W')
        			{
-				printf("find W in %d,%d\n", x, y);
-				player->playerX = (float)x;
+				printf("find W in %d,%d\n", y, x);
 				player->playerY = (float)y;
+				player->playerX = (float)x;
 				player->direction = 'W';
 			}
-			else if (player->map[x][y] == 'E')
+			else if (player->map[y][x] == 'E')
        			{
-				printf("find E in %d,%d\n", x, y);
-				player->playerX = (float)x;
+				printf("find E in %d,%d\n", y, x);
 				player->playerY = (float)y;
+				player->playerX = (float)x;
 				player->direction = 'E';
 			}
-       			else if (player->map[x][y] == 'S')
+       			else if (player->map[y][x] == 'S')
 			{
-				printf("find S in %d,%d\n", x, y);
+				printf("find S in %d,%d\n", y, x);
 				player->direction = 'S';
-				player->playerX = (float)x;
 				player->playerY = (float)y;
+				player->playerX = (float)x;
 			}
 		}
 	}
@@ -404,16 +407,16 @@ char	**create_test_map(void)
 {
 	char **map = malloc(sizeof(char*) * 10);
 
-	map[0] = strdup("1111111111");
-	map[1] = strdup("1000000001");
-	map[2] = strdup("1000W00001");
-	map[3] = strdup("1000011001");
-	map[4] = strdup("1001000001");
-	map[5] = strdup("1000011001");
-	map[6] = strdup("1000100001");
-	map[7] = strdup("1000000001");
-	map[8] = strdup("1000000001");
-	map[9] = strdup("1111111111");
+	map[0] = strdup("111111");
+	map[1] = strdup("100001");
+	map[2] = strdup("10N001");
+	map[3] = strdup("100011");
+	map[4] = strdup("110001");
+	map[5] = strdup("100111");
+	map[6] = strdup("101001");
+	map[7] = strdup("100001");
+	map[8] = strdup("100001");
+	map[9] = strdup("111111");
 
 	return (map);
 }

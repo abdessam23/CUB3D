@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
+/*   Updated: 2025/09/02 11:04:13 by asyani           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE_H
 #define CUBE_H
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
-#include "../lib_ft/libft.h"
+#include "lib_ft/libft.h"
 #include "mlx.h"
 
 #define WIN_WIDTH 800
