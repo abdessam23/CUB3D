@@ -31,10 +31,12 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
 
 // Movement speeds
-# define MOVE_SPEED 0.5
-# define ROT_SPEED 0.05
+# define MOVE_SPEED 0.005
+# define ROT_SPEED 0.001
 
 #define PI	3.14159265358979323846
 #define	FOV 66.0
@@ -75,8 +77,8 @@ typedef struct s_player
 	int hit;
 	int *p;
 	float wallX;
-	int dirX;
-	int dirY;
+	float dirX;
+	float dirY;
 	int	texX;
 }	t_player;
 
@@ -89,7 +91,7 @@ typedef struct s_game
 	int         keys[65536];
 }	t_game;
 
-int     *direction(char c);
+float    *direction(char c);
 void    set_plane(t_player *player);
 void    calc_step(t_player *player);
 void    DDA_algo(t_player *player);

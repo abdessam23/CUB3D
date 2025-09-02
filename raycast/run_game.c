@@ -33,7 +33,7 @@ float *direction(char c)
 			p[0] = 1;
 		return p;
 	}
-	return NULL;
+	return 0;
 }
 
 void	set_plane(t_player *player)
@@ -200,7 +200,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0x000000);
+		put_pixel(&game->img, column, y, 0xff0000);
 }
 
 
@@ -234,8 +234,8 @@ int key_release(int keycode, t_game *game)
 
 void rotate_player(t_player *player, float angle)
 {
-	float oldDirX = player->dirX;
 	// Rotate direction vector
+	float oldDirX = player->dirX;
 	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
 	player->dirY = oldDirX * sin(angle) + player->dirY * cos(angle);
 	
@@ -262,7 +262,7 @@ void handle_movement(t_game *game)
 		rotate_player(player, ROT_SPEED);
 
 	// Forward movement (W key)
-	if (game->keys[KEY_W])
+	if (game->keys[KEY_W] || game->keys[KEY_UP])
 	{
 		float newX = player->playerX + player->dirX * MOVE_SPEED;
 		float newY = player->playerY + player->dirY * MOVE_SPEED;
@@ -275,7 +275,7 @@ void handle_movement(t_game *game)
 	}
 
 	// Backward movement (S key)
-	if (game->keys[KEY_S])
+	if (game->keys[KEY_S] || game->keys[KEY_DOWN])
 	{
 		float newX = player->playerX - player->dirX * MOVE_SPEED;
 		float newY = player->playerY - player->dirY * MOVE_SPEED;
@@ -291,7 +291,6 @@ void handle_movement(t_game *game)
 void	init_player_direction(t_player *player)
 {
 	// Get initial direction
-	printf("direction: %c\n", player->direction);
 	float *p = direction(player->direction);
 	if (!p)
 	{
@@ -300,8 +299,6 @@ void	init_player_direction(t_player *player)
 	}
 	player->dirX = p[0];
 	player->dirY = p[1];
-	printf("dirx: %f diry: %f\n", player->dirX, player->dirY);
-	printf("playerx: %f playery: %f\n", player->playerX, player->playerY);
 	free(p);
 
 	// Set plane vector
@@ -313,7 +310,7 @@ void	init_player(t_player *player)
 	player->map = create_test_map();
 	for (int y = 0; y < 10; y++)
 	{
-		for (int x = 0; x < 18; x++)
+		for (int x = 0; x < 30; x++)
 		{
 			if (player->map[y][x] == 'N')
        			{
