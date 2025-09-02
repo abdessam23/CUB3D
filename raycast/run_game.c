@@ -268,9 +268,9 @@ void handle_movement(t_game *game)
 
 		// Check collision with walls
 		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY = newY;
+			player->playerY += newY;
 		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX = newX;
+			player->playerX += newX;
 	}
 
 	// Backward movement (S key)
@@ -411,7 +411,7 @@ char	**create_test_map(void)
 
 	map[0] = strdup("111111");
 	map[1] = strdup("100001");
-	map[2] = strdup("10N001");
+	map[2] = strdup("10E001");
 	map[3] = strdup("100011");
 	map[4] = strdup("110001");
 	map[5] = strdup("100111");
