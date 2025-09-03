@@ -169,6 +169,7 @@ void	wall_calc(t_player *player)
 void	draw_wall_column(t_game *game, t_player *player, int column)
 {
 	// Calculate line height and draw positions
+	int height, width;
 	if (player->side == 0)
 		player->wallp = player->dsidX - player->dx;
 	else
@@ -184,11 +185,29 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 		end_draw = WIN_HEIGHT - 1;
 
 	// Choose wall color based on side
-	int color;
+	/*int color;*/
+	/*if (player->side == 0)*/
+	/*	color = 0xA16B10;  // red for North/South walls*/
+	/*else*/
+	/*	color = 0x0A7A31;  // Green for East/West walls*/
+
 	if (player->side == 0)
-		color = 0xA16B10;  // red for North/South walls
+		player->wallX = player->playerY + player->wallp * player->raydiY;
 	else
-		color = 0x0A7A31;  // Green for East/West walls
+		player->wallX = player->playerX + player->wallp * player->raydiX;
+	player->wallX -= floor(player->wallX);
+	player->texX = (int)(player->wallX * 64);
+
+	int texY = (int)(((y - wall_top) * 64) / wall_height);
+
+	//convert xpm to image
+	void	*img_wall = mlx_xpm_file_to_image(game->mlx, "./textur/wall.xpm", &width, &height);
+	if (!img_wall)
+		return;
+	char *addr = mlx_get_data_addr(img_wall, &game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
+	if (!addr)
+		return;
+
 
 	// Draw ceiling (above wall)
 	for (int y = 0; y < start_draw; y++)
@@ -196,7 +215,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 
 	// Draw wall
 	for (int y = start_draw; y < end_draw; y++)
-		put_pixel(&game->img, column, y, color);
+		put_pixel(addr, column, y, color);
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
