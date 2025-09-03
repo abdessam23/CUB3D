@@ -184,30 +184,16 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	if (end_draw >= WIN_HEIGHT)
 		end_draw = WIN_HEIGHT - 1;
 
-	// Choose wall color based on side
-	/*int color;*/
-	/*if (player->side == 0)*/
-	/*	color = 0xA16B10;  // red for North/South walls*/
-	/*else*/
-	/*	color = 0x0A7A31;  // Green for East/West walls*/
 
 	if (player->side == 0)
 		player->wallX = player->playerY + player->wallp * player->raydiY;
 	else
 		player->wallX = player->playerX + player->wallp * player->raydiX;
 	player->wallX -= floor(player->wallX);
-	player->texX = (int)(player->wallX * 64);
 
-	int texY = (int)(((y - wall_top) * 64) / wall_height);
-
-	//convert xpm to image
-	void	*img_wall = mlx_xpm_file_to_image(game->mlx, "./textur/wall.xpm", &width, &height);
-	if (!img_wall)
-		return;
-	char *addr = mlx_get_data_addr(img_wall, &game->img.bits_per_pixel, &game->img.line_length, &game->img.endian);
-	if (!addr)
-		return;
-
+	int texX = (int)(player->wallX * game->wall_width);
+	if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+		texX = game->wall_width - 1 - texX;
 
 	// Draw ceiling (above wall)
 	for (int y = 0; y < start_draw; y++)
@@ -215,11 +201,15 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 
 	// Draw wall
 	for (int y = start_draw; y < end_draw; y++)
-		put_pixel(addr, column, y, color);
+	{
+		int texY = (int)(((y - start_draw) * game->wall_height) / line_height);
+		unsigned int color = *(unsigned int *)(game->wall_addr + texY * game->wall_line_len + texX * (game->wall_bpp / 8));
+		put_pixel(&game->img, column, y, color);
+	}
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0xff0000);
+		put_pixel(&game->img, column, y, 0x682828);
 }
 
 
@@ -416,6 +406,14 @@ int init_cube(void)
 				   &game.img.line_length, &game.img.endian);
 
 	game.player = &player;
+	game.wall_img = mlx_xpm_file_to_image(game.mlx, "../textur/wall.xpm",
+					&game.wall_width, &game.wall_height);
+	if (!game.wall_img)
+		return 0;
+	game.wall_addr = mlx_get_data_addr(game.wall_img,
+                                   &game.wall_bpp, &game.wall_line_len, &game.wall_endian);
+	if (!game.wall_addr)
+		return 0;
 
 	// Set up event hooks
 	mlx_hook(game.mlx_window, 2, 1L<<0, key_press, &game);

@@ -35,8 +35,8 @@
 # define KEY_DOWN 65364
 
 // Movement speeds
-# define MOVE_SPEED 0.005
-# define ROT_SPEED 0.001
+# define MOVE_SPEED 0.05
+# define ROT_SPEED 0.01
 
 typedef struct	s_data
 {
@@ -75,6 +75,7 @@ typedef struct s_player
 	float dirX;
 	float dirY;
 	int	texX;
+	void	*img_wall;
 }	t_player;
 
 typedef struct s_game
@@ -84,6 +85,13 @@ typedef struct s_game
 	t_data	img;
 	t_player *player;
 	int         keys[65536];
+	void    *wall_img;
+	char    *wall_addr;
+	int     wall_width;
+	int     wall_height;
+	int     wall_bpp;
+	int     wall_line_len;
+	int     wall_endian;
 }	t_game;
 
 float    *direction(char c);
