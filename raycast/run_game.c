@@ -140,44 +140,53 @@ void	put_pixel(t_data *img, int x, int y, int color)
 	}
 }
 
-/*void	wall_calc(t_player *player)*/
-/*{*/
-/*	// Calculate wall distance*/
-/*	if (player->side == 0)*/
-/*		player->wallp = player->dsidX - player->dx;*/
-/*	else*/
-/*		player->wallp = player->dsidY - player->dy;*/
-/**/
-/*	// Calculate line height and draw positions*/
-/*	player->line_hight = (int)(WIN_HEIGHT / player->wallp);*/
-/*	int startdraw = WIN_HEIGHT / 2 - player->line_hight / 2;*/
-/*	if (startdraw < 0)*/
-/*		startdraw = 0;*/
-/*	int enddraw = WIN_HEIGHT / 2 + player->line_hight / 2;*/
-/*	if (enddraw >= WIN_HEIGHT)*/
-/*		enddraw = WIN_HEIGHT - 1;*/
-/**/
-/*	// Calculate wall texture coordinate*/
-/*	if (player->side == 0)*/
-/*		player->wallX = player->playerY + player->wallp * player->raydiY;*/
-/*	else*/
-/*		player->wallX = player->playerX + player->wallp * player->raydiX;*/
-/*	player->wallX -= floor(player->wallX);*/
-/*	player->texX = (int)(player->wallX * 64);*/
-/*}*/
 
 void	Draw_textures(t_game *game, t_player *player, int column)
 {
-	int texX = (int)(player->wallX * game->north_width);
-	if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-		texX = game->north_width - 1 - texX;
 
 	// Draw wall
-	for (int y = player->start_draw; y < player->end_draw; y++)
+	int texX = (int)(player->wallX * game->south_width);
+	if (player->direction == 'N')
 	{
-		int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
-		unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
-		put_pixel(&game->img, column, y, color);
+		for (int y = player->start_draw; y < player->end_draw; y++)
+		{
+			int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
+			unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
+			put_pixel(&game->img, column, y, color);
+		}
+	}
+	if (player->direction == 'S')
+	{
+		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+			texX = game->south_width - 1 - texX;
+
+		for (int y = player->start_draw; y < player->end_draw; y++)
+		{
+			int texY = (int)(((y - player->start_draw) * game->south_height) / player->line_height);
+			unsigned int color = *(unsigned int *)(game->south_addr + texY * game->south_line_len + texX * (game->south_bpp / 8));
+			put_pixel(&game->img, column, y, color);
+		}
+	}
+	if (player->direction == 'W')
+	{
+		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+			texX = game->west_width - 1 - texX;
+
+		for (int y = player->start_draw; y < player->end_draw; y++)
+		{
+			int texY = (int)(((y - player->start_draw) * game->west_height) / player->line_height);
+			unsigned int color = *(unsigned int *)(game->west_addr + texY * game->west_line_len + texX * (game->west_bpp / 8));
+			put_pixel(&game->img, column, y, color);
+		}
+	}
+	if (player->direction == 'E')
+	{
+		for (int y = player->start_draw; y < player->end_draw; y++)
+		{
+			int texY = (int)(((y - player->start_draw) * game->east_height) / player->line_height);
+			unsigned int color = *(unsigned int *)(game->east_addr + texY * game->east_line_len + texX * (game->east_bpp / 8));
+			put_pixel(&game->img, column, y, color);
+		}
 	}
 }
 
