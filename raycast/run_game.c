@@ -140,49 +140,63 @@ void	put_pixel(t_data *img, int x, int y, int color)
 	}
 }
 
-void	wall_calc(t_player *player)
+/*void	wall_calc(t_player *player)*/
+/*{*/
+/*	// Calculate wall distance*/
+/*	if (player->side == 0)*/
+/*		player->wallp = player->dsidX - player->dx;*/
+/*	else*/
+/*		player->wallp = player->dsidY - player->dy;*/
+/**/
+/*	// Calculate line height and draw positions*/
+/*	player->line_hight = (int)(WIN_HEIGHT / player->wallp);*/
+/*	int startdraw = WIN_HEIGHT / 2 - player->line_hight / 2;*/
+/*	if (startdraw < 0)*/
+/*		startdraw = 0;*/
+/*	int enddraw = WIN_HEIGHT / 2 + player->line_hight / 2;*/
+/*	if (enddraw >= WIN_HEIGHT)*/
+/*		enddraw = WIN_HEIGHT - 1;*/
+/**/
+/*	// Calculate wall texture coordinate*/
+/*	if (player->side == 0)*/
+/*		player->wallX = player->playerY + player->wallp * player->raydiY;*/
+/*	else*/
+/*		player->wallX = player->playerX + player->wallp * player->raydiX;*/
+/*	player->wallX -= floor(player->wallX);*/
+/*	player->texX = (int)(player->wallX * 64);*/
+/*}*/
+
+void	Draw_textures(t_game *game, t_player *player, int column)
 {
-	// Calculate wall distance
-	if (player->side == 0)
-		player->wallp = player->dsidX - player->dx;
-	else
-		player->wallp = player->dsidY - player->dy;
+	int texX = (int)(player->wallX * game->north_width);
+	if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+		texX = game->north_width - 1 - texX;
 
-	// Calculate line height and draw positions
-	player->line_hight = (int)(WIN_HEIGHT / player->wallp);
-	int startdraw = WIN_HEIGHT / 2 - player->line_hight / 2;
-	if (startdraw < 0)
-		startdraw = 0;
-	int enddraw = WIN_HEIGHT / 2 + player->line_hight / 2;
-	if (enddraw >= WIN_HEIGHT)
-		enddraw = WIN_HEIGHT - 1;
-
-	// Calculate wall texture coordinate
-	if (player->side == 0)
-		player->wallX = player->playerY + player->wallp * player->raydiY;
-	else
-		player->wallX = player->playerX + player->wallp * player->raydiX;
-	player->wallX -= floor(player->wallX);
-	player->texX = (int)(player->wallX * 64);
+	// Draw wall
+	for (int y = player->start_draw; y < player->end_draw; y++)
+	{
+		int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
+		unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
+		put_pixel(&game->img, column, y, color);
+	}
 }
 
 void	draw_wall_column(t_game *game, t_player *player, int column)
 {
 	// Calculate line height and draw positions
-	int height, width;
 	if (player->side == 0)
 		player->wallp = player->dsidX - player->dx;
 	else
 		player->wallp = player->dsidY - player->dy;
 
-	int line_height = (int)(WIN_HEIGHT / player->wallp);
-	int start_draw = WIN_HEIGHT / 2 - line_height / 2;
-	int end_draw = WIN_HEIGHT / 2 + line_height / 2;
+	player->line_height = (int)(WIN_HEIGHT / player->wallp);
+	player->start_draw = WIN_HEIGHT / 2 - player->line_height / 2;
+	player->end_draw = WIN_HEIGHT / 2 + player->line_height / 2;
 
-	if (start_draw < 0)
-		start_draw = 0;
-	if (end_draw >= WIN_HEIGHT)
-		end_draw = WIN_HEIGHT - 1;
+	if (player->start_draw < 0)
+		player->start_draw = 0;
+	if (player->end_draw >= WIN_HEIGHT)
+		player->end_draw = WIN_HEIGHT - 1;
 
 
 	if (player->side == 0)
@@ -191,25 +205,15 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 		player->wallX = player->playerX + player->wallp * player->raydiX;
 	player->wallX -= floor(player->wallX);
 
-	int texX = (int)(player->wallX * game->north_width);
-	if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-		texX = game->north_width - 1 - texX;
-
 	// Draw ceiling (above wall)
-	for (int y = 0; y < start_draw; y++)
-		put_pixel(&game->img, column, y, 0x23244A);
+	for (int y = 0; y < player->start_draw; y++)
+		put_pixel(&game->img, column, y, 0x8BE9FF);
 
-	// Draw wall
-	for (int y = start_draw; y < end_draw; y++)
-	{
-		int texY = (int)(((y - start_draw) * game->north_height) / line_height);
-		unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
-		put_pixel(&game->img, column, y, color);
-	}
+	Draw_textures(game, player, column);
 
 	// Draw floor (below wall)
-	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0x23252B);
+	for (int y = player->end_draw; y < WIN_HEIGHT; y++)
+		put_pixel(&game->img, column, y, 0xB7715C);
 }
 
 

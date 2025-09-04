@@ -67,7 +67,9 @@ typedef struct s_player
 	double stepX;
 	double stepY;
 	double wallp;
-	int line_hight;
+	int line_height;
+	int	start_draw;
+	int	end_draw;
 	int side;
 	int hit;
 	int *p;
