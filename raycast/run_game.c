@@ -191,25 +191,25 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 		player->wallX = player->playerX + player->wallp * player->raydiX;
 	player->wallX -= floor(player->wallX);
 
-	int texX = (int)(player->wallX * game->wall_width);
+	int texX = (int)(player->wallX * game->north_width);
 	if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-		texX = game->wall_width - 1 - texX;
+		texX = game->north_width - 1 - texX;
 
 	// Draw ceiling (above wall)
 	for (int y = 0; y < start_draw; y++)
-		put_pixel(&game->img, column, y, 0x87CEEB);
+		put_pixel(&game->img, column, y, 0x23244A);
 
 	// Draw wall
 	for (int y = start_draw; y < end_draw; y++)
 	{
-		int texY = (int)(((y - start_draw) * game->wall_height) / line_height);
-		unsigned int color = *(unsigned int *)(game->wall_addr + texY * game->wall_line_len + texX * (game->wall_bpp / 8));
+		int texY = (int)(((y - start_draw) * game->north_height) / line_height);
+		unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
 		put_pixel(&game->img, column, y, color);
 	}
 
 	// Draw floor (below wall)
 	for (int y = end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0x682828);
+		put_pixel(&game->img, column, y, 0x23252B);
 }
 
 
@@ -373,6 +373,29 @@ int	close_window(t_game *game)
 	return (0);
 }
 
+void	load_textures(t_game *game)
+{
+	game->north_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+					&game->north_width, &game->north_height);
+	game->south_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+					&game->south_width, &game->south_height);
+	game->west_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+					&game->west_width, &game->west_height);
+	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+					&game->east_width, &game->east_height);
+	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
+		return ;
+	game->north_addr = mlx_get_data_addr(game->north_img,
+                                   &game->north_bpp, &game->north_line_len, &game->north_endian);
+	game->south_addr = mlx_get_data_addr(game->south_img,
+                                   &game->south_bpp, &game->south_line_len, &game->south_endian);
+	game->west_addr = mlx_get_data_addr(game->west_img,
+                                   &game->west_bpp, &game->west_line_len, &game->west_endian);
+	game->east_addr = mlx_get_data_addr(game->east_img,
+                                   &game->east_bpp, &game->east_line_len, &game->east_endian);
+	if (!game->north_addr || !game->south_addr || !game->west_addr || !game->east_addr)
+		return ;
+}
 
 int init_cube(void)
 {
@@ -406,14 +429,7 @@ int init_cube(void)
 				   &game.img.line_length, &game.img.endian);
 
 	game.player = &player;
-	game.wall_img = mlx_xpm_file_to_image(game.mlx, "../textur/wall.xpm",
-					&game.wall_width, &game.wall_height);
-	if (!game.wall_img)
-		return 0;
-	game.wall_addr = mlx_get_data_addr(game.wall_img,
-                                   &game.wall_bpp, &game.wall_line_len, &game.wall_endian);
-	if (!game.wall_addr)
-		return 0;
+	load_textures(&game);
 
 	// Set up event hooks
 	mlx_hook(game.mlx_window, 2, 1L<<0, key_press, &game);
