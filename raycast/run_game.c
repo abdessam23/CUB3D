@@ -145,47 +145,52 @@ void	Draw_textures(t_game *game, t_player *player, int column)
 {
 
 	// Draw wall
-	int texX = (int)(player->wallX * game->south_width);
-	if (player->direction == 'N')
+	int texX = (int)(player->wallX * 64);
+	if (player->side == 0)
 	{
-		for (int y = player->start_draw; y < player->end_draw; y++)
+		if (player->raydiX > 0)
 		{
-			int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
-			unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
-			put_pixel(&game->img, column, y, color);
-		}
-	}
-	if (player->direction == 'S')
-	{
-		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-			texX = game->south_width - 1 - texX;
+			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+				texX = game->west_width - 1 - texX;
 
-		for (int y = player->start_draw; y < player->end_draw; y++)
+			for (int y = player->start_draw; y < player->end_draw; y++)
+			{
+				int texY = (int)(((y - player->start_draw) * game->west_height) / player->line_height);
+				unsigned int color = *(unsigned int *)(game->west_addr + texY * game->west_line_len + texX * (game->west_bpp / 8));
+				put_pixel(&game->img, column, y, color);
+			}
+		}
+		else
 		{
-			int texY = (int)(((y - player->start_draw) * game->south_height) / player->line_height);
-			unsigned int color = *(unsigned int *)(game->south_addr + texY * game->south_line_len + texX * (game->south_bpp / 8));
-			put_pixel(&game->img, column, y, color);
+			for (int y = player->start_draw; y < player->end_draw; y++)
+			{
+				int texY = (int)(((y - player->start_draw) * game->east_height) / player->line_height);
+				unsigned int color = *(unsigned int *)(game->east_addr + texY * game->east_line_len + texX * (game->east_bpp / 8));
+				put_pixel(&game->img, column, y, color);
+			}
 		}
 	}
-	if (player->direction == 'W')
+	if (player->side == 1)
 	{
-		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-			texX = game->west_width - 1 - texX;
-
-		for (int y = player->start_draw; y < player->end_draw; y++)
+		if (player->raydiY > 0)
 		{
-			int texY = (int)(((y - player->start_draw) * game->west_height) / player->line_height);
-			unsigned int color = *(unsigned int *)(game->west_addr + texY * game->west_line_len + texX * (game->west_bpp / 8));
-			put_pixel(&game->img, column, y, color);
+			for (int y = player->start_draw; y < player->end_draw; y++)
+			{
+				int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
+				unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
+				put_pixel(&game->img, column, y, color);
+			}
 		}
-	}
-	if (player->direction == 'E')
-	{
-		for (int y = player->start_draw; y < player->end_draw; y++)
+		else
 		{
-			int texY = (int)(((y - player->start_draw) * game->east_height) / player->line_height);
-			unsigned int color = *(unsigned int *)(game->east_addr + texY * game->east_line_len + texX * (game->east_bpp / 8));
-			put_pixel(&game->img, column, y, color);
+			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
+				texX = game->south_width - 1 - texX;
+			for (int y = player->start_draw; y < player->end_draw; y++)
+			{
+				int texY = (int)(((y - player->start_draw) * game->south_height) / player->line_height);
+				unsigned int color = *(unsigned int *)(game->south_addr + texY * game->south_line_len + texX * (game->south_bpp / 8));
+				put_pixel(&game->img, column, y, color);
+			}
 		}
 	}
 }
@@ -388,13 +393,13 @@ int	close_window(t_game *game)
 
 void	load_textures(t_game *game)
 {
-	game->north_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+	game->north_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_1.xpm",
 					&game->north_width, &game->north_height);
-	game->south_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+	game->south_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_2.xpm",
 					&game->south_width, &game->south_height);
 	game->west_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
 					&game->west_width, &game->west_height);
-	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall.xpm",
 					&game->east_width, &game->east_height);
 	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
 		return ;
