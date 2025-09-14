@@ -150,6 +150,7 @@ void	Draw_textures(t_game *game, t_player *player, int column)
 	{
 		if (player->raydiX > 0)
 		{
+			int texX = (int)(player->wallX * game->west_width);
 			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
 				texX = game->west_width - 1 - texX;
 
@@ -162,6 +163,7 @@ void	Draw_textures(t_game *game, t_player *player, int column)
 		}
 		else
 		{
+			int texX = (int)(player->wallX * game->east_width);
 			for (int y = player->start_draw; y < player->end_draw; y++)
 			{
 				int texY = (int)(((y - player->start_draw) * game->east_height) / player->line_height);
@@ -174,6 +176,7 @@ void	Draw_textures(t_game *game, t_player *player, int column)
 	{
 		if (player->raydiY > 0)
 		{
+			int texX = (int)(player->wallX * game->north_width);
 			for (int y = player->start_draw; y < player->end_draw; y++)
 			{
 				int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
@@ -183,6 +186,7 @@ void	Draw_textures(t_game *game, t_player *player, int column)
 		}
 		else
 		{
+			int texX = (int)(player->wallX * game->south_width);
 			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
 				texX = game->south_width - 1 - texX;
 			for (int y = player->start_draw; y < player->end_draw; y++)
@@ -341,28 +345,24 @@ void	init_player(t_player *player)
 		{
 			if (player->map[y][x] == 'N')
        			{
-				printf("find N in %d,%d\n", y, x);
 				player->direction = 'N';
 				player->playerY = (float)y;
 				player->playerX = (float)x;
 			}
 			else if (player->map[y][x] == 'W')
        			{
-				printf("find W in %d,%d\n", y, x);
 				player->playerY = (float)y;
 				player->playerX = (float)x;
 				player->direction = 'W';
 			}
 			else if (player->map[y][x] == 'E')
        			{
-				printf("find E in %d,%d\n", y, x);
 				player->playerY = (float)y;
 				player->playerX = (float)x;
 				player->direction = 'E';
 			}
        			else if (player->map[y][x] == 'S')
 			{
-				printf("find S in %d,%d\n", y, x);
 				player->direction = 'S';
 				player->playerY = (float)y;
 				player->playerX = (float)x;
@@ -402,7 +402,7 @@ void	load_textures(t_game *game)
 	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall.xpm",
 					&game->east_width, &game->east_height);
 	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
-		return ;
+		exit(1); ;
 	game->north_addr = mlx_get_data_addr(game->north_img,
                                    &game->north_bpp, &game->north_line_len, &game->north_endian);
 	game->south_addr = mlx_get_data_addr(game->south_img,
@@ -465,10 +465,10 @@ char	**create_test_map(void)
 
 	map[0] = strdup("111111111111111111111111111111");
 	map[1] = strdup("100001000000000000000001000001");
-	map[2] = strdup("100000000000000000000000000001");
-	map[3] = strdup("101000000100000001011110000001");
+	map[2] = strdup("100000000100100000000000000001");
+	map[3] = strdup("10100001111D111111011110000001");
 	map[4] = strdup("100000010000000001000000000001");
-	map[5] = strdup("100000000000000000111100000001");
+	map[5] = strdup("100000010000000001111100000001");
 	map[6] = strdup("100001000000000000000000000001");
 	map[7] = strdup("100000000000N00001000000001001");
 	map[8] = strdup("100000111100000001000000000001");
