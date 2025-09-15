@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/08/13 10:08:58 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/15 12:06:10 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,104 +67,6 @@ int iswhitespace(char *s)
     }
     return 1;
 }
-
-// int check_map_recursive(char *str, int count)
-// {
-//     if (count == 6)
-//     {
-//         while (*str && ft_whitespace(*str))
-//             str++;
-//         if (*str == '1')
-//             return 1;
-//         else
-//             return 0;
-//     }
-//     while (*str && ft_whitespace(*str))
-//         str++;
-//     if (*str == '\0' || !ft_identif(*str))
-//         return 0;
-//     while (*str && *str != '\n')
-//         str++;
-//     return check_map_recursive(str, count + 1);
-// }
-
-// int check_map(char *s)
-// {
-//    char *str = read_line(s);
-//     if (!str ||*str == '\0' )
-//         return 0;
-//     return check_map_recursive(str, 0);
-// }
-
-// int check_map(char *s)
-// {
-//     char *str;
-//     int count = 0;
-//     int line;
-//     if (!*s)
-//         return 0;
-    
-//     str = read_line(s);
-//     if (*str)
-//     {
-//        while (*str && ft_whitespace(*str))
-//             str++;
-        
-//         if (ft_identif(*str))
-//         {
-//             while (*str && *str != '\n')
-//                 str++;
-//             while (*str && ft_whitespace(*str)) str++; 
-//             if (ft_identif(*str))
-//             {
-//                 while (*str && *str != '\n')
-//                     str++;
-//                 while (*str && ft_whitespace(*str)) str++;                           
-//                 if (ft_identif(*str))
-//                 {
-//                     while (*str && *str != '\n')
-//                         str++;
-//                     while (*str && ft_whitespace(*str)) str++;
-//                     if (ft_identif(*str))
-//                     {
-//                         while (*str && *str != '\n')
-//                             str++;
-//                         while (*str && ft_whitespace(*str)) str++;
-//                         if (ft_identif(*str))
-//                         {
-//                             while (*str && *str != '\n')
-//                                 str++;
-//                             while (*str && ft_whitespace(*str)) str++;
-//                             if (ft_identif(*str))
-//                             {
-//                                 while (*str && *str != '\n')
-//                                 str++;
-//                                 while (*str && ft_whitespace(*str)) str++;
-//                                 printf("f : %c f1:%c\n",*str,*(str+1));
-//                                 if(*str == '1')
-//                                     return 1;
-//                                 else
-//                                     return 0;
-//                             }
-//                             else
-//                                 return 0;
-//                         }
-//                         else
-//                                 return 0;
-//                     }
-//                     else
-//                                 return 0;   
-//                 }
-//                 else
-//                                 return 0; 
-//             }
-            
-//         }
-//         else
-//             return 0;
-//     }
-//     return 0;
-//}
 
 int is_valid(int c)
 {
@@ -285,7 +187,7 @@ int ft_direction(int c)
         return 1;
     return 0;
 }
-int duplicatID(char **str)
+int duplicatID(char **str, t_player *player)
 {
     int i;
     int x;
@@ -303,9 +205,9 @@ int duplicatID(char **str)
             if(ft_direction(str[i][j]))
             {
                 count++;
-                x = i; //position of player
-                y = j;  //position of player
-                dir = str[i][j]; // derection of player
+                player->playerX = i; //position of player
+                player->playerY = j;  //position of player
+                player->direction = str[i][j]; // derection of player
             }
         }
     }
@@ -313,7 +215,7 @@ int duplicatID(char **str)
         return 0;
     return 1;
 }
-int check_in_map(char **map)
+int check_in_map(char **map,t_player *player)
 {
     char **str;
     int n = 0;
@@ -329,11 +231,38 @@ int check_in_map(char **map)
         i++;
     if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
         return 0;
-    if (!duplicatID(str))
+    if (!duplicatID(str,player))
         return 0;
+    player->map = str; // map 
     return 1;        
 }
-int path_checker(char *s)
+
+void fill_img(char *str,char *path,t_player *player)
+{
+    int l;
+    l = ft_strlen(path);
+    while (l > 0)
+    {
+        if (path[l] == '.')
+            break;
+        l--;
+    }
+    if (ft_strncmp(path+l,".xpm",4))
+    {
+        free(path); //free all
+        printf("the should use .xpm extension\n");
+        exit(1);
+    }
+    if (*str == 'N')
+        player->northimg = path;
+    else if(*str == 'S')
+        player->southimg = path;
+    else if(*str == 'W')
+        player->westimg = path;
+    else
+        player->eastimg = path;
+}
+int path_checker(char *s, t_player *player)
 {
     int i = 3;
     int start = 0;
@@ -349,15 +278,19 @@ int path_checker(char *s)
     path = ft_substr(s,start, i - start);
     fd = open(path,O_RDONLY);
     if (fd == -1)
+    {
+        free(path);
         return 0;
+    }
+    fill_img(s,path,player);
    while (s[i] && s[i] == ' ')
             i++;
     if (s[i] != '\0')
         return 0;
-    free(path);
+    
     return 1;
 }
-int identif_checker(char *s1,char *s2)
+int identif_checker(char *s1,char *s2,t_player *player)
 {
     int i;
      
@@ -369,12 +302,12 @@ int identif_checker(char *s1,char *s2)
     {
         if (ft_strncmp(s1, s2, 3))
             return 0;
-        if (!path_checker(s1))
+        if (!path_checker(s1,player))
             return 0;
     }
     return 1;
 }
-int ft_atoichecker(char **s)
+int ft_atoichecker(char **s,char *str, t_player *player)
 {
     int i;
     i = 0;
@@ -382,15 +315,20 @@ int ft_atoichecker(char **s)
     while (s[i])
     {
         n = ft_atoi(s[i]);
+    
         if (n < 0 || n > 255)
             return 0;
+        if (*(str - 2) == 'F')
+            player->floor[i] = n;
+        else
+            player->roof[i] = n;
         i++;
     }
     if (i != 3)
         return 0;
     return 1;
 }
-int check_range(char *s)
+int check_range(char *s, t_player *player)
 {
     int  i;
     int start;
@@ -415,7 +353,7 @@ int check_range(char *s)
         start++;
     }
     arr = ft_split(range, ',');
-    if (!ft_atoichecker(arr))
+    if (!ft_atoichecker(arr,s, player))
         return 0;
     while (s[i] && s[i] == ' ')
         i++;
@@ -431,7 +369,7 @@ int check_range(char *s)
     free(arr);
     return 1;
 }
-int check_singlid(char *s)
+int check_singlid(char *s,t_player *player)
 {
     while (*s && *s == ' ')
         s++;
@@ -439,14 +377,14 @@ int check_singlid(char *s)
     {
         if(ft_strncmp(s,"F ", 2))
             return 0;
-        if (!check_range(s+2))
+        if (!check_range(s+2, player))
             return 0;
     }
     if(*s == 'C')
     {
         if(ft_strncmp(s,"C ", 2))
             return 0;
-        if (!check_range(s+2))
+        if (!check_range(s+2, player))
             return 0;
     }
    return 1;
@@ -464,7 +402,7 @@ char *ft_idchar(char c)
     return NULL;  
 }
 
-int ft_valid_id(char *str)
+int ft_valid_id(char *str,t_player *player)
 {
     int i;
     char *identif = NULL;
@@ -479,7 +417,7 @@ int ft_valid_id(char *str)
         if (str[i] == 'S' || str[i] == 'W' || str[i] == 'N' || str[i] == 'E')
         {
             identif = ft_idchar(str[i]);
-            if (!identif_checker(str, identif))
+            if (!identif_checker(str, identif,player))
             {
                 free(identif);
                 return 0;
@@ -488,7 +426,7 @@ int ft_valid_id(char *str)
         }
         if (str[i] == 'F' || str[i] == 'C')
         {
-            if(!check_singlid(str))
+            if(!check_singlid(str, player))
                 return 0;
         }
     }
@@ -501,6 +439,7 @@ int main(int argc, char **argv)
     int fd;
     char *str;
     char  **map;
+    t_player player;
     if (argc != 2)
         return 1;
     if (check_arg(argv[1]) == -1)
@@ -519,19 +458,16 @@ int main(int argc, char **argv)
         return 1;
     for (int i = 0; map[i] != NULL; i++)
     {
-        printf("%s\n", map[i]);
-        if (!ft_valid_id(map[i]))
+        if (!ft_valid_id(map[i],&player))
         {
             printf("Error: identifier");
             return 1;
         }
     }
-        
-    if (!check_in_map(map))
+    if (!check_in_map(map, &player))
     {
         printf("issue inside map");
         return 1;
     }
-    printf("seccess!");
     return 0;
 }
