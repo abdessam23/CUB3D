@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/15 12:06:10 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/16 10:20:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int iswhitespace(char *s)
 
 int is_valid(int c)
 {
-    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ')
+    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ' || c == 'D')
         return 1;
     return 0;
 }
@@ -187,6 +187,15 @@ int ft_direction(int c)
         return 1;
     return 0;
 }
+
+int check_door(char **str,int i, int j)
+{
+    if((str[i][j - 1] == '1' || str[i][j - 1] == ' ') && (str[i][j + 1] == '1' || str[i][j + 1] == ' '))
+        return 1;
+    else if((str[i + 1][j] == '1' || str[i + 1][j] == ' ') && (str[i - 1][j] == '1' || str[i -1][j] == ' '))
+        return 1;
+    return 0;
+}
 int duplicatID(char **str, t_player *player)
 {
     int i;
@@ -194,7 +203,8 @@ int duplicatID(char **str, t_player *player)
     int y;
     int j;
     int count;
-    char dir;
+    int flag;
+    flag = 0;
     i = 0;
     count  = 0;
     while (str[++i])
@@ -209,6 +219,14 @@ int duplicatID(char **str, t_player *player)
                 player->playerY = j;  //position of player
                 player->direction = str[i][j]; // derection of player
             }
+            if(str[i][j] == 'D')
+            {
+                if(check_door(str,i, j))
+                    flag++;
+                else 
+                    return 0;
+            }
+            
         }
     }
     if (count > 1)
