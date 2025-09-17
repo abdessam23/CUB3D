@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/17 11:14:27 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/17 13:57:36 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ int duplicatID(char **str, t_player *player)
             }
             if(str[i][j] == 'D')
             {
-                if (flag == 6)
+                if (flag == 100)
                     return 0;
                 if(check_door(str,i, j))
                 {

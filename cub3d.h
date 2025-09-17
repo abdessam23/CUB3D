@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 15:04:15 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/17 10:59:58 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/17 13:57:47 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_player
     char *southimg;
     char *westimg;
     char *eastimg;
-    int doorcordoni[6][2];
+    int doorcordoni[100][2];
 } t_player;
 
 #endif
