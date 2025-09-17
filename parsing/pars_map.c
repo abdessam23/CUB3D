@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/16 10:20:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/17 11:14:27 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,10 @@ int check_door(char **str,int i, int j)
         return 1;
     return 0;
 }
+// void filldoorcordonnie(t_player *player, int i, int j)
+// {
+    
+// }
 int duplicatID(char **str, t_player *player)
 {
     int i;
@@ -221,8 +225,15 @@ int duplicatID(char **str, t_player *player)
             }
             if(str[i][j] == 'D')
             {
+                if (flag == 6)
+                    return 0;
                 if(check_door(str,i, j))
+                {
                     flag++;
+                    player->doorcordoni[flag-1][0] = i;
+                    player->doorcordoni[flag-1][1] = j;
+                }
+                    
                 else 
                     return 0;
             }
@@ -300,12 +311,11 @@ int path_checker(char *s, t_player *player)
         free(path);
         return 0;
     }
-    fill_img(s,path,player);
    while (s[i] && s[i] == ' ')
             i++;
     if (s[i] != '\0')
         return 0;
-    
+    fill_img(s,path,player);
     return 1;
 }
 int identif_checker(char *s1,char *s2,t_player *player)
@@ -487,5 +497,20 @@ int main(int argc, char **argv)
         printf("issue inside map");
         return 1;
     }
+    printf("valid map!\n");
+    printf("door cordonne: %d,%d\n",player.doorcordoni[0][0],player.doorcordoni[0][1]);
+    printf("door cordonne: %d,%d\n",player.doorcordoni[1][0],player.doorcordoni[1][1]);
+    printf("door cordonne: %d,%d\n",player.doorcordoni[2][0],player.doorcordoni[2][1]);
+    printf("door cordonne: %d,%d\n",player.doorcordoni[3][0],player.doorcordoni[3][1]);
+    printf("door cordonne: %d,%d\n",player.doorcordoni[4][0],player.doorcordoni[4][1]);
+    printf("door cordonne: %d,%d\n",player.doorcordoni[5][0],player.doorcordoni[5][1]);
+    printf("player cordonne: %f,%f\n",player.playerX,player.playerY);
+    printf("Noth img : %s\n",player.northimg);
+    printf("South img : %s\n",player.southimg);
+    printf("Eest img : %s\n",player.eastimg);
+    printf("West img : %s\n",player.westimg);
+    printf("Direction  : %c\n",player.direction);
+    printf("Floor: %d,%d,%d\n",player.floor[0],player.floor[1],player.floor[2]);
+     printf("roof: %d,%d,%d\n",player.roof[0],player.roof[1],player.roof[2]);
     return 0;
 }
