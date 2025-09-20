@@ -142,5 +142,6 @@ int     key_press(int keycode, t_game *game);
 int     key_release(int keycode, t_game *game);
 void    rotate_player(t_player *player, float angle);
 void    handle_movement(t_game *game);
+void	load_textures(t_game *game);
 
 #endif

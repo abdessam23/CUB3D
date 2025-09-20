@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:22:27 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/02 18:42:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/20 10:01:52 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,101 +140,6 @@ void	put_pixel(t_data *img, int x, int y, int color)
 	}
 }
 
-
-void	Draw_textures(t_game *game, t_player *player, int column)
-{
-
-	// Draw wall
-	int texX = (int)(player->wallX * 64);
-	if (player->side == 0)
-	{
-		if (player->raydiX > 0)
-		{
-			int texX = (int)(player->wallX * game->west_width);
-			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-				texX = game->west_width - 1 - texX;
-
-			for (int y = player->start_draw; y < player->end_draw; y++)
-			{
-				int texY = (int)(((y - player->start_draw) * game->west_height) / player->line_height);
-				unsigned int color = *(unsigned int *)(game->west_addr + texY * game->west_line_len + texX * (game->west_bpp / 8));
-				put_pixel(&game->img, column, y, color);
-			}
-		}
-		else
-		{
-			int texX = (int)(player->wallX * game->east_width);
-			for (int y = player->start_draw; y < player->end_draw; y++)
-			{
-				int texY = (int)(((y - player->start_draw) * game->east_height) / player->line_height);
-				unsigned int color = *(unsigned int *)(game->east_addr + texY * game->east_line_len + texX * (game->east_bpp / 8));
-				put_pixel(&game->img, column, y, color);
-			}
-		}
-	}
-	if (player->side == 1)
-	{
-		if (player->raydiY > 0)
-		{
-			int texX = (int)(player->wallX * game->north_width);
-			for (int y = player->start_draw; y < player->end_draw; y++)
-			{
-				int texY = (int)(((y - player->start_draw) * game->north_height) / player->line_height);
-				unsigned int color = *(unsigned int *)(game->north_addr + texY * game->north_line_len + texX * (game->north_bpp / 8));
-				put_pixel(&game->img, column, y, color);
-			}
-		}
-		else
-		{
-			int texX = (int)(player->wallX * game->south_width);
-			if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))
-				texX = game->south_width - 1 - texX;
-			for (int y = player->start_draw; y < player->end_draw; y++)
-			{
-				int texY = (int)(((y - player->start_draw) * game->south_height) / player->line_height);
-				unsigned int color = *(unsigned int *)(game->south_addr + texY * game->south_line_len + texX * (game->south_bpp / 8));
-				put_pixel(&game->img, column, y, color);
-			}
-		}
-	}
-}
-
-void	draw_wall_column(t_game *game, t_player *player, int column)
-{
-	// Calculate line height and draw positions
-	if (player->side == 0)
-		player->wallp = player->dsidX - player->dx;
-	else
-		player->wallp = player->dsidY - player->dy;
-
-	player->line_height = (int)(WIN_HEIGHT / player->wallp);
-	player->start_draw = WIN_HEIGHT / 2 - player->line_height / 2;
-	player->end_draw = WIN_HEIGHT / 2 + player->line_height / 2;
-
-	if (player->start_draw < 0)
-		player->start_draw = 0;
-	if (player->end_draw >= WIN_HEIGHT)
-		player->end_draw = WIN_HEIGHT - 1;
-
-
-	if (player->side == 0)
-		player->wallX = player->playerY + player->wallp * player->raydiY;
-	else
-		player->wallX = player->playerX + player->wallp * player->raydiX;
-	player->wallX -= floor(player->wallX);
-
-	// Draw ceiling (above wall)
-	for (int y = 0; y < player->start_draw; y++)
-		put_pixel(&game->img, column, y, 0x8BE9FF);
-
-	Draw_textures(game, player, column);
-
-	// Draw floor (below wall)
-	for (int y = player->end_draw; y < WIN_HEIGHT; y++)
-		put_pixel(&game->img, column, y, 0xB7715C);
-}
-
-
 void	run_game(t_player *player, t_game *game)
 {
 	// Cast rays for each column
@@ -246,21 +151,6 @@ void	run_game(t_player *player, t_game *game)
 		//wall_calc(player);
 		draw_wall_column(game, player, i);
 	}
-}
-int key_press(int keycode, t_game *game)
-{
-	if (keycode == KEY_ESC)
-		close_window(game);
-	if (keycode < 65536)
-		game->keys[keycode] = 1;
-	return (0);
-}
-
-int key_release(int keycode, t_game *game)
-{
-	if (keycode < 65536)
-		game->keys[keycode] = 0;
-	return (0);
 }
 
 void rotate_player(t_player *player, float angle)
@@ -275,101 +165,6 @@ void rotate_player(t_player *player, float angle)
 	float oldPlaneX = player->planeX;
 	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
 	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);	
-}
-
-
-void handle_movement(t_game *game)
-{
-	t_player *player;
-	
-	
-	
-	player = game->player;
-	// Rotation (Left/Right arrows or A/D keys)
-	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
-		rotate_player(player, -ROT_SPEED);
-
-	if (game->keys[KEY_RIGHT] || game->keys[KEY_D])
-		rotate_player(player, ROT_SPEED);
-
-	// Forward movement (W key)
-	if (game->keys[KEY_W] || game->keys[KEY_UP])
-	{
-		float newX = player->playerX + player->dirX * MOVE_SPEED;
-		float newY = player->playerY + player->dirY * MOVE_SPEED;
-
-		// Check collision with walls
-		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY = newY;
-		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX = newX;
-	}
-
-	// Backward movement (S key)
-	if (game->keys[KEY_S] || game->keys[KEY_DOWN])
-	{
-		float newX = player->playerX - player->dirX * MOVE_SPEED;
-		float newY = player->playerY - player->dirY * MOVE_SPEED;
-
-		// Check collision with walls
-		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY = newY;
-		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX = newX;
-	}
-}
-
-void	init_player_direction(t_player *player)
-{
-	// Get initial direction
-	float *p = direction(player->direction);
-	if (!p)
-	{
-		printf("Yes");
-		return;
-	}
-	player->dirX = p[0];
-	player->dirY = p[1];
-	free(p);
-
-	// Set plane vector
-	set_plane(player);
-}
-
-void	init_player(t_player *player)
-{
-	player->map = create_test_map();
-	for (int y = 0; y < 10; y++)
-	{
-		for (int x = 0; x < 30; x++)
-		{
-			if (player->map[y][x] == 'N')
-       			{
-				player->direction = 'N';
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-			}
-			else if (player->map[y][x] == 'W')
-       			{
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-				player->direction = 'W';
-			}
-			else if (player->map[y][x] == 'E')
-       			{
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-				player->direction = 'E';
-			}
-       			else if (player->map[y][x] == 'S')
-			{
-				player->direction = 'S';
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-			}
-		}
-	}
-	init_player_direction(player);
 }
 
 int game_loop(t_game *game)
@@ -388,74 +183,6 @@ void	render_frame(t_game *game)
 int	close_window(t_game *game)
 {
 	exit(0);
-	return (0);
-}
-
-void	load_textures(t_game *game)
-{
-	game->north_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_1.xpm",
-					&game->north_width, &game->north_height);
-	game->south_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_2.xpm",
-					&game->south_width, &game->south_height);
-	game->west_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
-					&game->west_width, &game->west_height);
-	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall.xpm",
-					&game->east_width, &game->east_height);
-	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
-		exit(1); ;
-	game->north_addr = mlx_get_data_addr(game->north_img,
-                                   &game->north_bpp, &game->north_line_len, &game->north_endian);
-	game->south_addr = mlx_get_data_addr(game->south_img,
-                                   &game->south_bpp, &game->south_line_len, &game->south_endian);
-	game->west_addr = mlx_get_data_addr(game->west_img,
-                                   &game->west_bpp, &game->west_line_len, &game->west_endian);
-	game->east_addr = mlx_get_data_addr(game->east_img,
-                                   &game->east_bpp, &game->east_line_len, &game->east_endian);
-	if (!game->north_addr || !game->south_addr || !game->west_addr || !game->east_addr)
-		return ;
-}
-
-int init_cube(void)
-{
-	t_game      game;
-	t_player    player;
-	int         i;
-
-	// Initialize key states
-	i = 0;
-	while (i < 65536)
-	{
-		game.keys[i] = 0;
-		i++;
-	}
-
-	// Initialize player
-	init_player(&player);
-
-	// Initialize MLX
-	game.mlx = mlx_init();
-	if (!game.mlx)
-		return (1);
-
-	game.mlx_window = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
-	if (!game.mlx_window)
-		return (1);
-
-	// Create image
-	game.img.img = mlx_new_image(game.mlx, WIN_WIDTH, WIN_HEIGHT);
-	game.img.addr = mlx_get_data_addr(game.img.img, &game.img.bits_per_pixel, 
-				   &game.img.line_length, &game.img.endian);
-
-	game.player = &player;
-	load_textures(&game);
-
-	// Set up event hooks
-	mlx_hook(game.mlx_window, 2, 1L<<0, key_press, &game);
-	mlx_hook(game.mlx_window, 3, 1L<<1, key_release, &game);
-	mlx_hook(game.mlx_window, 17, 0, close_window, &game);
-	mlx_loop_hook(game.mlx, game_loop, &game);
-
-	mlx_loop(game.mlx);
 	return (0);
 }
 
