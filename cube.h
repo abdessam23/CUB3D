@@ -81,10 +81,11 @@ typedef struct s_player
 	// variable for draw W S
 	float step;
 	float texPos;
-	int texHieght;
+	int texHeight;
+	int texWidth;
 	unsigned char *texAddr;
 	int bpp;
-	int linelen;
+	int lineLen;
 }	t_player;
 
 typedef struct s_game

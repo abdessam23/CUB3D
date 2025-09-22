@@ -12,181 +12,75 @@
 
 #include "../cube.h"
 
-/*void draw_W_E(t_game *game, t_player *player, int column)*/
-/*{*/
-/*	int	y;*/
-/*	int	texX;*/
-/*	int	texY;*/
-/*	float	step;*/
-/*	float	texPos;*/
-/*	int	texHeight;*/
-/*	unsigned char *texAddr;*/
-/*	int	bpp;*/
-/*	int	lineLen;*/
-/**/
-/*	y = player->start_draw;*/
-/*	if (player->raydiX > 0)*/
-/*	{*/
-/*		texX = (int)(player->wallX * game->west_width);*/
-/*		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))*/
-/*			texX = game->west_width - 1 - texX;*/
-/*		texHeight = game->west_height;*/
-/*		texAddr = (unsigned char *)game->west_addr;*/
-/*		bpp = game->west_bpp / 8;*/
-/*		lineLen = game->west_line_len;*/
-/*	}*/
-/*	else*/
-/*{*/
-/*		texX = (int)(player->wallX * game->east_width);*/
-/*		texHeight = game->east_height;*/
-/*		texAddr = (unsigned char *)game->east_addr;*/
-/*		bpp = game->east_bpp / 8;*/
-/*		lineLen = game->east_line_len;*/
-/*	}*/
-/*	if (texX < 0)*/
-/*		texX = 0;*/
-/*	if (texX >= texHeight)*/
-/*		texX = texHeight - 1;*/
-/*	step = (float)texHeight / player->line_height;*/
-/*	texPos = (player->start_draw - WIN_HEIGHT / 2.0f + player->line_height / 2.0f) * step;*/
-/*	while (y < player->end_draw)*/
-/*	{*/
-/*		texY = (int)texPos;*/
-/*		if (texY < 0)*/
-/*			texY = 0;*/
-/*		if (texY >= texHeight)*/
-/*			texY = texHeight - 1;*/
-/*		texPos += step;*/
-/*		unsigned int color = *(unsigned int *)(texAddr + texY * lineLen + texX * bpp);*/
-/*		put_pixel(&game->img, column, y, color);*/
-/*		y++;*/
-/*	}*/
-/*}*/
-/**/
-/*void draw_N_S(t_game *game, t_player *player, int column)*/
-/*{*/
-/*	int	y;*/
-/*	int	texX;*/
-/*	int	texY;*/
-/*	float	step;*/
-/*	float	texPos;*/
-/*	int	texHeight;*/
-/*	unsigned char *texAddr;*/
-/*	int	bpp;*/
-/*	int	lineLen;*/
-/**/
-/*	y = player->start_draw;*/
-/*	if (player->raydiY > 0)*/
-/*	{*/
-/*		texX = (int)(player->wallX * game->north_width);*/
-/*		texHeight = game->north_height;*/
-/*		texAddr = (unsigned char *)game->north_addr;*/
-/*		bpp = game->north_bpp / 8;*/
-/*		lineLen = game->north_line_len;*/
-/*	}*/
-/*	else*/
-/*{*/
-/*		texX = (int)(player->wallX * game->south_width);*/
-/*		if ((player->side == 0 && player->raydiX > 0) || (player->side == 1 && player->raydiY < 0))*/
-/*			texX = game->south_width - 1 - texX;*/
-/*		texHeight = game->south_height;*/
-/*		texAddr = (unsigned char *)game->south_addr;*/
-/*		bpp = game->south_bpp / 8;*/
-/*		lineLen = game->south_line_len;*/
-/*	}*/
-/*	if (texX < 0)*/
-/*		texX = 0;*/
-/*	if (texX >= texHeight)*/
-/*		texX = texHeight - 1;*/
-/*	step = (float)texHeight / player->line_height;*/
-/*	texPos = (player->start_draw - WIN_HEIGHT / 2.0f + player->line_height / 2.0f) * step;*/
-/*	while (y < player->end_draw)*/
-/*	{*/
-/*		texY = (int)texPos;*/
-/*		if (texY < 0)*/
-/*			texY = 0;*/
-/*		if (texY >= texHeight)*/
-/*			texY = texHeight - 1;*/
-/*		texPos += step;*/
-/*		unsigned int color = *(unsigned int *)(texAddr + texY * lineLen + texX * bpp);*/
-/*		put_pixel(&game->img, column, y, color);*/
-/*		y++;*/
-/*	}*/
-/*}*/
+void	side_W_E(t_player *player, t_game *game)
+{
+		if (player->raydiX > 0)
+		{ 
+			// West wall
+			player->texWidth = game->west_width;
+			player->texHeight = game->west_height;
+			player->texAddr = (unsigned char *)game->west_addr;
+			player->bpp = game->west_bpp / 8;
+			player->lineLen = game->west_line_len;
+		}
+		else
+		{ 
+			// East wall
+			player->texWidth = game->east_width;
+			player->texHeight = game->east_height;
+			player->texAddr = (unsigned char *)game->east_addr;
+			player->bpp = game->east_bpp / 8;
+			player->lineLen = game->east_line_len;
+		}
+}
 
-/*void	Draw_textures(t_game *game, t_player *player, int column)*/
-/*{*/
-/**/
-/*	// Draw wall*/
-/*	if (player->side == 0)*/
-/*		draw_W_E(game, player, column);*/
-/*	if (player->side == 1)*/
-/*		draw_N_S(game, player, column);*/
-/*}*/
+void	side_N_S(t_player *player, t_game *game)
+{
+		if (player->raydiY > 0)
+		{ // North wall
+			player->texWidth = game->north_width;
+			player->texHeight = game->north_height;
+			player->texAddr = (unsigned char *)game->north_addr;
+			player->bpp = game->north_bpp / 8;
+			player->lineLen = game->north_line_len;
+		}
+		else
+		{ // South wall
+			player->texWidth = game->south_width;
+			player->texHeight = game->south_height;
+			player->texAddr = (unsigned char *)game->south_addr;
+			player->bpp = game->south_bpp / 8;
+			player->lineLen = game->south_line_len;
+		}
+}
 
 void draw_wall(t_game *game, t_player *player, int column)
 {
-    int texX, texY;
-    float step, texPos;
-    int texWidth, texHeight, bpp, lineLen;
-    unsigned char *texAddr;
-    int y = player->start_draw;
+	int texX;
+	int texY;
+	int y;
 
-    // --- Select which texture to use ---
-    if (player->side == 0) // hit vertical wall
-    {
-        if (player->raydiX > 0) { // West wall
-            texWidth = game->west_width;
-            texHeight = game->west_height;
-            texAddr = (unsigned char *)game->west_addr;
-            bpp = game->west_bpp / 8;
-            lineLen = game->west_line_len;
-        } else { // East wall
-            texWidth = game->east_width;
-            texHeight = game->east_height;
-            texAddr = (unsigned char *)game->east_addr;
-            bpp = game->east_bpp / 8;
-            lineLen = game->east_line_len;
-        }
-    }
-    else // hit horizontal wall
-    {
-        if (player->raydiY > 0) { // North wall
-            texWidth = game->north_width;
-            texHeight = game->north_height;
-            texAddr = (unsigned char *)game->north_addr;
-            bpp = game->north_bpp / 8;
-            lineLen = game->north_line_len;
-        } else { // South wall
-            texWidth = game->south_width;
-            texHeight = game->south_height;
-            texAddr = (unsigned char *)game->south_addr;
-            bpp = game->south_bpp / 8;
-            lineLen = game->south_line_len;
-        }
-    }
+	y = player->start_draw;
+	if (player->side == 0)
+		side_W_E(player, game);
+	else
+		side_N_S(player, game);
+	texX = (int)(player->wallX * player->texWidth);
+	if ((player->side == 0 && player->raydiX > 0) ||
+		(player->side == 1 && player->raydiY < 0))
+		texX = player->texWidth - texX - 1;
+	player->step = (float)player->texHeight / player->line_height;
+	player->texPos = (player->start_draw - WIN_HEIGHT / 2.0f + player->line_height / 2.0f) * player->step;
+	while (y < player->end_draw)
+	{
+		texY = (int)player->texPos;
+		if (texY >= player->texHeight) texY = player->texHeight - 1;
+		player->texPos += player->step;
 
-    // --- Texture X coordinate ---
-    texX = (int)(player->wallX * texWidth);
-    if ((player->side == 0 && player->raydiX > 0) ||
-        (player->side == 1 && player->raydiY < 0))
-        texX = texWidth - texX - 1;
-
-    // --- Step + start position ---
-    step = (float)texHeight / player->line_height;
-    texPos = (player->start_draw - WIN_HEIGHT / 2.0f + player->line_height / 2.0f) * step;
-
-    // --- Draw the vertical line ---
-    while (y < player->end_draw)
-    {
-        texY = (int)texPos;
-        if (texY >= texHeight) texY = texHeight - 1;
-        texPos += step;
-
-        unsigned int color = *(unsigned int *)(texAddr + texY * lineLen + texX * bpp);
-        put_pixel(&game->img, column, y, color);
-        y++;
-    }
+		unsigned int color = *(unsigned int *)(player->texAddr + texY * player->lineLen + texX * player->bpp);
+		put_pixel(&game->img, column, y, color);
+		y++;
+	}
 }
 
 int	to_hex(int r, int g, int b)
