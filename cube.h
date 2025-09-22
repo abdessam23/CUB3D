@@ -19,8 +19,8 @@
 #include "lib_ft/libft.h"
 #include "mlx.h"
 
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define WIN_WIDTH 1000
+#define WIN_HEIGHT 800
 #define MAX_WIDTH 800
 #define MAX_HEIGHT 600
 
@@ -78,6 +78,13 @@ typedef struct s_player
 	float dirY;
 	int	texX;
 	void	*img_wall;
+	// variable for draw W S
+	float step;
+	float texPos;
+	int texHieght;
+	unsigned char *texAddr;
+	int bpp;
+	int linelen;
 }	t_player;
 
 typedef struct s_game
