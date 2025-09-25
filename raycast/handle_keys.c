@@ -15,10 +15,13 @@
 void	key_down(t_game *game, t_player *player)
 {
 	// Backward movement (S key)
+	float	newX;
+	float	newY;
+
 	if (game->keys[KEY_S] || game->keys[KEY_DOWN])
 	{
-		float newX = player->playerX - player->dirX * MOVE_SPEED;
-		float newY = player->playerY - player->dirY * MOVE_SPEED;
+		newX = player->playerX - player->dirX * MOVE_SPEED;
+		newY = player->playerY - player->dirY * MOVE_SPEED;
 
 		// Check collision with walls
 		if (player->map[(int)newY][(int)player->playerX] != '1')
@@ -33,6 +36,7 @@ void handle_movement(t_game *game)
 	t_player *player;
 	
 	player = game->player;
+
 	// Rotation (Left/Right arrows or A/D keys)
 	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
 		rotate_player(player, -ROT_SPEED);

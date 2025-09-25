@@ -143,26 +143,32 @@ void	put_pixel(t_data *img, int x, int y, int color)
 void	run_game(t_player *player, t_game *game)
 {
 	// Cast rays for each column
-	for (int i = 0; i < WIN_WIDTH; i++)
+	int	i;
+
+	i = 0;
+	while (i < WIN_WIDTH)
 	{
 		prep_calcs(player, i);
 		calc_step(player);
 		DDA_algo(player);
-		//wall_calc(player);
 		draw_wall_column(game, player, i);
+		i++;
 	}
 }
 
 void rotate_player(t_player *player, float angle)
 {
 	// Rotate direction vector
-	float oldDirX = player->dirX;
+	float	oldDirX;
+	float	oldPlaneX;
+
+	oldDirX = player->dirX;
 	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
 	player->dirY = oldDirX * sin(angle) + player->dirY * cos(angle);
 	
 
 	//Rotate plane vector
-	float oldPlaneX = player->planeX;
+	oldPlaneX = player->planeX;
 	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
 	player->planeY = oldPlaneX * sin(angle) + player->planeY * cos(angle);	
 }
