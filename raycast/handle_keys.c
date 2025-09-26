@@ -34,6 +34,8 @@ void	key_down(t_game *game, t_player *player)
 void handle_movement(t_game *game)
 {
 	t_player *player;
+	float	newX;
+	float	newY;
 	
 	player = game->player;
 
@@ -45,8 +47,8 @@ void handle_movement(t_game *game)
 	// Forward movement (W key)
 	if (game->keys[KEY_W] || game->keys[KEY_UP])
 	{
-		float newX = player->playerX + player->dirX * MOVE_SPEED;
-		float newY = player->playerY + player->dirY * MOVE_SPEED;
+		newX = player->playerX + player->dirX * MOVE_SPEED;
+		newY = player->playerY + player->dirY * MOVE_SPEED;
 
 		// Check collision with walls
 		if (player->map[(int)newY][(int)player->playerX] != '1')

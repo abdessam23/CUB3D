@@ -88,17 +88,8 @@ int	to_hex(int r, int g, int b)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	draw_wall_column(t_game *game, t_player *player, int column)
+void	wall_height(t_player *player)
 {
-	// get colors
-	/*int roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);*/
-	/*int floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);*/
-	// Calculate line height and draw positions
-	if (player->side == 0)
-		player->wallp = player->dsidX - player->dx;
-	else
-		player->wallp = player->dsidY - player->dy;
-
 	player->line_height = (int)(WIN_HEIGHT / player->wallp);
 	player->start_draw = WIN_HEIGHT / 2 - player->line_height / 2;
 	player->end_draw = WIN_HEIGHT / 2 + player->line_height / 2;
@@ -114,14 +105,34 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	else
 		player->wallX = player->playerX + player->wallp * player->raydiX;
 	player->wallX -= floor(player->wallX);
+}
+
+void	draw_wall_column(t_game *game, t_player *player, int column)
+{
+	int	y;
+	// get colors
+	/*int roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);*/
+	/*int floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);*/
+	// Calculate line height and draw positions
+	if (player->side == 0)
+		player->wallp = player->dsidX - player->dx;
+	else
+		player->wallp = player->dsidY - player->dy;
+	wall_height(player);
 
 	// Draw ceiling (above wall)
-	for (int y = 0; y < player->start_draw; y++)
+	y = 0;
+	while (y < player->start_draw)
+	{
 		put_pixel(&game->img, column, y, 0x8BE9FF);
-
+		y++;
+	}
 	draw_wall(game, player, column);
-
 	// Draw floor (below wall)
-	for (int y = player->end_draw; y < WIN_HEIGHT; y++)
+	y = player->end_draw;
+	while (y < WIN_HEIGHT)
+	{
 		put_pixel(&game->img, column, y, 0xB7715C);
+		y++;
+	}
 }
