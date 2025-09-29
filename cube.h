@@ -13,16 +13,20 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <math.h>
-#include "lib_ft/libft.h"
-#include "mlx.h"
+# include <string.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdbool.h>
+# include <math.h>
+# include "lib_ft/libft.h"
+# include "mlx.h"
 
-#define WIN_WIDTH 1000
-#define WIN_HEIGHT 800
-#define MAX_WIDTH 800
-#define MAX_HEIGHT 600
+# define WIN_WIDTH 1000
+# define WIN_HEIGHT 800
+# define MAX_WIDTH 800
+# define MAX_HEIGHT 600
 
 # define KEY_W 119
 # define KEY_A 97
@@ -78,6 +82,12 @@ typedef struct s_player
 	float dirY;
 	int	texX;
 	void	*img_wall;
+	int roof[3];
+	int floor[3];
+	char *northimg;
+	char *southimg;
+	char *westimg;
+	char *eastimg;
 	// variable for draw W S
 	float step;
 	float texPos;

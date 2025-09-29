@@ -210,7 +210,7 @@ int	close_window(t_game *game)
 /*	return (map);*/
 /*}*/
 
-int main()
-{
-	return (init_cube());
-}
+/*int main()*/
+/*{*/
+/*	return (init_cube());*/
+/*}*/
