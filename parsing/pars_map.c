@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/17 13:57:36 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/29 10:45:53 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int iswhitespace(char *s)
 
 int is_valid(int c)
 {
-    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ' || c == 'D')
+    if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' ')
         return 1;
     return 0;
 }
@@ -188,18 +188,6 @@ int ft_direction(int c)
     return 0;
 }
 
-int check_door(char **str,int i, int j)
-{
-    if((str[i][j - 1] == '1' || str[i][j - 1] == ' ') && (str[i][j + 1] == '1' || str[i][j + 1] == ' '))
-        return 1;
-    else if((str[i + 1][j] == '1' || str[i + 1][j] == ' ') && (str[i - 1][j] == '1' || str[i -1][j] == ' '))
-        return 1;
-    return 0;
-}
-// void filldoorcordonnie(t_player *player, int i, int j)
-// {
-    
-// }
 int duplicatID(char **str, t_player *player)
 {
     int i;
@@ -222,28 +210,14 @@ int duplicatID(char **str, t_player *player)
                 player->playerX = i; //position of player
                 player->playerY = j;  //position of player
                 player->direction = str[i][j]; // derection of player
-            }
-            if(str[i][j] == 'D')
-            {
-                if (flag == 100)
-                    return 0;
-                if(check_door(str,i, j))
-                {
-                    flag++;
-                    player->doorcordoni[flag-1][0] = i;
-                    player->doorcordoni[flag-1][1] = j;
-                }
-                    
-                else 
-                    return 0;
-            }
-            
+            }        
         }
     }
     if (count > 1)
         return 0;
     return 1;
 }
+
 int check_in_map(char **map,t_player *player)
 {
     char **str;
@@ -279,7 +253,7 @@ void fill_img(char *str,char *path,t_player *player)
     if (ft_strncmp(path+l,".xpm",4))
     {
         free(path); //free all
-        printf("the should use .xpm extension\n");
+        printf("the image should use .xpm extension\n");
         exit(1);
     }
     if (*str == 'N')
@@ -462,9 +436,8 @@ int ft_valid_id(char *str,t_player *player)
         free(identif);
     return 1;
 }
-int main(int argc, char **argv)
+int pars_fun(int argc, char **argv)
 {
-    int fd;
     char *str;
     char  **map;
     t_player player;
@@ -498,12 +471,6 @@ int main(int argc, char **argv)
         return 1;
     }
     printf("valid map!\n");
-    printf("door cordonne: %d,%d\n",player.doorcordoni[0][0],player.doorcordoni[0][1]);
-    printf("door cordonne: %d,%d\n",player.doorcordoni[1][0],player.doorcordoni[1][1]);
-    printf("door cordonne: %d,%d\n",player.doorcordoni[2][0],player.doorcordoni[2][1]);
-    printf("door cordonne: %d,%d\n",player.doorcordoni[3][0],player.doorcordoni[3][1]);
-    printf("door cordonne: %d,%d\n",player.doorcordoni[4][0],player.doorcordoni[4][1]);
-    printf("door cordonne: %d,%d\n",player.doorcordoni[5][0],player.doorcordoni[5][1]);
     printf("player cordonne: %f,%f\n",player.playerX,player.playerY);
     printf("Noth img : %s\n",player.northimg);
     printf("South img : %s\n",player.southimg);
