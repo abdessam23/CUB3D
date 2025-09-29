@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:03:52 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/29 18:19:00 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,23 @@ int duplicatID(char **str, t_player *player)
         return 0;
     return 1;
 }
+char	**create_test_map(void)
+{
+	char **map = malloc(sizeof(char*) * 10);
 
+	map[0] = ft_strdup("111111111111111111111111111111");
+	map[1] = ft_strdup("100001000000000000000001000001");
+	map[2] = ft_strdup("100000000100100000000000000001");
+	map[3] = ft_strdup("101000011110111111011110000001");
+	map[4] = ft_strdup("100000010000000001000000000001");
+	map[5] = ft_strdup("100000010000000001111100000001");
+	map[6] = ft_strdup("100001000000000000000000000001");
+	map[7] = ft_strdup("100000000000N00001000000001001");
+	map[8] = ft_strdup("100000111100000001000000000001");
+	map[9] = ft_strdup("111111111111111111111111111111");
+
+	return (map);
+}
 int check_in_map(char **map,t_player *player)
 {
     char **str;
@@ -234,10 +250,10 @@ int check_in_map(char **map,t_player *player)
         i++;
     if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
         return 0;
-    if (!duplicatID(str,player))
+    if (!duplicatID(create_test_map(),player))
         return 0;
-    player->map = str; // map 
-    return 1;        
+    player->map = create_test_map(); // map 
+    return 1;         
 }
 
 void fill_img(char *str,char *path,t_player *player)
@@ -280,6 +296,7 @@ int path_checker(char *s, t_player *player)
             i++;
     path = ft_substr(s,start, i - start);
     fd = open(path,O_RDONLY);
+   
     if (fd == -1)
     {
         free(path);
@@ -471,13 +488,18 @@ int pars_fun(int argc, char **argv, t_player *player)
         return 1;
     }
     // printf("valid map!\n");
-    // printf("player cordonne: %f,%f\n",player.playerX,player.playerY);
-    // printf("Noth img : %s\n",player.northimg);
-    // printf("South img : %s\n",player.southimg);
-    // printf("Eest img : %s\n",player.eastimg);
-    // printf("West img : %s\n",player.westimg);
-    // printf("Direction  : %c\n",player.direction);
-    // printf("Floor: %d,%d,%d\n",player.floor[0],player.floor[1],player.floor[2]);
-    //  printf("roof: %d,%d,%d\n",player.roof[0],player.roof[1],player.roof[2]);
+    
+    // for(int i = 0; player->map[i] ;i++)
+    // {
+    //     printf("%s\n", player->map[i]);
+    // }
+    // printf("player cordonne: %f,%f\n",player->playerX,player->playerY);
+    // printf("Noth img : %s\n",player->northimg);
+    // printf("South img : %s\n",player->southimg);
+    // printf("Eest img : %s\n",player->eastimg);
+    // printf("West img : %s\n",player->westimg);
+    // printf("Direction  : %c\n",player->direction);
+    // printf("Floor: %d,%d,%d\n",player->floor[0],player->floor[1],player->floor[2]);
+    //  printf("roof: %d,%d,%d\n",player->roof[0],player->roof[1],player->roof[2]);
     return 0;
 }

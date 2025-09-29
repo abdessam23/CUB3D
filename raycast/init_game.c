@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 09:40:56 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/29 16:12:03 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/29 18:18:51 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 int init_cube(t_player *player)
 {
 	t_game      game;
-	
+	   for(int i = 0; player->map[i] ;i++)
+    {
+        printf("%s\n", player->map[i]);
+    }
 	int         i;
 
 	// Initialize key states
@@ -59,8 +62,11 @@ void	load_textures(t_game *game)
 					&game->west_width, &game->west_height);
 	game->east_img = mlx_xpm_file_to_image(game->mlx, game->player->eastimg,
 					&game->east_width, &game->east_height);
-	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
-		exit(1); ;
+	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img){
+		printf("hello");
+		exit(1);
+	}
+		
 	game->north_addr = mlx_get_data_addr(game->north_img,
                                    &game->north_bpp, &game->north_line_len, &game->north_endian);
 	game->south_addr = mlx_get_data_addr(game->south_img,

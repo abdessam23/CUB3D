@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:22:27 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/20 10:01:52 by asyani           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:10:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,35 @@ void	calc_step(t_player *player)
 		player->stepY = 1;
 		player->dsidY = (player->mapY + 1.0 - player->playerY) * player->dy;
 	}
+	printf("hello1 : %f ,%f\n", player->playerX,player->playerY);
 }
 
 void	DDA_algo(t_player *player)
 {
 	while (!player->hit)
 	{
+		
 		if (player->dsidX < player->dsidY)
 		{
+			
 			player->dsidX += player->dx;
 			player->mapX += player->stepX;
 			player->side = 0;
 		}
 		else
-	{
+		{
 			player->dsidY += player->dy;
 			player->mapY += player->stepY;
 			player->side = 1;
 		}
-		if (player->map[player->mapY][player->mapX] == '1')
+		printf("hello 3: %d,%d\n", player->mapX,player->mapY);
+		printf("%c\n",player->map[player->mapY][player->mapX]);
+		if (player->map[player->mapY][player->mapX] == '1' || player->map[player->mapY][player->mapX] == ' ')
+		{
+			printf("%c\n",player->map[player->mapY][player->mapX]);
 			player->hit = 1;
+		}
+			printf("%cgggggggggg\n",player->map[7][12]);
 	}
 }
 
@@ -111,7 +120,7 @@ void	prep_calcs(t_player *player, int i)
 {
 	player->mapX = (int)player->playerX;
 	player->mapY = (int)player->playerY;
-
+	printf("hello : %d ,%d\n", player->mapX,player->mapY);
 	player->hit = 0;
 	player->cameraX = 2 * (float)i / WIN_WIDTH - 1;
 	player->raydiX = player->dirX + player->planeX * player->cameraX;
@@ -192,25 +201,25 @@ int	close_window(t_game *game)
 	return (0);
 }
 
-/*char	**create_test_map(void)*/
-/*{*/
-/*	char **map = malloc(sizeof(char*) * 10);*/
-/**/
-/*	map[0] = strdup("111111111111111111111111111111");*/
-/*	map[1] = strdup("100001000000000000000001000001");*/
-/*	map[2] = strdup("100000000100100000000000000001");*/
-/*	map[3] = strdup("10100001111D111111011110000001");*/
-/*	map[4] = strdup("100000010000000001000000000001");*/
-/*	map[5] = strdup("100000010000000001111100000001");*/
-/*	map[6] = strdup("100001000000000000000000000001");*/
-/*	map[7] = strdup("100000000000N00001000000001001");*/
-/*	map[8] = strdup("100000111100000001000000000001");*/
-/*	map[9] = strdup("111111111111111111111111111111");*/
-/**/
-/*	return (map);*/
-/*}*/
+// /*char	**create_test_map(void)*/
+// /*{*/
+// /*	char **map = malloc(sizeof(char*) * 10);*/
+// /**/
+// /*	map[0] = strdup("111111111111111111111111111111");*/
+// /*	map[1] = strdup("100001000000000000000001000001");*/
+// /*	map[2] = strdup("100000000100100000000000000001");*/
+// /*	map[3] = strdup("10100001111D111111011110000001");*/
+// /*	map[4] = strdup("100000010000000001000000000001");*/
+// /*	map[5] = strdup("100000010000000001111100000001");*/
+// /*	map[6] = strdup("100001000000000000000000000001");*/
+// /*	map[7] = strdup("100000000000N00001000000001001");*/
+// /*	map[8] = strdup("100000111100000001000000000001");*/
+// /*	map[9] = strdup("111111111111111111111111111111");*/
+// /**/
+// /*	return (map);*/
+// /*}*/
 
-/*int main()*/
-/*{*/
-/*	return (init_cube());*/
-/*}*/
+// /*int main()*/
+// /*{*/
+// /*	return (init_cube());*/
+// /*}*/

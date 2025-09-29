@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/29 16:05:24 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/29 18:01:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdbool.h>
 # include <math.h>
 # include "libft/libft.h"
-# include "mlx.h"
+# include "minilibx-linux/mlx.h"
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 800
