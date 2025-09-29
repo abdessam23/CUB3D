@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:19 by abdo             ###   ########.fr       */
+/*   Created: 2024/11/02 09:38:34 by abhimi            #+#    #+#             */
+/*   Updated: 2024/11/03 10:13:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "cube.h"
-
-int main(int arc, char **argv)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-    t_player player;
-    if (pars_fun(arc,argv, &player) || init_cube(&player))
-        return 1;
+	t_list	*next;
+
+	if (!lst || !*lst || !del)
+		return ;
+	while (*lst)
+	{
+		next = (*lst)->next;
+		ft_lstdelone (*lst, del);
+		*lst = next;
+	}
+	free (*lst);
+	*lst = NULL;
 }

@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:19 by abdo             ###   ########.fr       */
+/*   Created: 2024/10/24 09:05:18 by abhimi            #+#    #+#             */
+/*   Updated: 2024/11/04 17:28:58 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "cube.h"
-
-int main(int arc, char **argv)
+char	*ft_strrchr(const char *s, int c)
 {
-    t_player player;
-    if (pars_fun(arc,argv, &player) || init_cube(&player))
-        return 1;
+	char	b;
+	int		i;
+
+	b = (char) c;
+	i = ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == b)
+			return ((char *) s + i);
+		i--;
+	}
+	return (NULL);
 }

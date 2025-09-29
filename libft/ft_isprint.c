@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:19 by abdo             ###   ########.fr       */
+/*   Created: 2024/10/21 16:30:24 by abhimi            #+#    #+#             */
+/*   Updated: 2024/11/01 10:06:10 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "cube.h"
-
-int main(int arc, char **argv)
+int	ft_isprint(int c)
 {
-    t_player player;
-    if (pars_fun(arc,argv, &player) || init_cube(&player))
-        return 1;
+	if (c >= 32 && c <= 126)
+		return (1);
+	return (0);
 }

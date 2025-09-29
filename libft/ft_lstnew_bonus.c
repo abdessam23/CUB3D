@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:19 by abdo             ###   ########.fr       */
+/*   Created: 2024/11/01 17:03:07 by abhimi            #+#    #+#             */
+/*   Updated: 2024/11/04 11:26:50 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "cube.h"
-
-int main(int arc, char **argv)
+t_list	*ft_lstnew(void *content)
 {
-    t_player player;
-    if (pars_fun(arc,argv, &player) || init_cube(&player))
-        return 1;
+	t_list	*d;
+
+	d = malloc(sizeof(t_list));
+	if (!d)
+		return (NULL);
+	d->content = content;
+	d->next = NULL;
+	return (d);
 }

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 16:07:19 by abdo             ###   ########.fr       */
+/*   Created: 2024/11/01 17:52:04 by abhimi            #+#    #+#             */
+/*   Updated: 2024/11/02 15:44:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 
-#include "cube.h"
-
-int main(int arc, char **argv)
+t_list	*ft_lstlast(t_list *lst)
+// klk
 {
-    t_player player;
-    if (pars_fun(arc,argv, &player) || init_cube(&player))
-        return 1;
+	if (!lst)
+		return (NULL);
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
 }

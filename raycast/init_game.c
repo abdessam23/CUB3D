@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 09:40:56 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/20 09:43:26 by asyani           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:12:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-int init_cube(void)
+int init_cube(t_player *player)
 {
 	t_game      game;
-	t_player    player;
+	
 	int         i;
 
 	// Initialize key states
@@ -26,7 +26,7 @@ int init_cube(void)
 		i++;
 	}
 	// Initialize player
-	init_player(&player);
+	init_player_direction(player);
 	// Initialize MLX
 	game.mlx = mlx_init();
 	if (!game.mlx)
@@ -38,7 +38,7 @@ int init_cube(void)
 	game.img.img = mlx_new_image(game.mlx, WIN_WIDTH, WIN_HEIGHT);
 	game.img.addr = mlx_get_data_addr(game.img.img, &game.img.bits_per_pixel, 
 				   &game.img.line_length, &game.img.endian);
-	game.player = &player;
+	game.player = player;
 	load_textures(&game);
 	// Set up event hooks
 	mlx_hook(game.mlx_window, 2, 1L<<0, key_press, &game);
@@ -51,13 +51,13 @@ int init_cube(void)
 
 void	load_textures(t_game *game)
 {
-	game->north_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_1.xpm",
+	game->north_img = mlx_xpm_file_to_image(game->mlx, game->player->northimg,
 					&game->north_width, &game->north_height);
-	game->south_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall_2.xpm",
+	game->south_img = mlx_xpm_file_to_image(game->mlx, game->player->southimg,
 					&game->south_width, &game->south_height);
-	game->west_img = mlx_xpm_file_to_image(game->mlx, "../textur/red_wall.xpm",
+	game->west_img = mlx_xpm_file_to_image(game->mlx,game->player->westimg,
 					&game->west_width, &game->west_height);
-	game->east_img = mlx_xpm_file_to_image(game->mlx, "../textur/wall.xpm",
+	game->east_img = mlx_xpm_file_to_image(game->mlx, game->player->eastimg,
 					&game->east_width, &game->east_height);
 	if (!game->north_img || !game->south_img || !game->west_img || !game->east_img)
 		exit(1); ;
@@ -90,38 +90,38 @@ void	init_player_direction(t_player *player)
 	set_plane(player);
 }
 
-void	init_player(t_player *player)
-{
-	player->map = create_test_map();
-	for (int y = 0; y < 10; y++)
-	{
-		for (int x = 0; x < 30; x++)
-		{
-			if (player->map[y][x] == 'N')
-       			{
-				player->direction = 'N';
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-			}
-			else if (player->map[y][x] == 'W')
-       			{
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-				player->direction = 'W';
-			}
-			else if (player->map[y][x] == 'E')
-       			{
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-				player->direction = 'E';
-			}
-       			else if (player->map[y][x] == 'S')
-			{
-				player->direction = 'S';
-				player->playerY = (float)y;
-				player->playerX = (float)x;
-			}
-		}
-	}
-	init_player_direction(player);
-}
+// void	init_player(t_player *player)
+// {
+// 	player->map = create_test_map();
+// 	for (int y = 0; y < 10; y++)
+// 	{
+// 		for (int x = 0; x < 30; x++)
+// 		{
+// 			if (player->map[y][x] == 'N')
+//        			{
+// 				player->direction = 'N';
+// 				player->playerY = (float)y;
+// 				player->playerX = (float)x;
+// 			}
+// 			else if (player->map[y][x] == 'W')
+//        			{
+// 				player->playerY = (float)y;
+// 				player->playerX = (float)x;
+// 				player->direction = 'W';
+// 			}
+// 			else if (player->map[y][x] == 'E')
+//        			{
+// 				player->playerY = (float)y;
+// 				player->playerX = (float)x;
+// 				player->direction = 'E';
+// 			}
+//        			else if (player->map[y][x] == 'S')
+// 			{
+// 				player->direction = 'S';
+// 				player->playerY = (float)y;
+// 				player->playerX = (float)x;
+// 			}
+// 		}
+// 	}
+// 	init_player_direction(player);
+// }

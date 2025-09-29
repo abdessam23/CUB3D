@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 10:45:53 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/29 16:03:52 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,11 +436,11 @@ int ft_valid_id(char *str,t_player *player)
         free(identif);
     return 1;
 }
-int pars_fun(int argc, char **argv)
+int pars_fun(int argc, char **argv, t_player *player)
 {
     char *str;
     char  **map;
-    t_player player;
+ 
     if (argc != 2)
         return 1;
     if (check_arg(argv[1]) == -1)
@@ -459,25 +459,25 @@ int pars_fun(int argc, char **argv)
         return 1;
     for (int i = 0; map[i] != NULL; i++)
     {
-        if (!ft_valid_id(map[i],&player))
+        if (!ft_valid_id(map[i],player))
         {
             printf("Error: identifier");
             return 1;
         }
     }
-    if (!check_in_map(map, &player))
+    if (!check_in_map(map, player))
     {
         printf("issue inside map");
         return 1;
     }
-    printf("valid map!\n");
-    printf("player cordonne: %f,%f\n",player.playerX,player.playerY);
-    printf("Noth img : %s\n",player.northimg);
-    printf("South img : %s\n",player.southimg);
-    printf("Eest img : %s\n",player.eastimg);
-    printf("West img : %s\n",player.westimg);
-    printf("Direction  : %c\n",player.direction);
-    printf("Floor: %d,%d,%d\n",player.floor[0],player.floor[1],player.floor[2]);
-     printf("roof: %d,%d,%d\n",player.roof[0],player.roof[1],player.roof[2]);
+    // printf("valid map!\n");
+    // printf("player cordonne: %f,%f\n",player.playerX,player.playerY);
+    // printf("Noth img : %s\n",player.northimg);
+    // printf("South img : %s\n",player.southimg);
+    // printf("Eest img : %s\n",player.eastimg);
+    // printf("West img : %s\n",player.westimg);
+    // printf("Direction  : %c\n",player.direction);
+    // printf("Floor: %d,%d,%d\n",player.floor[0],player.floor[1],player.floor[2]);
+    //  printf("roof: %d,%d,%d\n",player.roof[0],player.roof[1],player.roof[2]);
     return 0;
 }

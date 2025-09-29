@@ -3,7 +3,7 @@ NAME = cube
 CC = cc
 FLAGS = -O3 -Wall -Wextra -Werror 
 
-SRC = raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c
+SRC = raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c parsing/pars_map.c
 
 OBJ = $(SRC:.c=.o)
 

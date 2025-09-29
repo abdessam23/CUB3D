@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_tex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 09:47:08 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/20 09:47:22 by asyani           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:13:55 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 {
 	int	y;
 	// get colors
-	/*int roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);*/
-	/*int floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);*/
+	int roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);
+	int floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);
 	// Calculate line height and draw positions
 	if (player->side == 0)
 		player->wallp = player->dsidX - player->dx;
@@ -124,7 +124,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	y = 0;
 	while (y < player->start_draw)
 	{
-		put_pixel(&game->img, column, y, 0x8BE9FF);
+		put_pixel(&game->img, column, y,roof_color);
 		y++;
 	}
 	draw_wall(game, player, column);
@@ -132,7 +132,7 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	y = player->end_draw;
 	while (y < WIN_HEIGHT)
 	{
-		put_pixel(&game->img, column, y, 0xB7715C);
+		put_pixel(&game->img, column, y, floor_color);
 		y++;
 	}
 }

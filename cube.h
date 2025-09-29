@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/02 11:04:13 by asyani           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:05:24 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <math.h>
-# include "lib_ft/libft.h"
+# include "libft/libft.h"
 # include "mlx.h"
 
 # define WIN_WIDTH 1000
@@ -155,11 +155,12 @@ int     game_loop(t_game *game);
 void    render_frame(t_game *game);
 int     close_window(t_game *game);
 char    **create_test_map(void);
-int     init_cube(void);
+int     init_cube(t_player *player);
 int     key_press(int keycode, t_game *game);
 int     key_release(int keycode, t_game *game);
 void    rotate_player(t_player *player, float angle);
 void    handle_movement(t_game *game);
 void	load_textures(t_game *game);
+int pars_fun(int argc, char **argv,t_player *player);
 
 #endif
