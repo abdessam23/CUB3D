@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/30 16:16:35 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/30 16:32:26 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ int checkup_down(char *s)
 }
 int ft_side(char *s)
 {
-<<<<<<< HEAD
     int i =0;
     int l = ft_strlen(s);
     if (!s || !*s)
@@ -182,25 +181,6 @@ int ft_side(char *s)
     // }
     
     return 0;
-=======
-	int i =0;
-	int len = ft_strlen(s);
-	if (!s || !*s)
-		return 0;
-	while (s[i] == ' ')
-		i++;
-	if (s[i] != '1')
-		return 0;
-	/*while (s[i])*/
-	/*{*/
-	/*    if(s[i + 1] != ' ' && s[i] != '1')*/
-	/*        return 1;*/
-	/*    i++;*/
-	/*}*/
-	if (s[len - 1] == '1' || s[len - 1] == ' ')
-		return 1;
-	return 1;
->>>>>>> 35aa1f8730e87c6f6dc8c6e9874908818a4aca07
 }
 int check_side(char **str)
 {
@@ -238,56 +218,50 @@ int ft_direction(int c)
 		return 1;
 	return 0;
 }
-int safe_char_at(char **map, int i, int j, int height)
+int safe_char_at(char **map, int i, int j)
 {
-    if (i < 0 || j < 0 || i >= height)
-        return ' '; // outside map → treat as void
+    int l = 0;
+    while (map[l] != NULL)
+        l++;
+    if (i < 0 || j < 0 || i >= l)
+        return ' '; 
     int len = strlen(map[i]);
     if (j >= len)
-        return ' '; // past end of row → void
+        return ' '; 
     return map[i][j];
 }
 
 
-int check_spaces(char **map, int i, int j, int height)
+int check_spaces(char **map, int i, int j)
 {
-    if (map[i][j] != ' ')
-        return 1; // only check spaces
 
-    char up    = safe_char_at(map, i - 1, j, height);
-    char down  = safe_char_at(map, i + 1, j, height);
-    char left  = safe_char_at(map, i, j - 1, height);
-    char right = safe_char_at(map, i, j + 1, height);
+     char up;
+     char down;
+     char left;
+     char right;
+    
+    
+    up    = safe_char_at(map, i - 1, j);
+    down  = safe_char_at(map, i + 1, j);
+    left  = safe_char_at(map, i, j - 1);
+    right = safe_char_at(map, i, j + 1);
 
-    if ((up == '1' || up == ' ') &&
-        (down == '1' || down == ' ') &&
-        (left == '1' || left == ' ') &&
-        (right == '1' || right == ' '))
+    if ((up == '1' || up == ' ') &&(down == '1' || down == ' ') &&
+        (left == '1' || left == ' ') && (right == '1' || right == ' '))
         return 1;
 
     return 0;
 }
 
 
-int get_hight(char **map)
-{
-    int i = 0;
-    while (map[i] != NULL)
-    {
-        i++;
-    }
-    return i;
-}
+
 int duplicatID(char **str, t_player *player)
 {
-<<<<<<< HEAD
     int i;
     int x;
     int y;
     int j;
     int count;
-    int hight;
-    hight = get_hight(str);
     i = 0;
     count  = 0;
     while (str[++i])
@@ -304,7 +278,7 @@ int duplicatID(char **str, t_player *player)
             }
             if(str[i][j] == ' ')
             {
-                if(!check_spaces(str,i, j,hight))
+                if(!check_spaces(str,i, j))
                     return 0;
             }       
         }
@@ -312,34 +286,7 @@ int duplicatID(char **str, t_player *player)
     if (count > 1)
         return 0;
     return 1;
-=======
-	int i;
-	int x;
-	int y;
-	int j;
-	int count;
-	int flag;
-	flag = 0;
-	i = 0;
-	count  = 0;
-	while (str[++i])
-	{
-		j = 0;
-		while (str[i][++j])
-		{
-			if(ft_direction(str[i][j]))
-			{
-				count++;
-				player->playerX = (float)j; //position of player
-				player->playerY = (float)i;  //position of player
-				player->direction = str[i][j]; // derection of player
-			}        
-		}
-	}
-	if (count > 1)
-		return 0;
-	return 1;
->>>>>>> 35aa1f8730e87c6f6dc8c6e9874908818a4aca07
+
 }
 // char	**create_test_map(void)
 // {
@@ -358,31 +305,7 @@ int duplicatID(char **str, t_player *player)
 
 // 	return (map);
 
-<<<<<<< HEAD
-int check_in_map(char **map,t_player *player)
-{
-    char **str;
-    int n = 0;
-    n = find_one(map);
-    if(n == 0)
-        return 0;
-    str = map + n;
-    int i = 0;
-    if (!str || !*str)
-        return 0;
-    
-    while (str[i] != NULL)
-        i++;
-    if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
-        return 0;
-    
-    if (!duplicatID(str,player))
-        return 0;
-    player->map = str; // map 
-    return 1;         
-=======
-	return (map);
-}
+
 
 int check_in_map(char **map,t_player *player)
 {
@@ -403,8 +326,7 @@ int check_in_map(char **map,t_player *player)
 	if (!duplicatID(str,player))
 		return 0;
 	player->map = str; // map 
-	return 1;         
->>>>>>> 35aa1f8730e87c6f6dc8c6e9874908818a4aca07
+	return 1; 
 }
 
 void fill_img(char *str,char *path,t_player *player)
