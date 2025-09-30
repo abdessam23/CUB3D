@@ -10,7 +10,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -Lmlx  minilibx-linux/libmlx_Linux.a libft/libft.a -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -Lmlx -lmlx libft/libft.a -lXext -lX11 -lm -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
