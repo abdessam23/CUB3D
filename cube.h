@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/29 18:01:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/30 11:00:34 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@
 # define KEY_DOWN 65364
 
 // Movement speeds
-# define MOVE_SPEED 0.005
-# define ROT_SPEED 0.001
+# define MOVE_SPEED 0.05
+# define ROT_SPEED 0.01
 
 typedef struct	s_data
 {

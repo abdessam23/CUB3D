@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/09/29 18:19:00 by abdo             ###   ########.fr       */
+/*   Updated: 2025/09/30 16:16:35 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,18 +137,24 @@ int checkup_down(char *s)
 int ft_side(char *s)
 {
     int i =0;
+    int l = ft_strlen(s);
     if (!s || !*s)
         return 0;
     while (s[i] == ' ')
         i++;
     if (s[i] != '1')
         return 0;
-    while (s[i])
-    {
-        if(s[i + 1] != ' ' && s[i] != '1')
-            return 1;
-        i++;
-    }
+    if (s[l - 1] == '1')
+        return 1;
+    if (s[l - 1] == ' ')
+        return 1;
+    // while (s[i])
+    // {
+    //     if(s[i + 1] != ' ' && s[i] != '1')
+    //         return 1;
+    //     i++;
+    // }
+    
     return 0;
 }
 int check_side(char **str)
@@ -187,7 +193,46 @@ int ft_direction(int c)
         return 1;
     return 0;
 }
+int safe_char_at(char **map, int i, int j, int height)
+{
+    if (i < 0 || j < 0 || i >= height)
+        return ' '; // outside map → treat as void
+    int len = strlen(map[i]);
+    if (j >= len)
+        return ' '; // past end of row → void
+    return map[i][j];
+}
 
+
+int check_spaces(char **map, int i, int j, int height)
+{
+    if (map[i][j] != ' ')
+        return 1; // only check spaces
+
+    char up    = safe_char_at(map, i - 1, j, height);
+    char down  = safe_char_at(map, i + 1, j, height);
+    char left  = safe_char_at(map, i, j - 1, height);
+    char right = safe_char_at(map, i, j + 1, height);
+
+    if ((up == '1' || up == ' ') &&
+        (down == '1' || down == ' ') &&
+        (left == '1' || left == ' ') &&
+        (right == '1' || right == ' '))
+        return 1;
+
+    return 0;
+}
+
+
+int get_hight(char **map)
+{
+    int i = 0;
+    while (map[i] != NULL)
+    {
+        i++;
+    }
+    return i;
+}
 int duplicatID(char **str, t_player *player)
 {
     int i;
@@ -195,8 +240,8 @@ int duplicatID(char **str, t_player *player)
     int y;
     int j;
     int count;
-    int flag;
-    flag = 0;
+    int hight;
+    hight = get_hight(str);
     i = 0;
     count  = 0;
     while (str[++i])
@@ -207,33 +252,38 @@ int duplicatID(char **str, t_player *player)
             if(ft_direction(str[i][j]))
             {
                 count++;
-                player->playerX = i; //position of player
-                player->playerY = j;  //position of player
+                player->playerX = (double)j; //position of player
+                player->playerY = (double)i;  //position of player
                 player->direction = str[i][j]; // derection of player
-            }        
+            }
+            if(str[i][j] == ' ')
+            {
+                if(!check_spaces(str,i, j,hight))
+                    return 0;
+            }       
         }
     }
     if (count > 1)
         return 0;
     return 1;
 }
-char	**create_test_map(void)
-{
-	char **map = malloc(sizeof(char*) * 10);
+// char	**create_test_map(void)
+// {
+// 	char **map = malloc(sizeof(char*) * 10);
 
-	map[0] = ft_strdup("111111111111111111111111111111");
-	map[1] = ft_strdup("100001000000000000000001000001");
-	map[2] = ft_strdup("100000000100100000000000000001");
-	map[3] = ft_strdup("101000011110111111011110000001");
-	map[4] = ft_strdup("100000010000000001000000000001");
-	map[5] = ft_strdup("100000010000000001111100000001");
-	map[6] = ft_strdup("100001000000000000000000000001");
-	map[7] = ft_strdup("100000000000N00001000000001001");
-	map[8] = ft_strdup("100000111100000001000000000001");
-	map[9] = ft_strdup("111111111111111111111111111111");
+// 	map[0] = ft_strdup("111111111111111111111111111111");
+// 	map[1] = ft_strdup("100001000000000000000001000001");
+// 	map[2] = ft_strdup("100000000100100000000000000001");
+// 	map[3] = ft_strdup("101000011110111111011110000001");
+// 	map[4] = ft_strdup("100000010000000001000000000001");
+// 	map[5] = ft_strdup("100000010000000001111100000001");
+// 	map[6] = ft_strdup("100001000000000000000000000001");
+// 	map[7] = ft_strdup("100000000000N00001000000001001");
+// 	map[8] = ft_strdup("100000111100000001000000000001");
+// 	map[9] = ft_strdup("111111111111111111111111111111");
 
-	return (map);
-}
+// 	return (map);
+
 int check_in_map(char **map,t_player *player)
 {
     char **str;
@@ -250,9 +300,10 @@ int check_in_map(char **map,t_player *player)
         i++;
     if (i > 0 && (!checkup_down(str[0]) || !checkup_down(str[i - 1])  || !check_side(str)))
         return 0;
-    if (!duplicatID(create_test_map(),player))
+    
+    if (!duplicatID(str,player))
         return 0;
-    player->map = create_test_map(); // map 
+    player->map = str; // map 
     return 1;         
 }
 
@@ -347,6 +398,7 @@ int ft_atoichecker(char **s,char *str, t_player *player)
         return 0;
     return 1;
 }
+
 int check_range(char *s, t_player *player)
 {
     int  i;

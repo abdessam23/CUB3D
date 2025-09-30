@@ -1,7 +1,7 @@
 NAME = cube
 
 CC = cc
-FLAGS = -g  -Wall -Wextra -Werror  
+FLAGS = -Wall -Wextra -Werror  
 
 SRC =  raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c parsing/pars_map.c  main.c
 
