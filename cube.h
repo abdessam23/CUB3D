@@ -143,7 +143,7 @@ typedef struct s_game
 float    *direction(char c);
 void    set_plane(t_player *player);
 void    calc_step(t_player *player);
-void    DDA_algo(t_player *player);
+void    dda_algo(t_player *player);
 void    wall_calc(t_player *player);
 void    prep_calcs(t_player *player, int i);
 void    put_pixel(t_data *img, int x, int y, int color);
@@ -162,5 +162,6 @@ void    rotate_player(t_player *player, float angle);
 void    handle_movement(t_game *game);
 void	load_textures(t_game *game);
 int pars_fun(int argc, char **argv,t_player *player);
+void	draw_wall(t_game *game, t_player *player, int column);
 
 #endif
