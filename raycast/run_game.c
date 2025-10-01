@@ -32,12 +32,13 @@ void	rotate_player(t_player *player, float angle)
 	float	olddirx;
 	float	oldplanex;
 
-	olddirx = player->dirX;
-	player->dirX = player->dirX * cos(angle) - player->dirY * sin(angle);
-	player->dirY = olddirx * sin(angle) + player->dirY * cos(angle);
-	oldplanex = player->planeX;
-	player->planeX = player->planeX * cos(angle) - player->planeY * sin(angle);
-	player->planeY = oldplanex * sin(angle) + player->planeY * cos(angle);
+	olddirx = player->dir_x;
+	player->dir_x = player->dir_x * cos(angle) - player->dir_y * sin(angle);
+	player->dir_y = olddirx * sin(angle) + player->dir_y * cos(angle);
+	oldplanex = player->plane_x;
+	player->plane_x = player->plane_x * cos(angle)
+		- player->plane_y * sin(angle);
+	player->plane_y = oldplanex * sin(angle) + player->plane_y * cos(angle);
 }
 
 int	game_loop(t_game *game)

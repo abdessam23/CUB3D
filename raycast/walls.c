@@ -14,12 +14,12 @@
 
 void	prep_texx(t_player *player, int *texX)
 {
-	*texX = (int)(player->wallX * player->texWidth);
-	if ((player->side == 0 && player->raydiX > 0)
-		|| (player->side == 1 && player->raydiY < 0))
-		*texX = player->texWidth - *texX - 1;
-	player->step = (float)player->texHeight / player->line_height;
-	player->texPos = (player->start_draw - WIN_HEIGHT / 2.0f
+	*texX = (int)(player->wall_x * player->tex_width);
+	if ((player->side == 0 && player->raydi_x > 0)
+		|| (player->side == 1 && player->raydi_y < 0))
+		*texX = player->tex_width - *texX - 1;
+	player->step = (float)player->tex_height / player->line_height;
+	player->tex_pos = (player->start_draw - WIN_HEIGHT / 2.0f
 			+ player->line_height / 2.0f) * player->step;
 }
 
@@ -37,41 +37,41 @@ void	put_pixel(t_data *img, int x, int y, int color)
 
 void	side_w_e(t_player *player, t_game *game)
 {
-	if (player->raydiX > 0)
+	if (player->raydi_x > 0)
 	{
-		player->texWidth = game->west_width;
-		player->texHeight = game->west_height;
-		player->texAddr = (unsigned char *)game->west_addr;
+		player->tex_width = game->west_width;
+		player->tex_height = game->west_height;
+		player->tex_addr = (unsigned char *)game->west_addr;
 		player->bpp = game->west_bpp / 8;
-		player->lineLen = game->west_line_len;
+		player->line_len = game->west_line_len;
 	}
 	else
 	{
-		player->texWidth = game->east_width;
-		player->texHeight = game->east_height;
-		player->texAddr = (unsigned char *)game->east_addr;
+		player->tex_width = game->east_width;
+		player->tex_height = game->east_height;
+		player->tex_addr = (unsigned char *)game->east_addr;
 		player->bpp = game->east_bpp / 8;
-		player->lineLen = game->east_line_len;
+		player->line_len = game->east_line_len;
 	}
 }
 
 void	side_n_s(t_player *player, t_game *game)
 {
-	if (player->raydiY > 0)
+	if (player->raydi_y > 0)
 	{
-		player->texWidth = game->north_width;
-		player->texHeight = game->north_height;
-		player->texAddr = (unsigned char *)game->north_addr;
+		player->tex_width = game->north_width;
+		player->tex_height = game->north_height;
+		player->tex_addr = (unsigned char *)game->north_addr;
 		player->bpp = game->north_bpp / 8;
-		player->lineLen = game->north_line_len;
+		player->line_len = game->north_line_len;
 	}
 	else
 	{
-		player->texWidth = game->south_width;
-		player->texHeight = game->south_height;
-		player->texAddr = (unsigned char *)game->south_addr;
+		player->tex_width = game->south_width;
+		player->tex_height = game->south_height;
+		player->tex_addr = (unsigned char *)game->south_addr;
 		player->bpp = game->south_bpp / 8;
-		player->lineLen = game->south_line_len;
+		player->line_len = game->south_line_len;
 	}
 }
 
@@ -90,11 +90,11 @@ void	draw_wall(t_game *game, t_player *player, int column)
 	prep_texx(player, &texx);
 	while (y < player->end_draw)
 	{
-		texy = (int)player->texPos;
-		if (texy >= player->texHeight)
-			texy = player->texHeight - 1;
-		player->texPos += player->step;
-		color = *(unsigned int *)(player->texAddr + texy * player->lineLen
+		texy = (int)player->tex_pos;
+		if (texy >= player->tex_height)
+			texy = player->tex_height - 1;
+		player->tex_pos += player->step;
+		color = *(unsigned int *)(player->tex_addr + texy * player->line_len
 				+ texx * player->bpp);
 		put_pixel(&game->img, column, y, color);
 		y++;

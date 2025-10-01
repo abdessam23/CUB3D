@@ -11,17 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef CUBE_H
-#define CUBE_H
+# define CUBE_H
 
-# include <string.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdbool.h>
-# include <math.h>
 # include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
+# include <fcntl.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 800
@@ -38,130 +38,130 @@
 # define KEY_UP 65362
 # define KEY_DOWN 65364
 
-// Movement speeds
 # define MOVE_SPEED 0.05
 # define ROT_SPEED 0.01
 
-typedef struct	s_data
+typedef struct s_data
 {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	int				endian;
+}					t_data;
 
 typedef struct s_player
 {
-	char	**map;
-	double	playerX;
-	double	playerY;
-	char	direction;
-	int	mapX;
-	int	mapY;
-	float cameraX;
-	float planeX;
-	float planeY;
-	float raydiX;
-	float raydiY;
-	double dx;
-	double dy;
-	double dsidX;
-	double dsidY;
-	double stepX;
-	double stepY;
-	double wallp;
-	int line_height;
-	int	start_draw;
-	int	end_draw;
-	int side;
-	int hit;
-	int *p;
-	float wallX;
-	float dirX;
-	float dirY;
-	int	texX;
-	void	*img_wall;
-	int roof[3];
-	int floor[3];
-	char *northimg;
-	char *southimg;
-	char *westimg;
-	char *eastimg;
+	char			**map;
+	double			player_x;
+	double			player_y;
+	char			direction;
+	int				map_x;
+	int				map_y;
+	float			camera_x;
+	float			plane_x;
+	float			plane_y;
+	float			raydi_x;
+	float			raydi_y;
+	double			dx;
+	double			dy;
+	double			dsid_x;
+	double			dsid_y;
+	double			step_x;
+	double			step_y;
+	double			wallp;
+	int				line_height;
+	int				start_draw;
+	int				end_draw;
+	int				side;
+	int				hit;
+	int				*p;
+	float			wall_x;
+	float			dir_x;
+	float			dir_y;
+	int				tex_x;
+	void			*img_wall;
+	int				roof[3];
+	int				floor[3];
+	char			*northimg;
+	char			*southimg;
+	char			*westimg;
+	char			*eastimg;
 	// variable for draw W S
-	float step;
-	float texPos;
-	int texHeight;
-	int texWidth;
-	unsigned char *texAddr;
-	int bpp;
-	int lineLen;
-}	t_player;
+	float			step;
+	float			tex_pos;
+	int				tex_height;
+	int				tex_width;
+	unsigned char	*tex_addr;
+	int				bpp;
+	int				line_len;
+}					t_player;
 
 typedef struct s_game
 {
-	void	*mlx;
-	void	*mlx_window;
-	t_data	img;
-	t_player *player;
-	int         keys[65536];
+	void			*mlx;
+	void			*mlx_window;
+	t_data			img;
+	t_player		*player;
+	int				keys[65536];
 
 	//North
-	void    *north_img;
-	char    *north_addr;
-	int     north_width;
-	int     north_height;
-	int     north_bpp;
-	int     north_line_len;
-	int     north_endian;
+	void			*north_img;
+	char			*north_addr;
+	int				north_width;
+	int				north_height;
+	int				north_bpp;
+	int				north_line_len;
+	int				north_endian;
 	//South
-	void    *south_img;
-	char    *south_addr;
-	int     south_width;
-	int     south_height;
-	int     south_bpp;
-	int     south_line_len;
-	int     south_endian;
+	void			*south_img;
+	char			*south_addr;
+	int				south_width;
+	int				south_height;
+	int				south_bpp;
+	int				south_line_len;
+	int				south_endian;
 	//West
-	void    *west_img;
-	char    *west_addr;
-	int     west_width;
-	int     west_height;
-	int     west_bpp;
-	int     west_line_len;
-	int     west_endian;
+	void			*west_img;
+	char			*west_addr;
+	int				west_width;
+	int				west_height;
+	int				west_bpp;
+	int				west_line_len;
+	int				west_endian;
 	//east
-	void    *east_img;
-	char    *east_addr;
-	int     east_width;
-	int     east_height;
-	int     east_bpp;
-	int     east_line_len;
-	int     east_endian;
-}	t_game;
+	void			*east_img;
+	char			*east_addr;
+	int				east_width;
+	int				east_height;
+	int				east_bpp;
+	int				east_line_len;
+	int				east_endian;
+}					t_game;
 
-float    *direction(char c);
-void    set_plane(t_player *player);
-void    calc_step(t_player *player);
-void    dda_algo(t_player *player);
-void    wall_calc(t_player *player);
-void    prep_calcs(t_player *player, int i);
-void    put_pixel(t_data *img, int x, int y, int color);
-void    draw_wall_column(t_game *game, t_player *player, int column);
-void    run_game(t_player *player, t_game *game);
-void    init_player_direction(t_player *player);
-void    init_player(t_player *player);
-int     game_loop(t_game *game);
-void    render_frame(t_game *game);
-int     close_window(t_game *game);
-char    **create_test_map(void);
-int     init_cube(t_player *player);
-int     key_press(int keycode, t_game *game);
-int     key_release(int keycode, t_game *game);
-void    rotate_player(t_player *player, float angle);
-void    handle_movement(t_game *game);
-void	load_textures(t_game *game);
-int pars_fun(int argc, char **argv,t_player *player);
-void	draw_wall(t_game *game, t_player *player, int column);
+float				*direction(char c);
+void				set_plane(t_player *player);
+void				calc_step(t_player *player);
+void				dda_algo(t_player *player);
+void				wall_calc(t_player *player);
+void				prep_calcs(t_player *player, int i);
+void				put_pixel(t_data *img, int x, int y, int color);
+void				draw_wall_column(t_game *game, t_player *player,
+						int column);
+void				run_game(t_player *player, t_game *game);
+void				init_player_direction(t_player *player);
+void				init_player(t_player *player);
+int					game_loop(t_game *game);
+void				render_frame(t_game *game);
+int					close_window(t_game *game);
+char				**create_test_map(void);
+int					init_cube(t_player *player);
+int					key_press(int keycode, t_game *game);
+int					key_release(int keycode, t_game *game);
+void				rotate_player(t_player *player, float angle);
+void				handle_movement(t_game *game);
+void				load_textures(t_game *game);
+int					pars_fun(int argc, char **argv, t_player *player);
+void				draw_wall(t_game *game, t_player *player, int column);
 
 #endif

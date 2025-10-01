@@ -19,12 +19,12 @@ void	key_down(t_game *game, t_player *player)
 
 	if (game->keys[KEY_S] || game->keys[KEY_DOWN])
 	{
-		newx = player->playerX - player->dirX * MOVE_SPEED;
-		newy = player->playerY - player->dirY * MOVE_SPEED;
-		if (player->map[(int)newy][(int)player->playerX] != '1')
-			player->playerY = newy;
-		if (player->map[(int)player->playerY][(int)newx] != '1')
-			player->playerX = newx;
+		newx = player->player_x - player->dir_x * MOVE_SPEED;
+		newy = player->player_y - player->dir_y * MOVE_SPEED;
+		if (player->map[(int)newy][(int)player->player_x] != '1')
+			player->player_y = newy;
+		if (player->map[(int)player->player_y][(int)newx] != '1')
+			player->player_x = newx;
 	}
 }
 
@@ -41,12 +41,12 @@ void	handle_movement(t_game *game)
 		rotate_player(player, ROT_SPEED);
 	if (game->keys[KEY_W] || game->keys[KEY_UP])
 	{
-		newx = player->playerX + player->dirX * MOVE_SPEED;
-		newy = player->playerY + player->dirY * MOVE_SPEED;
-		if (player->map[(int)newy][(int)player->playerX] != '1')
-			player->playerY = newy;
-		if (player->map[(int)player->playerY][(int)newx] != '1')
-			player->playerX = newx;
+		newx = player->player_x + player->dir_x * MOVE_SPEED;
+		newy = player->player_y + player->dir_y * MOVE_SPEED;
+		if (player->map[(int)newy][(int)player->player_x] != '1')
+			player->player_y = newy;
+		if (player->map[(int)player->player_y][(int)newx] != '1')
+			player->player_x = newx;
 	}
 	key_down(game, player);
 }

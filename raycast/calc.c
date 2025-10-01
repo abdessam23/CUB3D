@@ -42,47 +42,47 @@ void	set_plane(t_player *player)
 {
 	if (player->direction == 'N')
 	{
-		player->planeX = 0.66;
-		player->planeY = 0;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
 	}
 	else if (player->direction == 'S')
 	{
-		player->planeX = -0.66;
-		player->planeY = 0;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
 	}
 	else if (player->direction == 'E')
 	{
-		player->planeX = 0;
-		player->planeY = 0.66;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
 	}
 	else if (player->direction == 'W')
 	{
-		player->planeX = 0;
-		player->planeY = -0.66;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
 	}
 }
 
 void	calc_step(t_player *player)
 {
-	if (player->raydiX < 0)
+	if (player->raydi_x < 0)
 	{
-		player->stepX = -1;
-		player->dsidX = (player->playerX - player->mapX) * player->dx;
+		player->step_x = -1;
+		player->dsid_x = (player->player_x - player->map_x) * player->dx;
 	}
 	else
 	{
-		player->stepX = 1;
-		player->dsidX = (player->mapX + 1.0 - player->playerX) * player->dx;
+		player->step_x = 1;
+		player->dsid_x = (player->map_x + 1.0 - player->player_x) * player->dx;
 	}
-	if (player->raydiY < 0)
+	if (player->raydi_y < 0)
 	{
-		player->stepY = -1;
-		player->dsidY = (player->playerY - player->mapY) * player->dy;
+		player->step_y = -1;
+		player->dsid_y = (player->player_y - player->map_y) * player->dy;
 	}
 	else
 	{
-		player->stepY = 1;
-		player->dsidY = (player->mapY + 1.0 - player->playerY) * player->dy;
+		player->step_y = 1;
+		player->dsid_y = (player->map_y + 1.0 - player->player_y) * player->dy;
 	}
 }
 
@@ -90,38 +90,38 @@ void	dda_algo(t_player *player)
 {
 	while (!player->hit)
 	{
-		if (player->dsidX < player->dsidY)
+		if (player->dsid_x < player->dsid_y)
 		{
-			player->dsidX += player->dx;
-			player->mapX += player->stepX;
+			player->dsid_x += player->dx;
+			player->map_x += player->step_x;
 			player->side = 0;
 		}
 		else
 		{
-			player->dsidY += player->dy;
-			player->mapY += player->stepY;
+			player->dsid_y += player->dy;
+			player->map_y += player->step_y;
 			player->side = 1;
 		}
-		if (player->map[player->mapY][player->mapX] == '1'
-			|| player->map[player->mapY][player->mapX] == ' ')
+		if (player->map[player->map_y][player->map_x] == '1'
+			|| player->map[player->map_y][player->map_x] == ' ')
 			player->hit = 1;
 	}
 }
 
 void	prep_calcs(t_player *player, int i)
 {
-	player->mapX = (int)player->playerX;
-	player->mapY = (int)player->playerY;
+	player->map_x = (int)player->player_x;
+	player->map_y = (int)player->player_y;
 	player->hit = 0;
-	player->cameraX = 2 * (float)i / WIN_WIDTH - 1;
-	player->raydiX = player->dirX + player->planeX * player->cameraX;
-	player->raydiY = player->dirY + player->planeY * player->cameraX;
-	if (player->raydiX == 0)
+	player->camera_x = 2 * (float)i / WIN_WIDTH - 1;
+	player->raydi_x = player->dir_x + player->plane_x * player->camera_x;
+	player->raydi_y = player->dir_y + player->plane_y * player->camera_x;
+	if (player->raydi_x == 0)
 		player->dx = 1e30;
 	else
-		player->dx = fabs(1 / player->raydiX);
-	if (player->raydiY == 0)
+		player->dx = fabs(1 / player->raydi_x);
+	if (player->raydi_y == 0)
 		player->dy = 1e30;
 	else
-		player->dy = fabs(1 / player->raydiY);
+		player->dy = fabs(1 / player->raydi_y);
 }

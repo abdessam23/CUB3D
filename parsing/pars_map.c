@@ -272,8 +272,8 @@ int duplicatID(char **str, t_player *player)
             if(ft_direction(str[i][j]))
             {
                 count++;
-                player->playerX = (double)j; //position of player
-                player->playerY = (double)i;  //position of player
+                player->player_x = (double)j; //position of player
+                player->player_y = (double)i;  //position of player
                 player->direction = str[i][j]; // derection of player
             }
             if(str[i][j] == ' ')
@@ -567,7 +567,7 @@ int pars_fun(int argc, char **argv, t_player *player)
 	// {
 	//     printf("%s\n", player->map[i]);
 	// }
-	// printf("player cordonne: %f,%f\n",player->playerX,player->playerY);
+	// printf("player cordonne: %f,%f\n",player->player_x,player->player_y);
 	// printf("Noth img : %s\n",player->northimg);
 	// printf("South img : %s\n",player->southimg);
 	// printf("Eest img : %s\n",player->eastimg);

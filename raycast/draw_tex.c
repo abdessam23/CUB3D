@@ -27,10 +27,10 @@ void	wall_height(t_player *player)
 	if (player->end_draw >= WIN_HEIGHT)
 		player->end_draw = WIN_HEIGHT - 1;
 	if (player->side == 0)
-		player->wallX = player->playerY + player->wallp * player->raydiY;
+		player->wall_x = player->player_y + player->wallp * player->raydi_y;
 	else
-		player->wallX = player->playerX + player->wallp * player->raydiX;
-	player->wallX -= floor(player->wallX);
+		player->wall_x = player->player_x + player->wallp * player->raydi_x;
+	player->wall_x -= floor(player->wall_x);
 }
 
 void	draw_wall_column(t_game *game, t_player *player, int column)
@@ -42,9 +42,9 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);
 	floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);
 	if (player->side == 0)
-		player->wallp = player->dsidX - player->dx;
+		player->wallp = player->dsid_x - player->dx;
 	else
-		player->wallp = player->dsidY - player->dy;
+		player->wallp = player->dsid_y - player->dy;
 	wall_height(player);
 	y = 0;
 	while (y < player->start_draw)

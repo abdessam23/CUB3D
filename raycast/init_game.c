@@ -88,8 +88,8 @@ void	init_player_direction(t_player *player)
 		printf("Yes");
 		return ;
 	}
-	player->dirX = p[0];
-	player->dirY = p[1];
+	player->dir_x = p[0];
+	player->dir_y = p[1];
 	free(p);
 	set_plane(player);
 }
