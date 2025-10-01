@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/01 11:33:59 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 12:20:37 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,11 @@ int ft_identif(int c);
 int iswhitespace(char *s);
 int is_valid(int c);
 int ft_side(char *s);
+int find_one(char **map);
+int ft_direction(int c);
+int check_spaces(char **map, int i, int j);
+int check_map(char *s);
+void	skip_spaces(char *str, int *i);
 
 
 #endif
