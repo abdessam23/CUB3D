@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:18:45 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 10:20:26 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 11:30:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,26 @@
 
 
 
+int ft_side(char *s)
+{
+    int i =0;
+    int l = ft_strlen(s);
+    if (!s || !*s)
+        return 0;
+    while (s[i] == ' ')
+        i++;
+    if (s[i] != '1')
+        return 0;
+    if (s[l - 1] == '1' || s[l - 1] == ' ')
+        return 1;
+    return 0;
+}
+
+
 void fill_img(char *str,char *path,t_player *player)
 {
 	int l;
+    
 	l = ft_strlen(path);
 	while (l > 0)
 	{
@@ -40,6 +57,7 @@ void fill_img(char *str,char *path,t_player *player)
 	else
 		player->eastimg = path;
 }
+
 int path_checker(char *s, t_player *player)
 {
 	int i = 3;

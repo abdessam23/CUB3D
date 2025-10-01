@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/30 11:00:34 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 11:33:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,15 @@ void    rotate_player(t_player *player, float angle);
 void    handle_movement(t_game *game);
 void	load_textures(t_game *game);
 int pars_fun(int argc, char **argv,t_player *player);
+
+//-----------------------------utils-------------------------
+
+char *read_line(char *s);
+int ft_whitespace(int c);
+int ft_identif(int c);
+int iswhitespace(char *s);
+int is_valid(int c);
+int ft_side(char *s);
+
 
 #endif

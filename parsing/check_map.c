@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:03:11 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 10:05:41 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 11:30:04 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ int checkup_down(char *s)
 	return 1; 
 }
 
-int ft_side(char *s)
-{
-    int i =0;
-    int l = ft_strlen(s);
-    if (!s || !*s)
-        return 0;
-    while (s[i] == ' ')
-        i++;
-    if (s[i] != '1')
-        return 0;
-    if (s[l - 1] == '1' || s[l - 1] == ' ')
-        return 1;
-    return 0;
-}
 
 int check_side(char **str)
 {
@@ -54,6 +40,16 @@ int check_side(char **str)
 	}
 	return 1;
 }
+
+int ft_spaces(char **str, int i, int j)
+{
+    if(str[i][j] == ' ')
+    {
+        if(!check_spaces(str,i, j))
+        return 0;
+    }
+    return 1;       
+}
 int duplicatID(char **str, t_player *player)
 {
     int i;
@@ -61,6 +57,7 @@ int duplicatID(char **str, t_player *player)
     int y;
     int j;
     int count;
+
     i = 0;
     count  = 0;
     while (str[++i])
@@ -75,17 +72,11 @@ int duplicatID(char **str, t_player *player)
                 player->playerY = (double)i;  //position of player
                 player->direction = str[i][j]; // derection of player
             }
-            if(str[i][j] == ' ')
-            {
-                if(!check_spaces(str,i, j))
-                    return 0;
-            }       
+            if(count > 0 || !ft_spaces(str,i,j))
+                return 0;
         }
     }
-    if (count > 1)
-        return 0;
     return 1;
-
 }
 
 

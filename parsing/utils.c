@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:06:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 10:06:25 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 11:29:12 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char *read_line(char *s)
 	close(fd);
 	return str;
 }
-
 
 int ft_whitespace(int c)
 {

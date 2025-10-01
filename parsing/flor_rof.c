@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:14:39 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 10:37:30 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/01 11:20:21 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,47 @@ void ft_free(char **arr)
 	}
 	free(arr);
 }
+
+int check_isdigit(char *range)
+{
+    int start;
+     
+    start = 0;
+    while(range[start])
+	{
+		if (!ft_isdigit(range[start]) && range[start] != ',')
+			return 0;
+		start++;
+	}
+    return 1;
+}
+void skip_spaces(char *str, int *i)
+{
+    while (str[*i] && str[*i] == ' ')
+		*i++;
+}
 int check_range(char *s, t_player *player)
 {
 	int  i;
 	int start;
 	char **arr;
-	char *range = NULL;
+	char *range;
+    
 	i = 0;
 	start = 0;
-	while (s[i] && s[i] == ' ')
-		i++;
+	skip_spaces(s, &i);
 	start = i;
 	if (s[i] == '\0')
 		return 0;
 	while (s[i] && s[i] != ' ')
 		i++;
 	range = ft_substr(s,start, i - start);
-	start = 0;
-
-	while(range[start])
-	{
-		if (!ft_isdigit(range[start]) && range[start] != ',')
-			return 0;
-		start++;
-	}
+	if (!range || !check_isdigit(range))
+        return 0;
 	arr = ft_split(range, ',');
 	if (!ft_atoichecker(arr,s, player))
 		return 0;
-	while (s[i] && s[i] == ' ')
-		i++;
+	skip_spaces(s, &i);
 	if(s[i] != '\0')
 		return 0;
 	free(range);
