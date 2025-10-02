@@ -6,8 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 10:53:47 by abdo             ###   ########.fr       */
-/*   Updated: 2025/10/02 11:42:52 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:21:21 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +27,14 @@ int	check_inside_map(char *str)
 	int i;
 
 	i = 0;
-	printf("%s\n", str);
-
 	while (str[i])
 	{
-		while (is_valid(str[i]) && str[i] != '\n')
+		while (str[i] && is_valid(str[i]) && str[i] != '\n')
 			i++;
 		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
-		{
-			printf("%c, %d\n", str[i], i);
-			printf("issue inside map\n");
 			return (0);
-		}
+		if (str[i] == '\0')
+			break ;
 		i++;
 		if (str[i] == '\n')
 		{
@@ -47,7 +42,6 @@ int	check_inside_map(char *str)
 				i++;
 			if (str[i] == '\0')
 				return (1);
-			printf("issue inside map\n");
 			return (0);
 		}
 	}
@@ -93,6 +87,9 @@ int	pars_fun(int argc, char **argv, t_player *player)
 	if (!map)
 		return (1);
 	if (!ft_valid_map(map, player) || !check_in_map(map, player))
+	{
+		printf("Error: inside map!\n");
 		return (1);
+	}
 	return (0);
 }

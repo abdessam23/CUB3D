@@ -6,8 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:06:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 10:55:02 by abdo             ###   ########.fr       */
-/*   Updated: 2025/10/02 11:40:22 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:19:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +14,28 @@
 
 char	*read_line(char *s)
 {
-	char	buf[11];
 	int		fd;
 	int		rbyt;
-	char	*str = NULL;
-	if (!s)
+	char	*str;
+	char	*tmp;
+	char	buf[11];
+
+	str = malloc(1);
+	str[0] = '\0';
+	fd = open_file(s);
+	if (fd == -1 || !str)
 		return (NULL);
-	fd = open(s, O_RDONLY);
-	if (fd == -1)
-		return (NULL);
-	while ((rbyt = read(fd, buf, 10)) > 0)
+	rbyt = 1;
+	while (rbyt > 0)
 	{
-		// rbyt = read(fd, buf, 10);
-		// if (rbyt == 0)
-		// 	break ;
-		buf[rbyt] = '\0';
-		str = ft_strjoin(str, buf);
+		rbyt = read(fd, buf, 10);
+		if (rbyt > 0)
+		{
+			buf[rbyt] = '\0';
+			tmp = ft_strjoin(str, buf);
+			free(str);
+			str = tmp;
+		}
 	}
 	close(fd);
 	return (str);

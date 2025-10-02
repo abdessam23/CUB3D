@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:14:39 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 12:00:53 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 17:56:42 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	check_isdigit(char *range)
 	start = 0;
 	while (range[start])
 	{
-		if (!ft_isdigit(range[start]) && range[start] != ',')
+		if (!ft_isdigit(range[start]) && range[start] != ','
+			&& range[start] != ' ')
 			return (0);
 		start++;
 	}
@@ -80,7 +81,7 @@ int	check_range(char *s, t_player *player)
 	start = i;
 	if (s[i] == '\0')
 		return (0);
-	while (s[i] && s[i] != ' ')
+	while (s[i])
 		i++;
 	range = ft_substr(s, start, i - start);
 	if (!range || !check_isdigit(range))

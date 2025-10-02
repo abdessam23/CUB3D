@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:03:11 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 10:32:00 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:23:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ int	ft_spaces(char **str, int i, int j)
 	if (str[i][j] == ' ')
 	{
 		if (!check_spaces(str, i, j))
+		{
+			printf("Error: check spaces!");
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -69,15 +72,14 @@ int	duplicatid(char **str, t_player *player)
 			if (ft_direction(str[i][j]))
 			{
 				count++;
-				player->player_x= (double)j;
-				player->player_y= (double)i;
+				player->player_x = (double)j + 0.5;
+				player->player_y = (double)i + 0.5;
 				player->direction = str[i][j];
 			}
-			if (count > 0 || !ft_spaces(str, i, j))
+			if (count > 1 || !ft_spaces(str, i, j))
 				return (0);
 		}
 	}
-	printf("ana hna\n");
 	return (1);
 }
 
@@ -103,5 +105,6 @@ int	check_in_map(char **map, t_player *player)
 	if (!duplicatid(str, player))
 		return (0);
 	player->map = str;
+	player->map[(int)player->player_y][(int)player->player_x] = '0';
 	return (1);
 }
