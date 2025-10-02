@@ -6,11 +6,18 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:07:43 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 12:21:32 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 17:02:01 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
+
+int	open_file(char *s)
+{
+	if (!s)
+		return (-1);
+	return (open(s, O_RDONLY));
+}
 
 int	identif_checker(char *s1, char *s2, t_player *player)
 {
@@ -87,7 +94,5 @@ int	ft_valid_id(char *str, t_player *player)
 				return (0);
 		}
 	}
-	if (identif)
-		free(identif);
 	return (1);
 }

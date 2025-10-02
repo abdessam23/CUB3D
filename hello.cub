@@ -3,7 +3,7 @@ WE textur/wall_1.xpm
 SO textur/wall_2.xpm
 EA textur/wall.xpm
 
-F 0,32,0
+F 0  ,       32  ,   0
 C 120,0,16
 
         1111111111111111111111111

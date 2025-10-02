@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/02 10:42:11 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 16:41:25 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ int	check_in_map(char **map, t_player *player);
 int	check_inside_map(char *str);
 int	path_checker(char *s, t_player *player);
 int	check_range(char *s, t_player *player);
+int	open_file(char *s);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 11:42:52 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 17:09:26 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_arg(char *s)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strrchr(s, '.');
 	if (strcmp(str, ".cub") == 0)
@@ -24,17 +24,17 @@ int	check_arg(char *s)
 
 int	check_inside_map(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	printf("%s\n",str);
 	while (str[i])
 	{
-		while (is_valid(str[i]) && str[i] != '\n')
+		while (str[i] && is_valid(str[i]) && str[i] != '\n')
 			i++;
 		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
 		{
-			printf("%c ,%d 8issue inside map\n",str[i],i);
+			if (str[i - 1] == '\0')
+				break ;
 			return (0);
 		}
 		i++;
@@ -44,7 +44,6 @@ int	check_inside_map(char *str)
 				i++;
 			if (str[i] == '\0')
 				return (1);
-			printf("9issue inside map\n");
 			return (0);
 		}
 	}
@@ -53,7 +52,7 @@ int	check_inside_map(char *str)
 
 int	ft_valid_map(char **map, t_player *player)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map[i] != NULL)
@@ -70,8 +69,8 @@ int	ft_valid_map(char **map, t_player *player)
 
 int	pars_fun(int argc, char **argv, t_player *player)
 {
-	char *str;
-	char **map;
+	char	*str;
+	char	**map;
 
 	if (argc != 2)
 		return (1);
@@ -90,6 +89,9 @@ int	pars_fun(int argc, char **argv, t_player *player)
 	if (!map)
 		return (1);
 	if (!ft_valid_map(map, player) || !check_in_map(map, player))
+	{
+		printf("Error: inside map!\n");
 		return (1);
+	}
 	return (0);
 }
