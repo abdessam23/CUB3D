@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:06:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 12:25:23 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 10:55:02 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 char	*read_line(char *s)
 {
-	char	buf[11];
+	char	buf[10];
 	int		fd;
 	int		rbyt;
 	char	*str;
 
-	*str = NULL;
+	str = NULL;
 	if (!s)
 		return (NULL);
 	fd = open(s, O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	while (rbyt > 0)
+	while ((rbyt = read(fd, buf, 10)) > 0)
 	{
-		rbyt = read(fd, buf, 10);
-		if (rbyt == 0)
-			break ;
+		// rbyt = read(fd, buf, 10);
+		// if (rbyt == 0)
+		// 	break ;
 		buf[rbyt] = '\0';
 		str = ft_strjoin(str, buf);
 	}

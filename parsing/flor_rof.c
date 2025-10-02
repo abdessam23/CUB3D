@@ -64,7 +64,7 @@ int	check_isdigit(char *range)
 void	skip_spaces(char *str, int *i)
 {
 	while (str[*i] && str[*i] == ' ')
-		*i++;
+		(*i)++;
 }
 
 int	check_range(char *s, t_player *player)
