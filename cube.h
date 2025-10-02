@@ -166,18 +166,17 @@ void				draw_wall(t_game *game, t_player *player, int column);
 
 //-----------------------------utils-------------------------
 
-char *read_line(char *s);
-int ft_whitespace(int c);
-int ft_identif(int c);
-int iswhitespace(char *s);
-int is_valid(int c);
-int ft_side(char *s);
-int find_one(char **map);
-int ft_direction(int c);
-int check_spaces(char **map, int i, int j);
-int check_map(char *s);
-void	skip_spaces(char *str, int *i);
-int ft_valid_id(char *str, t_player *player);
-
+char				*read_line(char *s);
+int					ft_whitespace(int c);
+int					ft_identif(int c);
+int					iswhitespace(char *s);
+int					is_valid(int c);
+int					ft_side(char *s);
+int					find_one(char **map);
+int					ft_direction(int c);
+int					check_spaces(char **map, int i, int j);
+int					check_map(char *s);
+void				skip_spaces(char *str, int *i);
+int					ft_valid_id(char *str, t_player *player);
 
 #endif

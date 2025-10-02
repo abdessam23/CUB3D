@@ -556,6 +556,7 @@ int	ft_valid_id(char *str, t_player *player)
 		free(identif);
 	return 1;
 }
+
 int	pars_fun(int argc, char **argv, t_player *player)
 {
 	char	*str;
