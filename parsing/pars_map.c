@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 10:53:47 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 11:42:52 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,24 @@ int	check_inside_map(char *str)
 	int i;
 
 	i = 0;
-	while (*str)
+	printf("%s\n",str);
+	while (str[i])
 	{
-		while (is_valid(*str) && *str != '\n')
-			str++;
-		if (*str != '\0' && *str != '\n' && !is_valid(*str))
+		while (is_valid(str[i]) && str[i] != '\n')
+			i++;
+		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
 		{
-			printf("%c :9issue inside map\n", *str);
+			printf("%c ,%d 8issue inside map\n",str[i],i);
 			return (0);
 		}
-		str++;
-		if (*str == '\n')
+		i++;
+		if (str[i] == '\n')
 		{
-			while (*str && ft_whitespace(*str))
-				str++;
-			if (*str == '\0')
+			while (str[i] && ft_whitespace(str[i]))
+				i++;
+			if (str[i] == '\0')
 				return (1);
-			printf("issue inside map\n");
+			printf("9issue inside map\n");
 			return (0);
 		}
 	}
@@ -80,7 +81,6 @@ int	pars_fun(int argc, char **argv, t_player *player)
 		return (1);
 	}
 	str = read_line(argv[1]);
-	printf("%s \n", str);
 	if (!check_map(str))
 	{
 		printf("Error: unexcepted in map\n");
