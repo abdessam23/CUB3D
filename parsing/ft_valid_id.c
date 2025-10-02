@@ -87,7 +87,7 @@ int	ft_valid_id(char *str, t_player *player)
 				return (0);
 		}
 	}
-	if (identif)
-		free(identif);
+	/*if (identif)*/
+	/*	free(identif);*/
 	return (1);
 }

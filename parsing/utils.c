@@ -7,6 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:06:00 by abdo              #+#    #+#             */
 /*   Updated: 2025/10/02 10:55:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 11:40:22 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +15,10 @@
 
 char	*read_line(char *s)
 {
-	char	buf[10];
+	char	buf[11];
 	int		fd;
 	int		rbyt;
-	char	*str;
-
-	str = NULL;
+	char	*str = NULL;
 	if (!s)
 		return (NULL);
 	fd = open(s, O_RDONLY);

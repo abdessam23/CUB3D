@@ -77,6 +77,7 @@ int	duplicatid(char **str, t_player *player)
 				return (0);
 		}
 	}
+	printf("ana hna\n");
 	return (1);
 }
 
