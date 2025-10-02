@@ -14,52 +14,44 @@
 
 void	key_down(t_game *game, t_player *player)
 {
-	// Backward movement (S key)
-	float	newX;
-	float	newY;
+	float	newx;
+	float	newy;
 
 	if (game->keys[KEY_S] || game->keys[KEY_DOWN])
 	{
-		newX = player->playerX - player->dirX * MOVE_SPEED;
-		newY = player->playerY - player->dirY * MOVE_SPEED;
-
-		// Check collision with walls
-		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY = newY;
-		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX = newX;
+		newx = player->player_x - player->dir_x * MOVE_SPEED;
+		newy = player->player_y - player->dir_y * MOVE_SPEED;
+		if (player->map[(int)newy][(int)player->player_x] != '1')
+			player->player_y = newy;
+		if (player->map[(int)player->player_y][(int)newx] != '1')
+			player->player_x = newx;
 	}
 }
 
-void handle_movement(t_game *game)
+void	handle_movement(t_game *game)
 {
-	t_player *player;
-	float	newX;
-	float	newY;
-	
-	player = game->player;
+	t_player	*player;
+	float		newx;
+	float		newy;
 
-	// Rotation (Left/Right arrows or A/D keys)
+	player = game->player;
 	if (game->keys[KEY_LEFT] || game->keys[KEY_A])
 		rotate_player(player, -ROT_SPEED);
 	if (game->keys[KEY_RIGHT] || game->keys[KEY_D])
 		rotate_player(player, ROT_SPEED);
-	// Forward movement (W key)
 	if (game->keys[KEY_W] || game->keys[KEY_UP])
 	{
-		newX = player->playerX + player->dirX * MOVE_SPEED;
-		newY = player->playerY + player->dirY * MOVE_SPEED;
-
-		// Check collision with walls
-		if (player->map[(int)newY][(int)player->playerX] != '1')
-			player->playerY = newY;
-		if (player->map[(int)player->playerY][(int)newX] != '1')
-			player->playerX = newX;
+		newx = player->player_x + player->dir_x * MOVE_SPEED;
+		newy = player->player_y + player->dir_y * MOVE_SPEED;
+		if (player->map[(int)newy][(int)player->player_x] != '1')
+			player->player_y = newy;
+		if (player->map[(int)player->player_y][(int)newx] != '1')
+			player->player_x = newx;
 	}
 	key_down(game, player);
 }
 
-int key_press(int keycode, t_game *game)
+int	key_press(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		close_window(game);
@@ -68,7 +60,7 @@ int key_press(int keycode, t_game *game)
 	return (0);
 }
 
-int key_release(int keycode, t_game *game)
+int	key_release(int keycode, t_game *game)
 {
 	if (keycode < 65536)
 		game->keys[keycode] = 0;
