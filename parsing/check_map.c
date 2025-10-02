@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:03:11 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 12:04:51 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 10:32:00 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	duplicatid(char **str, t_player *player)
 			if (ft_direction(str[i][j]))
 			{
 				count++;
-				player->playerX = (double)j;
-				player->playerY = (double)i;
+				player->player_x= (double)j;
+				player->player_y= (double)i;
 				player->direction = str[i][j];
 			}
 			if (count > 0 || !ft_spaces(str, i, j))

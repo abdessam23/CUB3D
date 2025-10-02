@@ -3,14 +3,15 @@ NAME = cube
 CC = cc
 FLAGS = -Wall -Wextra -Werror  
 
-SRC =  raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c raycast/calc.c raycast/walls.c parsing/pars_map.c  main.c
+SRC =  raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c raycast/calc.c raycast/walls.c parsing/pars_map.c  parsing/check_map.c parsing/check_space.c \
+		parsing/fill_image.c parsing/flor_rof.c parsing/ft_valid_id.c parsing/utils.c main.c
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -Lmlx -lmlx libft/libft.a -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -Lmlx minilibx-linux/libmlx_Linux.a libft/libft.a -lXext -lX11 -lm -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
