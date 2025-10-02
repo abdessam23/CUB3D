@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:14:39 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 17:21:20 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 17:56:42 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	check_isdigit(char *range)
 	int	start;
 
 	start = 0;
-	printf("%s\n", range);
 	while (range[start])
 	{
 		if (!ft_isdigit(range[start]) && range[start] != ','

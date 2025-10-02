@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:06:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 16:58:53 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:17:14 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*read_line(char *s)
 	char	buf[11];
 
 	str = malloc(1);
+	str[0] = '\0';
 	fd = open_file(s);
 	if (fd == -1 || !str)
 		return (NULL);

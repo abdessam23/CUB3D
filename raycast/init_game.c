@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 09:40:56 by asyani            #+#    #+#             */
-/*   Updated: 2025/09/29 18:18:51 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:11:00 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	init_arr(t_game *game)
 int	init_cube(t_player *player)
 {
 	t_game	game;
-
+	
+	game.mlx = NULL;
+	game.mlx_window = NULL;
+	game.player = NULL;
 	init_arr(&game);
 	init_player_direction(player);
 	game.mlx = mlx_init();

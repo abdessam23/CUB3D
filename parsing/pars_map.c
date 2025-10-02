@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 17:09:26 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:06:42 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	check_inside_map(char *str)
 		while (str[i] && is_valid(str[i]) && str[i] != '\n')
 			i++;
 		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
-		{
-			if (str[i - 1] == '\0')
-				break ;
 			return (0);
-		}
+		if (str[i] == '\0')
+			break ;
 		i++;
 		if (str[i] == '\n')
 		{
