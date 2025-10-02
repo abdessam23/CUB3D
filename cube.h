@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/02 18:26:19 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:50:10 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,11 @@ int check_spaces(char **map, int i, int j);
 int check_map(char *s);
 void	skip_spaces(char *str, int *i);
 int ft_valid_id(char *str, t_player *player);
+int	open_file(char *s);
+int	check_inside_map(char *str);
+int	check_range(char *s, t_player *player);
+int	path_checker(char *s, t_player *player);
+int	check_in_map(char **map, t_player *player);
 
 
 #endif

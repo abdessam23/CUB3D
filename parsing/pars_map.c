@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 18:21:21 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/02 18:45:44 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 int	check_arg(char *s)
 {
-	char *str;
+	char	*str;
 
 	str = ft_strrchr(s, '.');
-	if (strcmp(str, ".cub") == 0)
+	if (ft_strlen(str) > 4)
+		return (-1);
+	if (ft_strncmp(str, ".cub", 4) == 0)
 		return (1);
 	return (-1);
 }
 
 int	check_inside_map(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -50,7 +52,7 @@ int	check_inside_map(char *str)
 
 int	ft_valid_map(char **map, t_player *player)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map[i] != NULL)
@@ -67,8 +69,8 @@ int	ft_valid_map(char **map, t_player *player)
 
 int	pars_fun(int argc, char **argv, t_player *player)
 {
-	char *str;
-	char **map;
+	char	*str;
+	char	**map;
 
 	if (argc != 2)
 		return (1);
@@ -78,7 +80,7 @@ int	pars_fun(int argc, char **argv, t_player *player)
 		return (1);
 	}
 	str = read_line(argv[1]);
-	if (!check_map(str))
+	if (!str || !check_map(str))
 	{
 		printf("Error: unexcepted in map\n");
 		return (1);
