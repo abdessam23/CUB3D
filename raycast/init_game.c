@@ -31,6 +31,10 @@ int	init_cube(t_player *player)
 	game.mlx = NULL;
 	game.mlx_window = NULL;
 	game.player = NULL;
+	game.north_img = NULL;
+	game.south_img = NULL;
+	game.east_img = NULL;
+	game.west_img = NULL;
 	init_arr(&game);
 	init_player_direction(player);
 	game.mlx = mlx_init();

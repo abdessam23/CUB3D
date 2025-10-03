@@ -1,25 +1,31 @@
 NAME = cube
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror  
+FLAGS = -Wall -Wextra -Werror
+LIB_DIR = libft/
+LIB = $(LIB_DIR)/libft.a
 
 SRC =  raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c raycast/calc.c raycast/walls.c parsing/pars_map.c  parsing/check_map.c parsing/check_space.c \
 		parsing/fill_image.c parsing/flor_rof.c parsing/ft_valid_id.c parsing/utils.c main.c
+$(LIB):
+	@make -C $(LIB_DIR)
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all: $(LIB) $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -Lmlx minilibx-linux/libmlx_Linux.a libft/libft.a -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIB) -Lmlx -lmlx -lXext -lX11 -lm -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	make clean -C $(LIB_DIR)
 	rm -f $(OBJ)
 
 fclean: clean
+	make fclean -C $(LIB_DIR)
 	rm -f $(NAME)
 
 re: fclean all

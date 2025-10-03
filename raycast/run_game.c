@@ -56,6 +56,21 @@ void	render_frame(t_game *game)
 
 int	close_window(t_game *game)
 {
+	if (game->north_img)
+		mlx_destroy_image(game->mlx, game->north_img);
+	if (game->south_img)
+		mlx_destroy_image(game->mlx, game->south_img);
+	if (game->east_img)
+		mlx_destroy_image(game->mlx, game->east_img);
+	if (game->west_img)
+		mlx_destroy_image(game->mlx, game->west_img);
+	if (game->img.img)
+		mlx_destroy_image(game->mlx, game->img.img);
+
+	if (game->mlx_window)
+		mlx_destroy_window(game->mlx, game->mlx_window);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
 	exit(0);
 	return (0);
 }
