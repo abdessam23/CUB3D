@@ -71,6 +71,11 @@ int	pars_fun(int argc, char **argv, t_player *player)
 {
 	char	*str;
 	char	**map;
+	player->northimg = NULL;
+	player->southimg = NULL;
+	player->eastimg = NULL;
+	player->westimg = NULL;
+	player->map = NULL;
 
 	if (argc != 2)
 		return (1);
@@ -86,6 +91,7 @@ int	pars_fun(int argc, char **argv, t_player *player)
 		return (1);
 	}
 	map = ft_split(str, '\n');
+	free(str);
 	if (!map)
 		return (1);
 	if (!ft_valid_map(map, player) || !check_in_map(map, player))
@@ -93,5 +99,10 @@ int	pars_fun(int argc, char **argv, t_player *player)
 		printf("Error: inside map!\n");
 		return (1);
 	}
+	for (int i = 0; map[i] != NULL; i++)
+	{
+		free(map[i]);
+	}
+	free(map);
 	return (0);
 }

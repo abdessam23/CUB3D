@@ -39,11 +39,13 @@ int	init_cube(t_player *player)
 	init_player_direction(player);
 	game.mlx = mlx_init();
 	if (!game.mlx)
-		return (1);
+		error_exit("mlx failed", &game);
 	game.mlx_window = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Cub3D");
 	if (!game.mlx_window)
-		return (1);
+		error_exit("mlx_window failed", &game);
 	game.img.img = mlx_new_image(game.mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!game.img.img)
+		error_exit("Create image failed", &game);
 	game.img.addr = mlx_get_data_addr(game.img.img, &game.img.bits_per_pixel,
 			&game.img.line_length, &game.img.endian);
 	game.player = player;
@@ -68,10 +70,7 @@ void	load_textures(t_game *game)
 			&game->east_width, &game->east_height);
 	if (!game->north_img || !game->south_img || !game->west_img
 		|| !game->east_img)
-	{
-		printf("Error: converting failed\n");
-		exit(1);
-	}
+		error_exit("Load img failed", game);
 	game->north_addr = mlx_get_data_addr(game->north_img, &game->north_bpp,
 			&game->north_line_len, &game->north_endian);
 	game->south_addr = mlx_get_data_addr(game->south_img, &game->south_bpp,
@@ -82,7 +81,7 @@ void	load_textures(t_game *game)
 			&game->east_line_len, &game->east_endian);
 	if (!game->north_addr || !game->south_addr || !game->west_addr
 		|| !game->east_addr)
-		return ;
+		error_exit("get image address failed", game);
 }
 
 void	init_player_direction(t_player *player)
@@ -92,7 +91,7 @@ void	init_player_direction(t_player *player)
 	p = direction(player->direction);
 	if (!p)
 	{
-		printf("Yes");
+		printf("Direction is not correct");
 		return ;
 	}
 	player->dir_x = p[0];

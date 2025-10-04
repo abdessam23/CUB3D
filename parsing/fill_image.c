@@ -88,7 +88,10 @@ int	path_checker(char *s, t_player *player)
 		i++;
 	path = ft_substr(s, start, i - start);
 	if (!open_fille(path))
+	{
+		free(path);
 		return (0);
+	}
 	while (s[i] && s[i] == ' ')
 		i++;
 	if (s[i] != '\0')

@@ -73,7 +73,7 @@ char	*ft_idchar(char c)
 int	ft_valid_id(char *str, t_player *player)
 {
 	int		i;
-	char	*identif;
+	char	*identif = NULL;
 
 	i = 0;
 	skip_spaces(str, &i);
@@ -94,5 +94,6 @@ int	ft_valid_id(char *str, t_player *player)
 				return (0);
 		}
 	}
+	free(identif);
 	return (1);
 }

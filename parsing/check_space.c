@@ -15,10 +15,10 @@
 int	check_map(char *s)
 {
 	int		count;
-	char	*str;
+	char	*str = NULL;
 
 	count = 0;
-	str = ft_strdup(s);
+	str = s;
 	while (*str)
 	{
 		while (*str && ft_whitespace(*str))
