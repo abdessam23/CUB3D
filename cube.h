@@ -166,6 +166,7 @@ void				draw_wall(t_game *game, t_player *player, int column);
 
 //-----------------------------utils-------------------------
 
+void	free_all(t_game *game);
 void	error_exit(char *msg, t_game *game);
 char *read_line(char *s);
 int ft_whitespace(int c);

@@ -27,7 +27,6 @@ void	init_arr(t_game *game)
 	game->south_addr = NULL;
 	game->east_addr = NULL;
 	game->west_addr = NULL;
-
 	i = 0;
 	while (i < 65536)
 	{
@@ -39,7 +38,7 @@ void	init_arr(t_game *game)
 int	init_cube(t_player *player)
 {
 	t_game	game;
-	
+
 	init_arr(&game);
 	init_player_direction(player);
 	game.mlx = mlx_init();

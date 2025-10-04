@@ -102,8 +102,7 @@ void	dda_algo(t_player *player)
 			player->map_y += player->step_y;
 			player->side = 1;
 		}
-		if (player->map[player->map_y][player->map_x] == '1'
-			|| player->map[player->map_y][player->map_x] == ' ')
+		if (player->map[player->map_y][player->map_x] == '1')
 			player->hit = 1;
 	}
 }

@@ -66,3 +66,20 @@ int	key_release(int keycode, t_game *game)
 		game->keys[keycode] = 0;
 	return (0);
 }
+
+void	error_exit(char *msg, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	free_all(game);
+	while (game->player->map[i])
+	{
+		free(game->player->map[i]);
+		i++;
+	}
+	free(game->player->map);
+	free(game->mlx);
+	printf("%s\n", msg);
+	exit(1);
+}
