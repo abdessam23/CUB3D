@@ -16,7 +16,7 @@ $(LIB):
 	@make -C $(LIB_DIR)
 
 $(NAME): $(OBJ) $(LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) -Lmlx minilibx-linux/libmlx_Linux.a  libft/libft.a -lXext -lX11 -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIB) -Lmlx -lmlx -lXext -lX11 -lm -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

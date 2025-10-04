@@ -56,34 +56,10 @@ void	render_frame(t_game *game)
 
 int	close_window(t_game *game)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if (game->north_img)
-		mlx_destroy_image(game->mlx, game->north_img);
-	if (game->south_img)
-		mlx_destroy_image(game->mlx, game->south_img);
-	if (game->east_img)
-		mlx_destroy_image(game->mlx, game->east_img);
-	if (game->west_img)
-		mlx_destroy_image(game->mlx, game->west_img);
-	if (game->img.img)
-		mlx_destroy_image(game->mlx, game->img.img);
-	//----------
-	
-	if (game->player->northimg)
-		free(game->player->northimg);
-	if (game->player->southimg)
-		free(game->player->southimg);
-	if (game->player->westimg)
-		free(game->player->westimg);
-	if (game->player->eastimg)
-		free(game->player->eastimg);
-	//----------
-
-	if (game->mlx_window)
-		mlx_destroy_window(game->mlx, game->mlx_window);
-	mlx_destroy_display(game->mlx);
+	free_all(game);
 	while (game->player->map[i])
 	{
 		free(game->player->map[i]);
@@ -93,33 +69,4 @@ int	close_window(t_game *game)
 	free(game->mlx);
 	exit(0);
 	return (0);
-}
-
-void	error_exit(char *msg, t_game *game)
-{
-	int i;
-
-	i = 0;
-	if (game->north_img)
-		mlx_destroy_image(game->mlx, game->north_img);
-	if (game->south_img)
-		mlx_destroy_image(game->mlx, game->south_img);
-	if (game->east_img)
-		mlx_destroy_image(game->mlx, game->east_img);
-	if (game->west_img)
-		mlx_destroy_image(game->mlx, game->west_img);
-	if (game->img.img)
-		mlx_destroy_image(game->mlx, game->img.img);
-	if (game->mlx_window)
-		mlx_destroy_window(game->mlx, game->mlx_window);
-	mlx_destroy_display(game->mlx);
-	while (game->player->map[i])
-	{
-		free(game->player->map[i]);
-		i++;
-	}
-	free(game->player->map);
-	free(game->mlx);
-	printf("%s\n", msg);
-	exit(1);
 }

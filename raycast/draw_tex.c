@@ -60,3 +60,28 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 		y++;
 	}
 }
+
+void	free_all(t_game *game)
+{
+	if (game->north_img)
+		mlx_destroy_image(game->mlx, game->north_img);
+	if (game->south_img)
+		mlx_destroy_image(game->mlx, game->south_img);
+	if (game->east_img)
+		mlx_destroy_image(game->mlx, game->east_img);
+	if (game->west_img)
+		mlx_destroy_image(game->mlx, game->west_img);
+	if (game->img.img)
+		mlx_destroy_image(game->mlx, game->img.img);
+	if (game->player->northimg)
+		free(game->player->northimg);
+	if (game->player->southimg)
+		free(game->player->southimg);
+	if (game->player->westimg)
+		free(game->player->westimg);
+	if (game->player->eastimg)
+		free(game->player->eastimg);
+	if (game->mlx_window)
+		mlx_destroy_window(game->mlx, game->mlx_window);
+	mlx_destroy_display(game->mlx);
+}

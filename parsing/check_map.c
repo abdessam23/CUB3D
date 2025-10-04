@@ -105,7 +105,7 @@ int	check_in_map(char **map, t_player *player)
 	int len = 0;
 	while (str[i])
 		i++;
-	player->map = malloc(sizeof(char *) *(i + 1));
+	player->map = malloc(sizeof(char *) * (i + 1));
 	if (!player->map)
 		return 0;
 	len = i;
