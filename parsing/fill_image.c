@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:18:45 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 10:49:18 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 11:50:55 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	open_fille(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
+		free(path);
 		return (0);
 	}
 	return (fd);
@@ -87,14 +88,37 @@ int	path_checker(char *s, t_player *player)
 		i++;
 	path = ft_substr(s, start, i - start);
 	if (!open_fille(path))
-	{
-		free(path);
 		return (0);
-	}
 	while (s[i] && s[i] == ' ')
 		i++;
 	if (s[i] != '\0')
 		return (0);
 	fill_img(s, path, player);
+	return (1);
+}
+
+int	check_inside_map(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && is_valid(str[i]) && str[i] != '\n')
+			i++;
+		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
+			return (0);
+		if (str[i] == '\0')
+			break ;
+		i++;
+		if (str[i] == '\n')
+		{
+			while (str[i] && ft_whitespace(str[i]))
+				i++;
+			if (str[i] == '\0')
+				return (1);
+			return (0);
+		}
+	}
 	return (1);
 }

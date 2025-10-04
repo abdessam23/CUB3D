@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 10:55:27 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 11:49:08 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_arg(char *s)
 {
 	char	*str;
-	
+
 	str = ft_strrchr(s, '.');
 	if (!str)
 		return (-1);
@@ -24,32 +24,6 @@ int	check_arg(char *s)
 	if (ft_strncmp(str, ".cub", 4) == 0)
 		return (1);
 	return (-1);
-}
-
-int	check_inside_map(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		while (str[i] && is_valid(str[i]) && str[i] != '\n')
-			i++;
-		if (str[i] != '\0' && str[i] != '\n' && !is_valid(str[i]))
-			return (0);
-		if (str[i] == '\0')
-			break ;
-		i++;
-		if (str[i] == '\n')
-		{
-			while (str[i] && ft_whitespace(str[i]))
-				i++;
-			if (str[i] == '\0')
-				return (1);
-			return (0);
-		}
-	}
-	return (1);
 }
 
 int	ft_valid_map(char **map, t_player *player)
@@ -68,7 +42,8 @@ int	ft_valid_map(char **map, t_player *player)
 	}
 	return (1);
 }
-void ft_init_player(t_player *player)
+
+void	ft_init_player(t_player *player)
 {
 	player->northimg = NULL;
 	player->southimg = NULL;
@@ -77,7 +52,7 @@ void ft_init_player(t_player *player)
 	player->map = NULL;
 }
 
-int ft_pars_map(char **map, t_player *player)
+int	ft_pars_map(char **map, t_player *player)
 {
 	if (!ft_valid_map(map, player) || !check_in_map(map, player))
 	{
@@ -86,13 +61,14 @@ int ft_pars_map(char **map, t_player *player)
 		return (0);
 	}
 	ft_free(map);
-	return  (1);
+	return (1);
 }
+
 int	pars_fun(int argc, char **argv, t_player *player)
 {
 	char	*str;
 	char	**map;
-	
+
 	ft_init_player(player);
 	if (argc != 2)
 		return (1);

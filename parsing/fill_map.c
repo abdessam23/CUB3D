@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 12:14:49 by abdo             ###   ########.fr       */
+/*   Created: 2025/10/04 12:03:35 by abdo              #+#    #+#             */
+/*   Updated: 2025/10/04 12:04:59 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube.h"
+#include "../cube.h"
 
-int	main(int arc, char **argv)
+void	fill_map(char **str, t_player *player)
 {
-	t_player	player;
+	int	i;
+	int	len;
 
-	if (pars_fun(arc, argv, &player))
+	i = 0;
+	len = 0;
+	while (str[i])
+		i++;
+	player->map = malloc(sizeof(char *) * (i + 1));
+	if (!player->map)
+		return ;
+	len = i;
+	i = 0;
+	while (i < len)
 	{
-		printf("parsing\n");
-		return (1);
+		player->map[i] = ft_strdup(str[i]);
+		i++;
 	}
-	if (init_cube(&player))
-	{
-		printf("raycasting\n");
-		return (1);
-	}
-	return (0);
+	player->map[i] = NULL;
+	player->map[(int)player->player_y][(int)player->player_x] = '0';
 }

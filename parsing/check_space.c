@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:11:24 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/02 18:22:50 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 11:47:40 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,22 @@
 int	check_map(char *s)
 {
 	int		count;
-	char	*str = NULL;
 
 	count = 0;
-	str = s;
-	while (*str)
+	while (*s)
 	{
-		while (*str && ft_whitespace(*str))
-			str++;
-		if (*str == '\0' || !ft_identif(*str))
+		while (*s && ft_whitespace(*s))
+			s++;
+		if (*s == '\0' || !ft_identif(*s))
 			return (0);
-		while (*str && *str != '\n')
-			str++;
-		while (*str && ft_whitespace(*str))
-			str++;
+		while (*s && *s != '\n')
+			s++;
+		while (*s && ft_whitespace(*s))
+			s++;
 		count++;
 		if (count == 6)
 		{
-			if (*str == '1' && check_inside_map(str))
+			if (*s == '1' && check_inside_map(s))
 				return (1);
 			return (0);
 		}

@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/04 10:27:02 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 12:04:20 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ typedef struct s_game
 	t_player		*player;
 	int				keys[65536];
 
-	//North
+	// North
 	void			*north_img;
 	char			*north_addr;
 	int				north_width;
@@ -113,7 +113,7 @@ typedef struct s_game
 	int				north_bpp;
 	int				north_line_len;
 	int				north_endian;
-	//South
+	// South
 	void			*south_img;
 	char			*south_addr;
 	int				south_width;
@@ -121,7 +121,7 @@ typedef struct s_game
 	int				south_bpp;
 	int				south_line_len;
 	int				south_endian;
-	//West
+	// West
 	void			*west_img;
 	char			*west_addr;
 	int				west_width;
@@ -129,7 +129,7 @@ typedef struct s_game
 	int				west_bpp;
 	int				west_line_len;
 	int				west_endian;
-	//east
+	// east
 	void			*east_img;
 	char			*east_addr;
 	int				east_width;
@@ -166,26 +166,26 @@ void				draw_wall(t_game *game, t_player *player, int column);
 
 //-----------------------------utils-------------------------
 
-void	free_all(t_game *game);
-void	error_exit(char *msg, t_game *game);
-char *read_line(char *s);
-int ft_whitespace(int c);
-int ft_identif(int c);
-int iswhitespace(char *s);
-int is_valid(int c);
-int ft_side(char *s);
-int find_one(char **map);
-int ft_direction(int c);
-int check_spaces(char **map, int i, int j);
-int check_map(char *s);
-void	skip_spaces(char *str, int *i);
-int ft_valid_id(char *str, t_player *player);
-int	open_file(char *s);
-int	check_inside_map(char *str);
-int	check_range(char *s, t_player *player);
-int	path_checker(char *s, t_player *player);
-int	check_in_map(char **map, t_player *player);
-void	ft_free(char **arr);
-
+void				free_all(t_game *game);
+void				error_exit(char *msg, t_game *game);
+char				*read_line(char *s);
+int					ft_whitespace(int c);
+int					ft_identif(int c);
+int					iswhitespace(char *s);
+int					is_valid(int c);
+int					ft_side(char *s);
+int					find_one(char **map);
+int					ft_direction(int c);
+int					check_spaces(char **map, int i, int j);
+int					check_map(char *s);
+void				skip_spaces(char *str, int *i);
+int					ft_valid_id(char *str, t_player *player);
+int					open_file(char *s);
+int					check_inside_map(char *str);
+int					check_range(char *s, t_player *player);
+int					path_checker(char *s, t_player *player);
+int					check_in_map(char **map, t_player *player);
+void				ft_free(char **arr);
+void				fill_map(char **str, t_player *player);
 
 #endif

@@ -6,7 +6,7 @@ LIB_DIR = libft
 LIB = $(LIB_DIR)/libft.a
 
 SRC =  raycast/draw_tex.c raycast/handle_keys.c raycast/init_game.c raycast/run_game.c raycast/calc.c raycast/walls.c parsing/pars_map.c  parsing/check_map.c parsing/check_space.c \
-		parsing/fill_image.c parsing/flor_rof.c parsing/ft_valid_id.c parsing/utils.c main.c
+		parsing/fill_image.c parsing/flor_rof.c parsing/ft_valid_id.c parsing/utils.c parsing/fill_map.c main.c
 
 OBJ = $(SRC:.c=.o)
 

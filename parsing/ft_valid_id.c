@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:07:43 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 10:38:39 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 11:56:23 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,10 @@ char	*ft_idchar(char c)
 int	ft_valid_id(char *str, t_player *player)
 {
 	int		i;
-	char	*identif = NULL;
+	char	*identif;
 
 	i = 0;
+	identif = NULL;
 	skip_spaces(str, &i);
 	if (ft_identif(str[i]))
 	{

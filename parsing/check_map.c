@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:03:11 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 11:21:06 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 12:03:45 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,21 +101,6 @@ int	check_in_map(char **map, t_player *player)
 		return (0);
 	if (!duplicatid(str, player))
 		return (0);
-	i = 0;
-	int len = 0;
-	while (str[i])
-		i++;
-	player->map = malloc(sizeof(char *) * (i + 1));
-	if (!player->map)
-		return 0;
-	len = i;
-	i = 0;
-	while (i < len)
-	{
-		player->map[i] = ft_strdup(str[i]);
-		i++;
-	}
-	player->map[i] = NULL;
-	player->map[(int)player->player_y][(int)player->player_x] = '0';
+	fill_map(str, player);
 	return (1);
 }
