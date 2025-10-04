@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calc.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asyani <asyani@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:05:49 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/01 10:06:20 by asyani           ###   ########.fr       */
+/*   Updated: 2025/10/04 11:08:26 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ void	dda_algo(t_player *player)
 			player->map_y += player->step_y;
 			player->side = 1;
 		}
-		if (player->map[player->map_y][player->map_x] == '1'
-			|| player->map[player->map_y][player->map_x] == ' ')
+		if (player->map[player->map_y][player->map_x] == '1')
 			player->hit = 1;
 	}
 }

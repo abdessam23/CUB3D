@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:18:45 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/01 12:13:48 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 10:49:18 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	open_fille(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		free(path);
 		return (0);
 	}
 	return (fd);

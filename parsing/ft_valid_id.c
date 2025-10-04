@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:07:43 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/03 09:49:40 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 10:38:39 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	open_file(char *s)
 
 int	identif_checker(char *s1, char *s2, t_player *player)
 {
-	int	i;
-
-	i = 0;
 	while (*s1 == ' ')
 		s1++;
 	if (*s1 == *s2)
