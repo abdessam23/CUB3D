@@ -16,6 +16,18 @@ void	init_arr(t_game *game)
 {
 	int		i;
 
+	game->mlx = NULL;
+	game->mlx_window = NULL;
+	game->player = NULL;
+	game->north_img = NULL;
+	game->south_img = NULL;
+	game->east_img = NULL;
+	game->west_img = NULL;
+	game->north_addr = NULL;
+	game->south_addr = NULL;
+	game->east_addr = NULL;
+	game->west_addr = NULL;
+
 	i = 0;
 	while (i < 65536)
 	{
@@ -28,13 +40,6 @@ int	init_cube(t_player *player)
 {
 	t_game	game;
 	
-	game.mlx = NULL;
-	game.mlx_window = NULL;
-	game.player = NULL;
-	game.north_img = NULL;
-	game.south_img = NULL;
-	game.east_img = NULL;
-	game.west_img = NULL;
 	init_arr(&game);
 	init_player_direction(player);
 	game.mlx = mlx_init();
@@ -48,6 +53,8 @@ int	init_cube(t_player *player)
 		error_exit("Create image failed", &game);
 	game.img.addr = mlx_get_data_addr(game.img.img, &game.img.bits_per_pixel,
 			&game.img.line_length, &game.img.endian);
+	if (!game.img.addr)
+		error_exit("image address failed", &game);
 	game.player = player;
 	load_textures(&game);
 	mlx_hook(game.mlx_window, 2, 1L << 0, key_press, &game);
@@ -81,7 +88,7 @@ void	load_textures(t_game *game)
 			&game->east_line_len, &game->east_endian);
 	if (!game->north_addr || !game->south_addr || !game->west_addr
 		|| !game->east_addr)
-		error_exit("get image address failed", game);
+		error_exit("get textures address failed", game);
 }
 
 void	init_player_direction(t_player *player)

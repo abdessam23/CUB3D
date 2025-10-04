@@ -112,6 +112,14 @@ void	error_exit(char *msg, t_game *game)
 		mlx_destroy_image(game->mlx, game->img.img);
 	if (game->mlx_window)
 		mlx_destroy_window(game->mlx, game->mlx_window);
+	if (game->player->northimg)
+		free(game->player->northimg);
+	if (game->player->southimg)
+		free(game->player->southimg);
+	if (game->player->westimg)
+		free(game->player->westimg);
+	if (game->player->eastimg)
+		free(game->player->eastimg);
 	mlx_destroy_display(game->mlx);
 	while (game->player->map[i])
 	{
