@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:18:45 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 11:50:55 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 13:06:13 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_side(char *s)
 	return (0);
 }
 
-void	fill_img(char *str, char *path, t_player *player)
+int	fill_img(char *str, char *path, t_player *player)
 {
 	int	l;
 
@@ -44,8 +44,9 @@ void	fill_img(char *str, char *path, t_player *player)
 	if (ft_strncmp(path + l, ".xpm", 4))
 	{
 		free(path);
+		ft_free_path(player);
 		printf("the image should use .xpm extension\n");
-		exit(1);
+		return (0);
 	}
 	if (*str == 'N')
 		player->northimg = path;
@@ -55,15 +56,17 @@ void	fill_img(char *str, char *path, t_player *player)
 		player->westimg = path;
 	else
 		player->eastimg = path;
+	return (1);
 }
 
-int	open_fille(char *path)
+int	open_fille(char *path, t_player *player)
 {
 	int	fd;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
+		ft_free_path(player);
 		free(path);
 		return (0);
 	}
@@ -87,13 +90,14 @@ int	path_checker(char *s, t_player *player)
 	while (s[i] && s[i] != ' ')
 		i++;
 	path = ft_substr(s, start, i - start);
-	if (!open_fille(path))
+	if (!open_fille(path, player))
 		return (0);
 	while (s[i] && s[i] == ' ')
 		i++;
 	if (s[i] != '\0')
 		return (0);
-	fill_img(s, path, player);
+	if (!fill_img(s, path, player))
+		return (0);
 	return (1);
 }
 

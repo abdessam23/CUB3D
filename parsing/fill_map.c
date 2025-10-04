@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 12:03:35 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 12:04:59 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/04 12:59:12 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,16 @@ void	fill_map(char **str, t_player *player)
 	}
 	player->map[i] = NULL;
 	player->map[(int)player->player_y][(int)player->player_x] = '0';
+}
+
+void	ft_free_path(t_player *player)
+{
+	if (player->northimg)
+		free(player->northimg);
+	if (player->westimg)
+		free(player->westimg);
+	if (player->southimg)
+		free(player->southimg);
+	if (player->eastimg)
+		free(player->eastimg);
 }
