@@ -56,8 +56,8 @@ int	init_cube(t_player *player)
 		error_exit("image address failed", &game);
 	game.player = player;
 	load_textures(&game);
-	mlx_hook(game.mlx_window, 2, 1L << 0, key_press, &game);
-	mlx_hook(game.mlx_window, 3, 1L << 1, key_release, &game);
+	mlx_hook(game.mlx_window, 2, 1, key_press, &game);
+	mlx_hook(game.mlx_window, 3, 2, key_release, &game);
 	mlx_hook(game.mlx_window, 17, 0, close_window, &game);
 	mlx_loop_hook(game.mlx, game_loop, &game);
 	mlx_loop(game.mlx);

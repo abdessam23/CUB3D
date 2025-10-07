@@ -44,18 +44,17 @@ int	fill_img(char *str, char *path, t_player *player)
 	if (ft_strncmp(path + l, ".xpm", 4))
 	{
 		free(path);
-		ft_free_path(player);
 		printf("the image should use .xpm extension\n");
 		return (0);
 	}
 	if (*str == 'N')
-		player->northimg = path;
+		player->northimg = ft_strdup(path);
 	else if (*str == 'S')
-		player->southimg = path;
+		player->southimg = ft_strdup(path);
 	else if (*str == 'W')
-		player->westimg = path;
+		player->westimg = ft_strdup(path);
 	else
-		player->eastimg = path;
+		player->eastimg = ft_strdup(path);
 	return (1);
 }
 
@@ -63,10 +62,10 @@ int	open_fille(char *path, t_player *player)
 {
 	int	fd;
 
+	(void)player;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_free_path(player);
 		free(path);
 		return (0);
 	}
@@ -95,9 +94,16 @@ int	path_checker(char *s, t_player *player)
 	while (s[i] && s[i] == ' ')
 		i++;
 	if (s[i] != '\0')
+	{
+		free(path);
 		return (0);
+	}
 	if (!fill_img(s, path, player))
+	{
+		free(path);
 		return (0);
+	}
+	free(path);
 	return (1);
 }
 

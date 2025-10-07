@@ -100,7 +100,10 @@ int	check_in_map(char **map, t_player *player)
 			|| !check_side(str)))
 		return (0);
 	if (!duplicatid(str, player))
+	{
+		ft_free_path(player);
 		return (0);
+	}
 	fill_map(str, player);
 	return (1);
 }

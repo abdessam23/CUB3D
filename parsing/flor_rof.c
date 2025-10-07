@@ -22,7 +22,10 @@ int	ft_atoichecker(char **s, char *str, t_player *player)
 	{
 		n = ft_atoi(s[i]);
 		if (n < 0 || n > 255)
+		{
+			ft_free(s);
 			return (0);
+		}
 		if (*(str - 2) == 'F')
 			player->floor[i] = n;
 		else
@@ -87,12 +90,12 @@ int	check_range(char *s, t_player *player)
 	if (!range || !check_isdigit(range))
 		return (0);
 	arr = ft_split(range, ',');
+	free(range);
 	if (!ft_atoichecker(arr, s, player))
 		return (0);
 	skip_spaces(s, &i);
 	if (s[i] != '\0')
 		return (0);
-	free(range);
 	ft_free(arr);
 	return (1);
 }

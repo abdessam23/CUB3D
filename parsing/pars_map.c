@@ -35,6 +35,7 @@ int	ft_valid_map(char **map, t_player *player)
 	{
 		if (!ft_valid_id(map[i], player))
 		{
+			ft_free_path(player);
 			printf("Error: identifier\n");
 			return (0);
 		}
