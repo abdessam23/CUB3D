@@ -23,8 +23,8 @@
 # include <string.h>
 # include <unistd.h>
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 800
+# define WIN_WIDTH 1800
+# define WIN_HEIGHT 1200
 # define MAX_WIDTH 800
 # define MAX_HEIGHT 600
 
