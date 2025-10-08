@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:18:45 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 13:06:13 by abdo             ###   ########.fr       */
+/*   Updated: 2025/10/08 14:37:03 by abdo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ int	path_checker(char *s, t_player *player)
 	i = 3;
 	start = 0;
 	path = NULL;
-	while (s[i] == ' ')
-		i++;
+	skip_spaces(s, &i);
 	start = i;
 	if (s[i] == '\0')
 		return (0);
@@ -91,18 +90,11 @@ int	path_checker(char *s, t_player *player)
 	path = ft_substr(s, start, i - start);
 	if (!open_fille(path, player))
 		return (0);
-	while (s[i] && s[i] == ' ')
-		i++;
+	skip_spaces(s, &i);
 	if (s[i] != '\0')
-	{
-		free(path);
-		return (0);
-	}
+		return (free(path), 0);
 	if (!fill_img(s, path, player))
-	{
-		free(path);
-		return (0);
-	}
+		return (free(path), 0);
 	free(path);
 	return (1);
 }
