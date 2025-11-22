@@ -17,8 +17,10 @@ int	to_hex(int r, int g, int b)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	wall_height(t_player *player)
+void	wall_height(t_player *player, int *r_color, int *f_color)
 {
+	*r_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);
+	*f_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);
 	player->line_height = (int)(WIN_HEIGHT / player->wallp);
 	player->start_draw = WIN_HEIGHT / 2 - player->line_height / 2;
 	player->end_draw = WIN_HEIGHT / 2 + player->line_height / 2;
@@ -39,13 +41,13 @@ void	draw_wall_column(t_game *game, t_player *player, int column)
 	int	roof_color;
 	int	floor_color;
 
-	roof_color = to_hex(player->roof[0], player->roof[1], player->roof[2]);
-	floor_color = to_hex(player->floor[0], player->floor[1], player->floor[2]);
 	if (player->side == 0)
 		player->wallp = player->dsid_x - player->dx;
 	else
 		player->wallp = player->dsid_y - player->dy;
-	wall_height(player);
+	if (player->wallp < 1e-6)
+		player->wallp = 1e-6;
+	wall_height(player, &roof_color, &floor_color);
 	y = 0;
 	while (y < player->start_draw)
 	{

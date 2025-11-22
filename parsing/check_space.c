@@ -6,7 +6,7 @@
 /*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:11:24 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 11:47:40 by abdo             ###   ########.fr       */
+/*   Updated: 2025/11/22 12:48:21 by asyani           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,18 @@ int	find_one(char **map)
 	return (0);
 }
 
-int	ft_direction(int c)
+int	ft_direction(char c, t_player *player, int i, int j)
 {
 	if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+	{
+		player->player_x = (double)j + 0.5;
+		player->player_y = (double)i + 0.5;
 		return (1);
+	}
 	return (0);
 }
 
-int	safe_char_at(char **map, int i, int j)
+int	safe_char_at(char **map, int i, int j, char flag)
 {
 	int	l;
 	int	len;
@@ -72,10 +76,10 @@ int	safe_char_at(char **map, int i, int j)
 	while (map[l] != NULL)
 		l++;
 	if (i < 0 || j < 0 || i >= l)
-		return (' ');
+		return (flag);
 	len = ft_strlen(map[i]);
 	if (j >= len)
-		return (' ');
+		return (flag);
 	return (map[i][j]);
 }
 
@@ -86,10 +90,10 @@ int	check_spaces(char **map, int i, int j)
 	char	left;
 	char	right;
 
-	up = safe_char_at(map, i - 1, j);
-	down = safe_char_at(map, i + 1, j);
-	left = safe_char_at(map, i, j - 1);
-	right = safe_char_at(map, i, j + 1);
+	up = safe_char_at(map, i - 1, j, ' ');
+	down = safe_char_at(map, i + 1, j, ' ');
+	left = safe_char_at(map, i, j - 1, ' ');
+	right = safe_char_at(map, i, j + 1, ' ');
 	if ((up == '1' || up == ' ') && (down == '1' || down == ' ') && (left == '1'
 			|| left == ' ') && (right == '1' || right == ' '))
 		return (1);

@@ -12,6 +12,20 @@
 
 #include "../cube.h"
 
+int	check_zero(char **map, int i, int j)
+{
+	char	up;
+	char	down;
+
+	if (map[i][j] != '0')
+		return (1);
+	up = safe_char_at(map, i - 1, j, '\0');
+	down = safe_char_at(map, i + 1, j, '\0');
+	if (up == '\0' || down == '\0')
+		return (0);
+	return (1);
+}
+
 void	fill_map(char **str, t_player *player)
 {
 	int	i;

@@ -61,22 +61,24 @@ int	duplicatid(char **str, t_player *player)
 
 	i = 0;
 	count = 0;
-	while (str[++i])
+	while (str[i])
 	{
 		j = 0;
-		while (str[i][++j])
+		while (str[i][j])
 		{
-			if (ft_direction(str[i][j]))
+			if (ft_direction(str[i][j], player, i, j))
 			{
 				count++;
-				player->player_x = (double)j + 0.5;
-				player->player_y = (double)i + 0.5;
 				player->direction = str[i][j];
 			}
-			if (count > 1 || !ft_spaces(str, i, j))
+			if (!ft_spaces(str, i, j) || !check_zero(str, i, j) || count > 1)
 				return (0);
+			j++;
 		}
+		i++;
 	}
+	if (count == 0)
+		return (0);
 	return (1);
 }
 
