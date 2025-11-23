@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 14:58:53 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 11:49:08 by abdo             ###   ########.fr       */
+/*   Updated: 2025/11/22 18:17:09 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	ft_valid_map(char **map, t_player *player)
 	{
 		if (!ft_valid_id(map[i], player))
 		{
-			ft_free_path(player);
 			printf("Error: identifier\n");
 			return (0);
 		}
@@ -58,6 +57,7 @@ int	ft_pars_map(char **map, t_player *player)
 	if (!ft_valid_map(map, player) || !check_in_map(map, player))
 	{
 		ft_free(map);
+		ft_free_path(player);
 		printf("Error: inside map!\n");
 		return (0);
 	}

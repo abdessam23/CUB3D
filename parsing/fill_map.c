@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 12:03:35 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 12:59:12 by abdo             ###   ########.fr       */
+/*   Updated: 2025/11/22 18:20:24 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,31 @@ void	ft_free_path(t_player *player)
 		free(player->southimg);
 	if (player->eastimg)
 		free(player->eastimg);
+}
+
+int	get_only_map(char **str, int *i)
+{
+	int	count;
+	int	flag;
+	int	j;
+
+	count = 0;
+	flag = 0;
+	while (--(*i) >= 0)
+	{
+		j = 0;
+		while (str[*i][j])
+		{
+			if (str[*i][j] == '1')
+			{
+				flag = 1;
+				break ;
+			}
+			j++;
+		}
+		if (flag)
+			break ;
+		count++;
+	}
+	return (count);
 }

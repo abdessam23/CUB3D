@@ -14,7 +14,7 @@
 
 int	check_map(char *s)
 {
-	int		count;
+	int	count;
 
 	count = 0;
 	while (*s)

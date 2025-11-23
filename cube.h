@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 11:04:01 by asyani            #+#    #+#             */
-/*   Updated: 2025/10/04 12:59:33 by abdo             ###   ########.fr       */
+/*   Updated: 2025/11/22 18:21:59 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,6 @@ int					check_in_map(char **map, t_player *player);
 void				ft_free(char **arr);
 void				fill_map(char **str, t_player *player);
 void				ft_free_path(t_player *player);
+int					get_only_map(char **str, int *i);
 
 #endif

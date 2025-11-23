@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdo <abdo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:13:00 by abdo              #+#    #+#             */
-/*   Updated: 2025/10/04 12:14:49 by abdo             ###   ########.fr       */
+/*   Updated: 2025/11/22 18:24:49 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,8 @@ int	main(int arc, char **argv)
 	t_player	player;
 
 	if (pars_fun(arc, argv, &player))
-	{
-		printf("parsing\n");
 		return (1);
-	}
 	if (init_cube(&player))
-	{
-		printf("raycasting\n");
 		return (1);
-	}
 	return (0);
 }
