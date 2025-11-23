@@ -43,7 +43,6 @@ int	fill_img(char *str, char *path, t_player *player)
 	}
 	if (ft_strncmp(path + l, ".xpm", 4))
 	{
-		free(path);
 		printf("the image should use .xpm extension\n");
 		return (0);
 	}

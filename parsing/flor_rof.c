@@ -88,7 +88,10 @@ int	check_range(char *s, t_player *player)
 		i++;
 	range = ft_substr(s, start, i - start);
 	if (!range || !check_isdigit(range))
+	{
+		free(range);
 		return (0);
+	}
 	arr = ft_split(range, ',');
 	free(range);
 	if (!ft_atoichecker(arr, s, player))
